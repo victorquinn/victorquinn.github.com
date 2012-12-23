@@ -1,0 +1,45 @@
+ErrorDocument 404 /404.html
+
+Redirect 301 /tag/efficiency http://victorquinn.com/blog/2010/08/30/micro-efficiency/
+
+Redirect 301 /tag/resale http://victorquinn.com/blog/2010/10/25/autodesk-and-the-right-to-resell-software/
+Redirect 301 /tag/firstsaledoctrine http://victorquinn.com/blog/2010/10/25/autodesk-and-the-right-to-resell-software/
+Redirect 301 /tag/autodesk-and-the-evaporating-license http://victorquinn.com/blog/2010/10/25/autodesk-and-the-right-to-resell-software/
+
+Redirect 301 /concept-idea-using-client-side-javascript-for http://victorquinn.com/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/
+
+Redirect 301 /tag/start http://victorquinn.com/blog/2010/08/04/the-start-of-the-journey/
+
+Redirect 301 /tag/law http://victorquinn.com/blog/2011/09/28/joint-infringement/
+Redirect 301 /tag/patentinfringement http://victorquinn.com/blog/2011/09/28/joint-infringement/
+Redirect 301 /tag/jointinfringement http://victorquinn.com/blog/2011/09/28/joint-infringement/
+
+Redirect 301 /lets-share-bad-stories http://victorquinn.com/blog/2010/08/12/let-s-share-bad-stories/
+
+Redirect 301 /tag/safari http://victorquinn.com/blog/2010/08/27/duckduckgo-safari-extension-update-1-3/
+Redirect 301 /duckduckgo-safari-extension-update-13 http://victorquinn.com/blog/2010/08/27/duckduckgo-safari-extension-update-1-3/
+Redirect 301 /tag/duckduckgo http://victorquinn.com/blog/2010/08/27/duckduckgo-safari-extension-update-1-3/
+
+Redirect 301 /duckduckgo-safari-extension http://victorquinn.com/blog/2010/08/17/duckduckgo-safari-extension/
+
+Redirect 301 /the-blame-game http://victorquinn.com/blog/2010/08/13/the-blame-game/
+Redirect 301 /tag/blame http://victorquinn.com/blog/2010/08/13/the-blame-game/
+Redirect 301 /tag/responsibility http://victorquinn.com/blog/2010/08/13/the-blame-game/
+
+Redirect 301 /tag/arm http://victorquinn.com/blog/2011/05/09/on-apple-s-rumored-arm-adoption/
+
+Redirect 301 /tag/waste http://victorquinn.com/blog/2011/08/09/random-idea-gravity-powered-waste-generator-for-high-rise-buildings/
+Redirect 301 /tag/gravity http://victorquinn.com/blog/2011/08/09/random-idea-gravity-powered-waste-generator-for-high-rise-buildings/
+
+Redirect 301 /tag/efficiency http://victorquinn.com/blog/2010/08/30/micro-efficiency/
+
+Redirect 301 /tag/tmux http://victorquinn.com/blog/2011/06/20/tmux/
+Redirect 301 /tag/howto http://victorquinn.com/blog/2011/06/20/tmux/
+Redirect 301 /tag/gnuscreen http://victorquinn.com/blog/2011/06/20/tmux/
+
+Redirect 301 /tag/decisions http://victorquinn.com/blog/2010/08/31/you-cannot-change-the-past/
+Redirect 301 /tag/past http://victorquinn.com/blog/2010/08/31/you-cannot-change-the-past/
+Redirect 301 /tag/selfanalysis http://victorquinn.com/blog/2010/08/31/you-cannot-change-the-past/
+Redirect 301 /you-cannot-change-the-past http://victorquinn.com/blog/2010/08/31/you-cannot-change-the-past/
+
+Redirect 301 /rss.xml http://victorquinn.com/atom.xml
