@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: zsh | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/zsh/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[cd which directory]]></title>
+    <link href="http://victorquinn.com/blog/2012/10/15/cd-which-directory/"/>
+    <updated>2012-10-15T10:04:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/10/15/cd-which-directory</id>
+    <content type="html"><![CDATA[<p>Sharing a minor tweak which has been very useful to me.</p>
+
+<p>I find I often want to cd into the directory where a program exists. Let's say I was trying to jump to the directory which contained <em>myawesomeprogram</em> but didn't know where it was. My old workflow was something like:</p>
+
+<p>``` bash
+which myawesomeprogram</p>
+
+<h1>Manually click/drag to copy and paste the resulting output</h1>
+
+<p>cd <pasted directory>
+```</p>
+
+<p>Come on, I'm an übernerd, surely I can figure out something better/more efficient which doesn't require me to touch my mouse.</p>
+
+<h2>Enter a simple zsh function</h2>
+
+<p>I use <a href="http://zsh.sourceforge.net">zsh</a> for my shell. I think this should work with bash though YMMV.</p>
+
+<p><code>bash
+cdw () {
+  cd $(dirname $(which $1))
+}
+</code></p>
+
+<p>Adding this to my .zshrc allows me to just type</p>
+
+<p><code>bash
+cdw myawesomeprogram
+</code>
+and I'm immediately teleported to the folder which contains that program.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Solved: zsh git tab completion painfully slow]]></title>
+    <link href="http://victorquinn.com/blog/2011/12/22/solved-zsh-git-tab-completion-painfully-slow/"/>
+    <updated>2011-12-22T20:55:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2011/12/22/solved-zsh-git-tab-completion-painfully-slow</id>
+    <content type="html"><![CDATA[<h2>Soooo slow</h2>
+
+<p>First, I love zsh. It has a bunch of features that bash doesn't so I've been using it as my main shell for about three years.</p>
+
+<p>That said, it hasn't been all great. Some time ago, I came across a major issue that almost made me stop using zsh. Basically, for sufficiently large projects, git tab completion was taking longer and longer. At first, it was a few seconds which, while annoying, wasn't fatal. Then it got worse and worse. This morning, if I had a file named foo.html and I typed <code>git diff fo</code> and hit tab, the command line would lock for up to 30 seconds, leaving me unable to do anything.</p>
+
+<p>I had, in the past, spent some time searching and found a handful of pages in the zsh developer mailing lists discussing the problem as a known issue, but offering no solution. Some pointed to the way compinit recursively does things, others had other explanations, but no one offered a solution. There were technical grumblings about how it's a hard problem to solve, blah blah. I'm not saying it isn't a hard problem to solve, but it's pretty ridiculous that it isn't solved. In bash, this kind of thing is basically instant, there should be no way that they can't find some solution.</p>
+
+<p><em>Bottom line, I no longer cared, I just wanted my freaking command line to not go unresponsive for such a long time.</em></p>
+
+<h2>The solution</h2>
+
+<p>I found the solution <a href="https://github.com/bobthecow/git-flow-completion/wiki/Update-Zsh-git-completion-module">here</a>. It was relatively simple, just replace the zsh _git with that version. And voila, all seems to work! Literally years of frustration seem to have vanished. I'm writing this hopefully to publicize it so more people are able to find the solution to this painful problem.</p>
+]]></content>
+  </entry>
+  
+</feed>

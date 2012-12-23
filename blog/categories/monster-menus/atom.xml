@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Monster Menus | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/monster-menus/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Monster Menus and Drupal Multisite]]></title>
+    <link href="http://victorquinn.com/blog/2012/03/06/monster-menus-and-drupal-multisite/"/>
+    <updated>2012-03-06T21:48:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2012/03/06/monster-menus-and-drupal-multisite</id>
+    <content type="html"><![CDATA[<h2>Monster Menus</h2>
+
+<p>Over my years working at <a href="https://www.amherst.edu">Amherst College</a>, I have been fortunate enough to have played a part in helping to develop and create a module for <a href="http://drupal.org">Drupal</a> called <a href="http://drupal.org/project/monster_menus">Monster Menus</a>. The module is a Monster! (pun intended)</p>
+
+<p>The capabilities it adds to out of the box Drupal are quite incredible. It plugs many gaping holes in Drupal which made it suitable for use by a large institution such as Amherst College.</p>
+
+<h3>Permissions gaps in core Drupal</h3>
+
+<p>Out of the box, Drupal is quite limited in terms of its permission capabilities. It has a concept of roles which it uses for permissions. This is fine for many small sites or sites where there are limited content creators, but on a site with tens of thousands of users creating content, this starts to break down quickly.</p>
+
+<p>In the simplest terms, Monster Menus layers, on top of the standard Drupal access permissions, a series of access permissions which approximate the permissions given to any modern filesystem.</p>
+
+<p>For example, in any linux or unix based system, there are permissions such as read, write, execute which can be given to users and/or groups. This allows for very rich and nuanced access privileges such as John can edit this file but he cannot view this folder. View the screenshot below of the Monster Menus permissions interface for a given page:</p>
+
+<p><img class="center" src="/images/mm1.png"></p>
+
+<p>As you can see, this is very similar to the permissions structure of a filesystem. As a result, this allows for things such as, "all instructors in the English department can edit the English department website" or "only John Doe can add content to this page and everyone can read it" or "John and members of the English department group can read this page but no one else can." This kind of nuanced permissions is simply not available in off-the-shelf Drupal.</p>
+
+<h3>The Approach Other Large Institutions Have Taken</h3>
+
+<p>Many institutions have run into similar issues and have solved it a few different ways.</p>
+
+<h4>Organic Groups</h4>
+
+<p>The first is by using something called <a href="http://drupal.org/project/og">Organic Groups</a>.</p>
+
+<p>It does add the concept of Groups to Drupal, but does not appropriately offer the nuanced permissions described above. For example, it would not allow for something such as "only members of the English department and John and members of the Philosophy department can edit this page."</p>
+
+<h4>Separate Drupal Instances and Subdomains</h4>
+
+<p>The second is by creating an entirely different Drupal instance for each site and using subdomains.</p>
+
+<p>This has many downsides, the most notable being that updating can be a monstrous pain.</p>
+
+<p>At DrupalCon last year, I spoke with someone from another college that had ~160 different Drupal instances! They had a different instance for every single educational department in their large university. So they were trying to figure out a way to update the codebase in 160 directories and then run scripts to update 160 databases.</p>
+
+<p>He was asking how other places dealt with the process of updating because it was almost a full-time job just for him to run around and update all of these separate instances. Ouch.</p>
+
+<p>The other major downside is that, by using subdomains like english.college.edu or physics.college.edu is that, since they have different subdomains, they don't share Google juice.</p>
+
+<h3>Amherst College Paved Their Own Path</h3>
+
+<p>As a result, when Amherst College wanted to adopt Drupal as their content management system, they needed a solution to deliver these kind of nuanced permissions and, since neither Organic Groups or these Separate Instances scaled, they decided to pave their own path.</p>
+
+<p>Thus Monster Menus was born.</p>
+
+<p>(<a href="http://drupal.org/project/monster_menus">Monster Menus</a> will likely get a broader treatment in a later blog post as I love discussing it!)</p>
+
+<h2>Drupal Multisite</h2>
+
+<p>One of the benefits of Drupal is that it can be set up in a multisite configuration. This allows multiple sites to share a single codebase which in turn leads to easier updates downstream. Having to only modify files once per server instead of once per website hosted on that server can be a huge time-saver.</p>
+
+<p>However, as each Drupal instance in a multisite configuration shares the same code, they each have different databases so, for all intents and purposes, each one is an entirely separate and siloed site.</p>
+
+<p><img class="center" src="/images/mm2.png"></p>
+
+<p>With this kind of configuration, on my web server I have a single instance of the Drupal codebase and, utilize a multisite configuration to have about a dozen different Drupal instances each with their own database. These sites each look like their own completely separate entities to the outside world (most notably because they have entirely different URLs), but under the hood they share a lot of the same codebase.</p>
+
+<p>The primary developer of Monster Menus had the wise foresight to build in the capability to use it with a multisite configuration. His instructions can be found on Drupal's website:</p>
+
+<blockquote><p><a href="http://drupal.org/node/1366320">Multiple Drupal Sites with One Monster Menus Tree</a></p></blockquote>
+
+<h2>Deploying Monster Menus with Drupal Multisite</h2>
+
+<p>I have recently taken some time to work on some web projects for myself. Two of those projects were related and needed some nuanced permissions so I took it as a great opportunity to deploy Monster Menus (MM hereafter) in my own environment and try out the multisite capabilities to share users, permissions, etc. between the two.</p>
+
+<p>So I followed <a href="http://drupal.org/node/1366320">the instructions</a>, installed MM on one instance, then using multisite created another instance, pointing it to use the same database. This leads to the following configuration:</p>
+
+<p><img class="center" src="/images/mm3.png"></p>
+
+<p>This is when the problems started to arise. First, those instructions say in Step 1 that:</p>
+
+<p>"During setup, it is important to note that you must use the same database for all of your instances."</p>
+
+<p>Hrm. This sounds like it could cause troubles down the line. Later:</p>
+
+<p>"Choose the newly-created site in the 'Current Homepage' column, and click the 'Set the current homepage' button. Now, when you visit your site's homepage, the page you just created will be displayed."</p>
+
+<p>Anyone familiar with databases will realize there is a problem here. If the two or more sites are sharing a single database, changing the current homepage as in the instructions necessarily also changes it in the other!</p>
+
+<p>Unless I was missing something quite obvious, this wouldn't work!</p>
+
+<p>Now the primary developer for MM is an incredibly competent programmer so I assume he had some way around this. The instructions mention using the $conf variable in the settings.php file. Assumedly, since the current homepage is stored as a system variable in the variables table and $conf can be used to overwrite these values, it ought to be possible to use this somehow to redirect to a different homepage for each instance. First, I couldn't figure out how to get that working, and second I noticed some other problems that wouldn't be solved even if this worked.</p>
+
+<h3>Other Problems With the Primary Multisite Method</h3>
+
+<p>Since both instances share a single database, it impossible to set any settings on one that would not end up affecting the other. For example, changing the Site Name, E-mail address, Performance settings, and any other configuration setting on one site would change it the other! Unless there is a situation under which both sites have all of the same information and configuration, this setup would not work!</p>
+
+<p>Sure, one could manually override $conf in the settings.php file in an attempt to account for some of these configuration changes, but it gets messy quickly.</p>
+
+<p>Further, this method can only be used to override things in the variables table. It wouldn't be any help for other database entries.</p>
+
+<p>Things broke down more when it came to the use of modules. One of my sites was reasonably complex, requiring the installation of many modules. The other was relatively simple and I desired to keep it as light as possible. However, it was not possible to do this when they shared a single database! Installing a module on one instance necessarily installed it on the other due to their sharing. This introduced unnecessary bloat to the site I desired to be lighter.</p>
+
+<p>The instructions mention using different database prefixes for tables not used by Monster Menus. However, this gets tedious for multiple reasons:</p>
+
+<h4>Reason 1: Installing Modules is a mess</h4>
+
+<p>The tables will not be created until a module is installed. So the process for installing a module ends up something like the following:</p>
+
+<ol>
+<li>Create a separate database for the non-shared tables</li>
+<li>Install the module on the shared database</li>
+<li>Dump and import those tables (and their data) from the shared database to the separate database</li>
+<li>Create prefix entries for the instance that is using those to point to the separate database for those tables from the instance that will be using the tables outside of the shared instance</li>
+<li>Uninstall the module on the shared database, setting its state back to before the module was installed.</li>
+</ol>
+
+
+<p>Note, this would simply break if there was an update to a module that added or removed a table because it's prefix wouldn't be in the list of prefixes. The person responsible for performing the module updates would therefore have to read through the module code, search for database updates, and pre-emptively set their prefixes in the settings.php file. If this is missed, the tables will be created on the shared database and will not make any sense.</p>
+
+<h4>Reason 2: Difficult for standard Drupal tables</h4>
+
+<p>This is difficult for more standard Drupal tables such as system where the entire instance relies heavily on it being set a certain way. Once it gets copied, moved, changed, there is a high probability of things breaking.</p>
+
+<p>So this created many issues.</p>
+
+<h2>Finding a Workaround</h2>
+
+<p>First, I spent time trying to find a way to workaround this and get things to play nicely. The standard <a href="http://drupal.org/node/1366320">instructions</a> say that it's possible to use different prefixes for tables not used by Monster Menus, but that they must share the same database and not have prefixes for Monster Menus specific tables.</p>
+
+<p>So I could have manually created a separate database with separate tables and pointed my secondary instance at them. However, this would have the downside of requiring me to create any new table separately in another database as described above!</p>
+
+<p>Put another way, this says that, by default, share all tables, only use different tables if we so specify.</p>
+
+<p>The more I thought about this, the more it seemed backwards. I would much rather it default to using multiple, separate databases, with each instance using its own database tables, and only refer to the other instance's database for any Monster Menus related tables. This way I can install modules, change settings, etc. on each instance without affecting the other. I envisioned some variation of the following:</p>
+
+<p><img class="center" src="/images/mm4.png"></p>
+
+<h3>The Alternate Method for using Drupal Multisite with MM</h3>
+
+<p>There is a very detailed post I made on drupal.org about how to do this. And I explain some of the background, but not in the kind of depth I have done in this post:</p>
+
+<blockquote><p><a href="http://drupal.org/node/1471176">Multiple Drupal Sites with One MM Tree (alternate configuration)</a></p></blockquote>
+
+<p>I won't repeat the steps here as that would be needlessly redundant. The magic there though is that the multiple instances default to using their own databases and use the prefixes in the settings.php file to point to a master for any requests for Monster Menus specific content such as the tree itself, permission groups, monster menus blocks, etc.</p>
+
+<p>This alleviates all of the issues with not being able to have different per-instance configurations, of having a different module stack on each site, and all of the other problems that come with requiring all instances to share a single database instance.</p>
+
+<h3>Fringe Benefits</h3>
+
+<p>Aside from simply remedying the issues described above, this also has corollary benefits.</p>
+
+<p> A major one is that it is now possible to have a single master and X slaves. In my actual setup, I had only one master and one slave. However, as in my diagram above, it's possible to have one master and two slaves. Or one master and fifty slaves. There is ultimately no limit.</p>
+
+<p> And since they are all sharing the same Monster Menus permissions trees, this means Single Sign On is possible throughout the sites as a single user account is tied to permissions on multiple sites! It's possible to assign permission groups from any site to any other site that is linked in this fashion.</p>
+
+<p>And configuration on any given site (aside from the Monster Menus configuration of course!) can be entirely separate and siloed off from the others. Now if an administrator on one site changes the contact email or creates a new WYSIWYG profile or installs (or uninstalls) a module or changes the input filters, it will not break any content or configuration on any of the other linked sites.</p>
+
+<h2>Conclusion</h2>
+
+<p><a href="http://drupal.org/project/monster_menus">Monster Menus</a> is is an amazing module. Having the capability, with some tweaks like this, to share its assets and ablilities across multiple sites is unbelievably powerful.</p>
+
+<p>Special thanks to <a href="https://www.amherst.edu">Amherst College</a> for paving the way with this module!</p>
+]]></content>
+  </entry>
+  
+</feed>

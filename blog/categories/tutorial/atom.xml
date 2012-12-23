@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tutorial | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/tutorial/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fortran Tutorial]]></title>
+    <link href="http://victorquinn.com/blog/2012/12/15/fortran-tutorial/"/>
+    <updated>2012-12-15T10:46:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2012/12/15/fortran-tutorial</id>
+    <content type="html"><![CDATA[<p>I know what you're thinking. Have I fallen through a time portal? Was this post truly written in 2012? No and Yes!</p>
+
+<p>My father is an electrical engineer/physicist who has a bunch of Fortran programs he uses regularly. As a hobby project, I offered to take a look at them and see if I couldn't find some optimizations or modernizations. Upon Googling it, I found it more difficult than I thought to find the type of modern tutorial I'm so used to for Rails or Node.js or something.</p>
+
+<h3></h3>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Capybara and RSpec to test Drupal]]></title>
+    <link href="http://victorquinn.com/blog/2012/10/11/using-capybara-and-rspec-to-test-drupal/"/>
+    <updated>2012-10-11T14:49:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/10/11/using-capybara-and-rspec-to-test-drupal</id>
+    <content type="html"><![CDATA[<h2>tl;dr</h2>
+
+<p>I created a git repo with a framework for testing Drupal sites using Capybara webkit and RSpec so any Drupal developers can just clone it and go.</p>
+
+<p><a href="https://github.com/victorquinn/drupal-capybara">View project on Github</a></p>
+
+<h2>Rationale</h2>
+
+<p>The first question I'm likely to get here is "Why?" Drupal has its own testing framework <a href="http://drupal.org/simpletest">SimpleTest</a> which can be used for both Unit and Functional tests, so why try to use RSpec/Ruby? Also, SimpleTest has access to all of the Drupal-y goodness, why write functional tests in Ruby where those functions would not be available?</p>
+
+<p>That's a great question. In my case I'm trying to run tests on a Drupal instance that is on a different machine. In my case I'm trying to run the tests from by desktop and hit my production web server which is on an offsite clustered server. Here SimpleTest wouldn't fit the bill. These tests allow me to take into account network latency and such.</p>
+
+<p>Note, of course since these tests are not in Drupal, tests written and performed like this will not do the setup/teardown like SimpleTest. So I would strongly suggest only touching data on test websites.</p>
+
+<h2>Setup</h2>
+
+<p>First, test that ruby exists and is the right version.</p>
+
+<p><code>bash
+ruby -v
+</code></p>
+
+<p>I used ruby 1.9.3-p194 managed by <a href="https://rvm.io">rvm</a> but I believe any 1.9+ version of ruby should work here with Capybara.</p>
+
+<p>Next, clone my repo which is basically a skeleton setup ready to test Drupal using Capybara. In the repo I've included a file called default.config.yaml. You will want to copy that file to config.yaml. The Gemfile should be set up to install all necessary dependencies.</p>
+
+<p><code>bash
+git clone git://github.com/victorquinn/drupal-capybara.git
+cp default.config.yaml config.yaml
+bundle install
+</code></p>
+
+<p>Now edit config.yaml and change the values to match the Drupal site you are testing.</p>
+
+<p><code>yaml
+site: "http://mycoolwebsite.com"
+user: myusername
+password: abcd1234
+</code></p>
+
+<h2>Is it working?</h2>
+
+<p>I've included two sample tests, one which will just check to ensure the site can be hit and the second which should try logging in to your Drupal site using the values in config.yaml. I've tested this both on Drupal 6 and Drupal 7 and works out of the box on both.</p>
+
+<p>Try to run the tests and ensure things work. Go to the root of that directory (drupal-capybara by default) and try to run it! (do not try to run this from inside the spec directory, you'll get errors.)</p>
+
+<p><code>bash
+rspec spec
+</code></p>
+
+<p>You should see something like the following:</p>
+
+<p>``` bash
+2012-10-12 11:45:18.027 webkit_server[73469:707] *** WARNING: Method userSpaceScaleFactor in class NSView is deprecated on 10.7 and later. It should not be used in new applications. Use convertRectToBacking: instead.</p>
+
+<p>..</p>
+
+<p>Finished in 4.23 seconds
+2 examples, 0 failures
+```
+The warnings can be safely ignored. I am not sure exactly why they're there, something to do with the way the Capybara webkit code is with Mountain Lion. But it's just a warning and doesn't have anything to do with our web tests.</p>
+
+<p>Note: The login test I included will only work if your system has not altered the login page. If something has changed the Log In button to say "Login" or "Go" or "Submit" or anything else, the test will fail. This is one of the downsides of trying to write tests for Drupal in a system that is not associated with Drupal -- it cannot dynamically know about anything which has changed internal to Drupal.</p>
+
+<p>** Capybara webkit can be a bit of a tricky beast to get installed on your system with dependencies and such. <a href="#troubleshooting_webkit">Jump to the bottom</a> to see more details on some possible solutions.</p>
+
+<p>Now test that tests fail correctly by changing your password in config.yaml to a bad value and run it again.</p>
+
+<p><code>yaml
+site: "http://mycoolwebsite.com"
+user: myusername
+password: notmypassword
+</code></p>
+
+<p>You should see something like the following:</p>
+
+<p>``` bash
+2012-10-12 11:42:51.760 webkit_server[72603:707] *** WARNING: Method userSpaceScaleFactor in class NSView is deprecated on 10.7 and later. It should not be used in new applications. Use convertRectToBacking: instead.</p>
+
+<p>Failures:</p>
+
+<p>  1) DrupalTest login works</p>
+
+<pre><code> Failure/Error: verify_login_worked
+   expected #has_content?("Sorry, unrecognized username or password.") to return false, got true
+ # ./spec/drupal_test_helper.rb:10:in `verify_login_worked'
+ # ./spec/drupal_capybara_spec.rb:27:in `block (2 levels) in &lt;top (required)&gt;'
+</code></pre>
+
+<p>Finished in 3.46 seconds
+2 examples, 1 failure</p>
+
+<p>Failed examples:</p>
+
+<p>rspec ./spec/drupal_capybara_spec.rb:25 # DrupalTest login works
+```</p>
+
+<p>Here failure is a good thing! Shouldn't be able to log in if the password is wrong. Don't forget to change your password back in config.yaml before moving on.</p>
+
+<p>This isn't a full rspec tutorial as such, but with my example tests that should be a good start. I've included a third sample test of filling out a Drupal form in my code (specifically in <em>spec/drupal_capybara_spec.rb</em>, but it's commented out by default because that's kind of specific to the particulars of the site and I didn't want to send this out with tests likely to fail on most systems.</p>
+
+<p>I should note, you can also run RSpec to get a nice HTML output. Just run the following:</p>
+
+<p>``` bash
+rspec spec --format html --out results.html</p>
+
+<h1>And if you're on a Mac, to open the results in a browser, just run:</h1>
+
+<p>open results.html
+```
+<em>You should be all set and ready to write some tests!</em></p>
+
+<h2><a id="troubleshooting_webkit"></a>Troubleshooting Capybara Webkit</h2>
+
+<p>Not to sugar coat things, I found Capybara Webkit pretty painful to get installed.</p>
+
+<p>I'll help with the issues I overcame, but generally it will likely involve some googling and such as it's very dependent on the particulars of the system on which this is being run. For reference, I am on Mountain Lion (10.8.2) using ruby 1.9.3-p194. I also use <a href="http://mxcl.github.com/homebrew/">HomeBrew</a> to manage packages.</p>
+
+<p>If you get the following error:</p>
+
+<p>``` bash
+Installing capybara-webkit (0.12.1) with native extensions
+Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.</p>
+
+<pre><code>    /Users/&lt;username&gt;/.rvm/rubies/ruby-1.9.3-p194/bin/ruby extconf.rb
+</code></pre>
+
+<p>Gem files will remain installed in /Users/<username>/.rvm/gems/ruby-1.9.3-p194/gems/capybara-webkit-0.12.1 for inspection.
+Results logged to /Users/<username>/.rvm/gems/ruby-1.9.3-p194/gems/capybara-webkit-0.12.1/./gem_make.out
+An error occured while installing capybara-webkit (0.12.1), and Bundler cannot continue.
+Make sure that <code>gem install capybara-webkit -v '0.12.1'</code> succeeds before bundling.
+```
+Then it's likely qt is not installed on your system. I resolved this by running:</p>
+
+<p><code>bash
+brew install qt libpng
+</code></p>
+
+<p>Mentioned above, but if you're on Mountain Lion you will likely see a warning such as:</p>
+
+<p><code>bash
+2012-10-11 18:16:42.457 webkit_server[64967:707] *** WARNING: Method userSpaceScaleFactor in class NSView is deprecated on 10.7 and later. It should not be used in new applications. Use convertRectToBacking: instead.
+</code></p>
+
+<p>but it can safely be ignored.</p>
+
+<p>If all else fails and you cannot get Webkit working on your system, Selenium can be used instead of Capybara Webkit so all this magic still works, just using Selenium instead of Webkit.</p>
+
+<h3>Alternative setup with Selenium</h3>
+
+<p>To use Selenium instead of headless Webkit, simply edit the drupal_capybara_spec.rb file as follows:</p>
+
+<p>``` ruby</p>
+
+<h1>Before</h1>
+
+<p>Capybara.default_driver = :webkit
+Capybara.javascript_driver = :webkit</p>
+
+<h1>After</h1>
+
+<p>Capybara.default_driver = :selenium
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programmatically Creating Fielded Nodes in Drupal 7]]></title>
+    <link href="http://victorquinn.com/blog/2012/08/11/programmatically-creating-fielded-d7-nodes/"/>
+    <updated>2012-08-11T18:23:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/08/11/programmatically-creating-fielded-d7-nodes</id>
+    <content type="html"><![CDATA[<h3>The Setup</h3>
+
+<p>You've just created your new super awesome node type in Drupal 7 using the (now in core!) Content type editor.</p>
+
+<p><img class="center" src="/images/contenttype1.png"></p>
+
+<p>Now you want to programmatically generate some Super Awesome Content nodes. Some <a href="https://www.google.com">Googling</a> (or <a href="https://duckduckgo.com">Ducking</a>!) will land you with some snippets that look as follows:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Works with standard node  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&amp;lt;?php</span>
+</span><span class='line'><span class="x">function create_my_node() {</span>
+</span><span class='line'><span class="x">  $node = new stdClass();</span>
+</span><span class='line'><span class="x">  $node-&gt;type = &#39;blog&#39;;</span>
+</span><span class='line'><span class="x">  node_object_prepare($node);&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;  $node-&gt;title = &quot;My Awesome Title&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;language = LANGUAGE_NONE;</span>
+</span><span class='line'><span class="x">  node_save($node);</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>The Problem</h3>
+
+<p>Since you've defined a custom content type, you may think something like the following would work great with your new custom node type to set your custom field values:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Attempt with custom node (this will fail!)  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&amp;lt;?php</span>
+</span><span class='line'><span class="x">function create_my_node() {</span>
+</span><span class='line'><span class="x">  $node = new stdClass();</span>
+</span><span class='line'><span class="x">  $node-&gt;type = &#39;super_awesome_content&#39;;</span>
+</span><span class='line'><span class="x">  node_object_prepare($node);&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;  $node-&gt;title = &quot;My Awesome Title&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;language = LANGUAGE_NONE;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;  // Try to set your custom field values</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome = &quot;Too many to count...&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;field_awesome_points = 23;</span>
+</span><span class='line'><span class="x">  node_save($node);</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>However, that will fail! Why? Because you can't set node custom fields like you may expect with <em>$node->{$key}</em>.</p>
+
+<p><em>In my opinion, this is one thing Drupal 7 got very wrong. I'll explain their rationale in a bit after showing the correct way to do this and it does make some sense, but it seems unnecessarily complicated.</em></p>
+
+<h3>The Solution</h3>
+
+<p>Instead of trying to set those custom field attributes directly, you have to use the following funky syntax:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Successful attempt with custom node (this totally works!)  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&amp;lt;?php</span>
+</span><span class='line'><span class="x">function create_my_node() {</span>
+</span><span class='line'><span class="x">  $node = new stdClass();</span>
+</span><span class='line'><span class="x">  $node-&gt;type = &#39;super_awesome_content&#39;;</span>
+</span><span class='line'><span class="x">  node_object_prepare($node);&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;  $node-&gt;title = &quot;My Awesome Title&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;language = LANGUAGE_NONE;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;  // Try to set your custom field</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome[&#39;und&#39;][0][&#39;value&#39;] = &quot;Too many to count...&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;field_awesome_points[&#39;und&#39;][0][&#39;value&#39;] = 23;</span>
+</span><span class='line'><span class="x">  node_save($node);</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Huh? What's with this <em>['und'][0]['value']</em> stuff?</p>
+
+<p>Well, it's a bit complicated. Let's break it down piece by piece</p>
+
+<h4>['und']</h4>
+
+<p>This first bit is the language to be applied to the field. <em>'und'</em> is the key specifying that the language is undefined. This could also be 'en' or 'de' or 'fr' or any other 2 letter language code if a particular language is specified for this field.</p>
+
+<h4>[0]</h4>
+
+<p>This is an array index. For any single value fields like the ones we have, this is just [0]. But it's conceivable to have multiple values in which this would kind of make sense. For example, let's say our reasons_for_being_awesome field was a multi-value field:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Multi-value field  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&amp;lt;?php</span>
+</span><span class='line'><span class="x">  ...</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome[&#39;und&#39;][0][&#39;value&#39;] = &quot;Too many to count...&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome[&#39;und&#39;][1][&#39;value&#39;] = &quot;Reason number 2&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome[&#39;und&#39;][2][&#39;value&#39;] = &quot;Another reason&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome[&#39;und&#39;][3][&#39;value&#39;] = &quot;The most important reason&quot;;</span>
+</span><span class='line'><span class="x">  node_save($node);</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>So it makes some sense for the array index to be there, but it's somewhat confusing for what is arguably the main use case -- namely trying to assign a single value to a field.</p>
+
+<h4>['value']</h4>
+
+<p>This may be the oddest piece. There are a few other keys which could be specified here, among them <em>['format']</em> and <em>['summary']</em>, but when working programmatically with custom fields, it's rare to be setting anything other than <em>['value']</em>.</p>
+
+<h3>Summary</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Summary  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&amp;lt;?php</span>
+</span><span class='line'><span class="x">  // Won&#39;t work</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome = &quot;Too many to count...&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;field_awesome_points = 23;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;  // Will work</span>
+</span><span class='line'><span class="x">  $node-&gt;field_reasons_for_being_awesome[&#39;und&#39;][0][&#39;value&#39;] = &quot;Too many to count...&quot;;</span>
+</span><span class='line'><span class="x">  $node-&gt;field_awesome_points[&#39;und&#39;][0][&#39;value&#39;] = 23;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Commentary</h3>
+
+<p>I think Drupal should be much better here and dropped the ball for developers by not allowing the first method above to work. This ['und'][0]['value'] mess may make it easier for the system to deal with the input, but it makes things far more difficult/complicated for developers. This is an area where it's painfully clear that the Drupal Field API is not a true ORM like <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">ActiveRecord</a> and in my opinion that's a missed opportunity.</p>
+
+<p>Ideally the system would be able to default to allowing things to be set with just the key and not require developers to specify the language, array index, and value key every single time a value is set to the field.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Solved: git svn broken in Mountain Lion DP2]]></title>
+    <link href="http://victorquinn.com/blog/2012/03/20/solved-git-svn-broken-in-mountain-lion-dp2/"/>
+    <updated>2012-03-20T22:08:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/03/20/solved-git-svn-broken-in-mountain-lion-dp2</id>
+    <content type="html"><![CDATA[<p>Over this past weekend, I installed Mountain Lion Developer Preview 2 (DP2).</p>
+
+<p>It came with another version of Xcode and I was heartbroken to once again see that git svn was broken!</p>
+
+<p>However, I was relieved to find that my <a href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/">previous solution</a> worked like a charm. I was able to copy-paste the exact commands again and everything worked perfectly.</p>
+
+<p>I updated the former post accordingly and it's available <a href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/">here</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Solved: git svn broken in Mountain Lion]]></title>
+    <link href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/"/>
+    <updated>2012-02-19T12:20:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion</id>
+    <content type="html"><![CDATA[<p>On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named <a href="http://www.apple.com/macosx/mountain-lion/">Mountain Lion</a> to Developers. I will refrain from discussing anything about the upcoming release for fear of violating Apple's NDA, but I did come across one problem that interfered with my workflow which I solved and the disclosure that solution will not violate the NDA.</p>
+
+<p>I use <a href="http://git-scm.com/">git</a> to connect to my employer's <a href="http://subversion.apache.org/">subversion</a> server. I was using a package called git-svn which includes connectors between the two systems. Upon upgrading to the Mountain Lion beta, my <em>git svn</em> commands stopped working. The solution follows.</p>
+
+<h3>Install Xcode</h3>
+
+<p>First, install the latest version of Xcode (version 4.4) for Mountain Lion. An interesting note is that in Mountain Lion, Apple decided to move it from its former home in <em>/Developer/Xcode</em> to <em>/Applications/Xcode</em>. This was the root source of many of the issues as many of the utilities were searching in the wrong place for the appropriate binaries.</p>
+
+<h3>Install Xcode Command Line Tools</h3>
+
+<p>Another change they've made is that the command line tools are no longer installed by default. Previously, they were included with Xcode with no additional installation necessary. To install the command line tools, launch Xcode, open the Preferences, and switch to the Downloads tab:</p>
+
+<p><img class="center" src="http://victorquinn.com/images/xcodepreferences.png"></p>
+
+<p>One of the entries there is <em>Command Line Tools</em>. Mine already says <em>Installed</em> as I've already installed it, but if you haven't, it'll appear as an <em>Install</em> button as the iOS 4.0 and 3.0 Device Debugging Support entries do in my screenshot above.</p>
+
+<h3>Link the svn Libraries</h3>
+
+<p>After this, you may be tempted to run a <em>git svn</em> command and see what happens. I received the following output:</p>
+
+<p><code>bash Can't locate error
+$ git svn rebase
+Can't locate SVN/Core.pm in @INC (@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/Perl/5.12 /Network/Library
+/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-multi-2level /System/Library/P
+erl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .) at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn l
+ine 41.
+</code></p>
+
+<p>The problem here is that the <em>git svn</em> command requires Perl libraries that aren't linked in Mountain Lion. <sup><a href="#gitsvn1">[1]</a></sup> So, we'll have to manually link them. Run the following in your terminal to link the library:</p>
+
+<p>``` bash Link the second library
+$ sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/SVN /System/Library/Perl/Extras/5.12/SVN</p>
+
+<p>```</p>
+
+<p>Now when you run <em>git svn rebase</em> you will likely be presented with a different error. This is good because it indicates progress! But obviously poor because it's not working.</p>
+
+<p><code>bash Can't locate error
+$ git svn rebase
+Can't locate loadable object for module SVN::_Core in @INC (@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/
+Perl/5.12 /Network/Library/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-mult
+i-2level /System/Library/Perl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .) at /System/Library/Perl/Extras/5.
+12/SVN/Base.pm line 59
+BEGIN failed--compilation aborted at /System/Library/Perl/Extras/5.12/SVN/Core.pm line 5.
+Compilation failed in require at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn line 41.
+</code></p>
+
+<p>So now it appears it <em>can</em> find the Subversion core, but cannot find some other libraries it requires. Issue the following command to remedy this:</p>
+
+<p><code>bash Link the second library
+$ sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/auto/SVN/ /System/Library/Perl/Extras/5.12/auto/SVN
+</code>
+By doing this, we've now linked all of the Subversion Perl directories necessary for this command to run correctly.</p>
+
+<p><em>Update - March 19</em>
+<em>I installed Mountain Lion DP2 over the weekend which broke this again. However, my exact instructions still applied and fixed the issue. I simply needed to install the latest version of Xcode 4.4 (available from <a href="http://developer.apple.com/devcenter/mac">developer.apple.com</a>) and then run the commands listed above.</em></p>
+
+<ol>
+<li><a id="gitsvn1"></a> Note, I am using the version of git from <a href="http://mxcl.github.com/homebrew/">Homebrew</a>. Your outcome may differ slightly if you are using a different version or not using Homebrew.</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

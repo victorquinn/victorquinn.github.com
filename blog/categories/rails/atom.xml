@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Rails | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Launching Scales]]></title>
+    <link href="http://victorquinn.com/blog/2012/11/25/launching-scales/"/>
+    <updated>2012-11-25T18:31:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2012/11/25/launching-scales</id>
+    <content type="html"><![CDATA[<p>Today I officially announce the initial launch of the new website for my startup called <a href="http://scalesapp.com">Scales</a>.</p>
+
+<p><img class="center" src="/images/scales-icon.png" width="256" height="256"></p>
+
+<p>Named for the implement held in one hand by <a href="http://en.wikipedia.org/wiki/Lady_Justice">Lady Justice</a>, Scales will focus on creating innovative learning solutions for law students.</p>
+
+<p>More info is available on the <a href="http://scalesapp.com">Scales</a> site, but in brief my goal is to meld my knowledge of the law with my skills as a software architect and build something unlike anything else that currently exists. Scales will offer a fresh new take on legal supplements, bringing them into the 21st century.</p>
+
+<p>For the tech nerds out there, Scales is a <a href="http://rubyonrails.org">Ruby on Rails</a> application which will serve as the central repository for info, study materials, quiz questions, and other learning content. I will then build out a web experience directly in Rails using <a href="http://backbonejs.org">Backbone.js</a> to ensure it's snappy along with an iOS app which will communicate to that main web app via an API. Content and progress created in the Rails app will by seamlessly synchronized to the iOS app and vice versa with some intelligent caching so lack of connectivity will never be blocking.</p>
+
+<p>With my rich background in software development building APIs, my plan is to be able to offer a top notch, fully integrated experience for legal education unlike any other currently out there which is also open for future expansion to Android devices or desktop applications or whatever else the future may have in store. (Direct mindlink anybody?)</p>
+
+<p>I am flying solo on this project so progress may seem somewhat slow at the start, but will always be steady and I hope to have a true initial launch with content for a core set of courses sometime in Spring 2013. Please stay tuned for updates and if you are interested please do not hesitate to <a href="mailto:mail@victorquinn.com?subject=Scales">contact me</a>.</p>
+
+<p>In the meantime any posts relating to Scales will be tagged appropriately and can all be viewed <a href="http://victorquinn.com/blog/categories/scales/">on this page</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

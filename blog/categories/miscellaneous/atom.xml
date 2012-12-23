@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Miscellaneous | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/miscellaneous/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Convert .png to .eps on a Mac]]></title>
+    <link href="http://victorquinn.com/blog/2012/03/13/convert-png-to-eps/"/>
+    <updated>2012-03-13T22:31:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/03/13/convert-png-to-eps</id>
+    <content type="html"><![CDATA[<p>This is one of those tips that seems almost too easy to be true.</p>
+
+<p>My <a href="http://victorquinn.com/files/VQResumeLatest.pdf">resume</a> and cover letters are written in <a href="http://www.latex-project.org/">LaTeX</a>. LaTeX is a typesetting system often used for creating technical documents as it is particularly good at creating complex documents including scientific equations. I have been using it for a few years to draft documents both because it gives me a lot of control over the output and so that I could prepare myself for working with technical documents such as patents which are likely be written in LaTeX.</p>
+
+<p>I wanted to include my signature in a cover letter. In order to do so in LaTeX, it required a graphic in <em>.eps</em> format. However, my signature was a <em>.png</em> image. I searched for awhile until I came across the answer which was so simple I felt silly for not knowing it.</p>
+
+<p>I thought it may prove useful to someone else. This is a command line trick, so if you are not familiar with a terminal, this tip will not be of much help. Without further adieu:</p>
+
+<p>Simply use the <em>convert</em> command line utility to convert it.</p>
+
+<p><code>bash Convert Command
+$ convert image.png image.eps
+</code></p>
+
+<p>Yes, it was that easy! Out came a perfect .eps file which I was able to use in my LaTeX document. The <a href="http://man.cx/convert"><em>convert</em></a> command has all sorts of other options for resizing and many other things, but for simply doing a straight conversion, that was all!</p>
+
+<p>Worth noting, while this worked for <em>.png</em> to <em>.eps</em>, it also works for <em>.jpg</em> to <em>.eps</em> and <em>.gif</em> to <em>.eps</em>. Have not tested anything else, but it appears to be pretty versatile!</p>
+]]></content>
+  </entry>
+  
+</feed>

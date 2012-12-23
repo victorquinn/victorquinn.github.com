@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Agile | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/agile/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Naming Agile Sprints]]></title>
+    <link href="http://victorquinn.com/blog/2012/10/08/naming-agile-sprints/"/>
+    <updated>2012-10-08T21:32:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/10/08/naming-agile-sprints</id>
+    <content type="html"><![CDATA[<p>This is a trivial post of sorts.</p>
+
+<p>There are 52 weeks in the year. My company follows 2 week sprints for development using an <a href="http://en.wikipedia.org/wiki/Agile_software_development">Agile Development</a> process called <a href="http://en.wikipedia.org/wiki/Scrum_(development">Scrum</a>).</p>
+
+<p>52 divided by 2 yields 26.</p>
+
+<p>How many letters are in the alphabet? Oh right, 26.</p>
+
+<p>So using the letters A-Z it is possible to represent each sprint uniquely by just a letter of the alphabet just like hurricanes or Ubuntu.</p>
+
+<p>So let's make sprint planning, a generally dry and boring affair, interesting.</p>
+
+<p>Since I began leading sprints in my role as team lead with my current employer, my team has planned each sprint using a letter of the alphabet. But not just a letter of the alphabet, we've used the first letter to represent some adjective and the second to represent a mythical god.</p>
+
+<p>We have had such gems as Entropic <a href="http://en.wikipedia.org/wiki/Echo_(mythology)">Echo</a>, Fab <a href="http://en.wikipedia.org/wiki/Fortuna">Fortuna</a>, Hapless <a href="http://en.wikipedia.org/wiki/Lernaean_Hydra">Hydra</a>, Gravid <a href="http://en.wikipedia.org/wiki/Godhead">Godhead</a>, and we are currently nearing the end of Jovial <a href="http://en.wikipedia.org/wiki/Jah">Jah</a>.</p>
+
+<p>I am hardly the first one to think of this, but it has done us well and adds some much needed jazz to an otherwise boring affair.</p>
+
+<p>In the midst of one of the most tiresome aspects of development, the sprint planning, we begin a debate on which adjective/mythical being pair would best represent our current sprint. Excellent and enjoyable arguments ensue as each person argues that their adjective/god pair most closely resembles the sprint we have just planned. The monotony has been cut with an amusing nonsensical argument about how Entropic this sprint is or the etymology of God vs. Godhead vs. Gaia. What does it mean to be a God? Amusement rises from a once dry conversation as an excited debate ignites. Developers who were once dreary of the seemingly endless task of planning the coming weeks spring to life in an attempt to argue that their pairing of adjective and god is most apt.</p>
+
+<p>And I've done so against resistance. I have been told that company policy forbade such a tactic, that tradition was to name the sprint by the (boring) start and end date and to diverge was verboten. I now technically name sprints by the start and end date, but tack on my team consensus amusing god name as a suffix. Since "Ardent Atlas" was forbidden, we now have "May 22 - June 5, Bashful Baal" to appease the powers that be while maintaining autonomy and team spirit.</p>
+
+<p>The thing I love most about this is that there is no trickery here. This is not like the spoon zoomed toward the infant like it's an airplane while the spoon holder mockingly looks down upon the infant as, well, infantile. Rather this is just a moment to enjoy the company of other intellectuals and have a respectful debate about something downright silly and frankly nonsensical to mix things up. It is an excuse to forget about the nitty gritty details of the boring nature of what had just been planned and just wax philosophically and passionately about definitions and minutiae in a manner which few other sectors af the human race would appreciate as much as developers happen to.</p>
+
+<p>Keeping developers happy is arguably the greatest challenge in the management of software engineers and this little trivial tidbit has added some nice spice to an otherwise boring dish.</p>
+]]></content>
+  </entry>
+  
+</feed>

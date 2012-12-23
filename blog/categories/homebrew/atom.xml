@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Homebrew | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/homebrew/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Homebrew Tip #45]]></title>
+    <link href="http://victorquinn.com/blog/2012/10/07/homebrew-tip-number-45/"/>
+    <updated>2012-10-07T12:53:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/10/07/homebrew-tip-number-45</id>
+    <content type="html"><![CDATA[<h2>Warm malt extract during brewing so less is wasted.</h2>
+
+<p>When I start the homebrew process, the first step of which is sanitizing all my equipment, I first plug one of my sinks, put my liquid malt extract into it (still in its containers), then fill it with hot water.</p>
+
+<p><img class="center" src="/images/lme1.png"></p>
+
+<p>I pick up the liquid malt extract container from time to time and give it a shake to evenly distribute it throughout the container. I also periodically drain and refresh the hot water it's bathed in to keep it hot as the malt extract absorbs the heat. This also melts the glue so the labels can be pulled off easily. You'll see in my image above that one has its label all the way off and the other is starting to peel. Removing this makes doubly sure that nothing falls into the wort.</p>
+
+<p>By doing this, it makes the malt extract much more viscous (read: runny) so when it comes time to add it to the wort, less is wasted because more of it runs out while pouring and less sticks to the inside of the container.</p>
+
+<p>Bonus: If using a plastic container with a lid (for example with <a href="http://www.amazon.com/gp/product/B000V5XAQK/ref=as_li_ss_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=B000V5XAQK&amp;linkCode=as2&amp;tag=victorqcom-20" title="">Briess Liquid Malt Extract</a>) you can do as above, but also, after pouring out the malt extract, you can fill this plastic container with hot water from the tap, shake it around, and pour it into the wort. This will ensure even more of your malt extract makes its way into the wort and little is wasted. This can also be done with an aluminum can but it will be less efficient.</p>
+]]></content>
+  </entry>
+  
+</feed>

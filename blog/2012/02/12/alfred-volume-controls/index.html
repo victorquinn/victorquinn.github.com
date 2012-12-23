@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Alfred Volume Control Extension - Victor Quinn</title>
+  <meta name="author" content="Victor Quinn">
+
+  
+  <meta name="description" content="I am a huge fan of Alfred. It&#8217;s a productivity application which allows you to do almost anything on your Mac without reaching for your mouse. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://victorquinn.com/blog/2012/02/12/alfred-volume-controls/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Victor Quinn" type="application/atom+xml">
+  <!--Custom Javascript -->
+<script src="/javascripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+<script src="/javascripts/victorquinn.js"></script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=Mate+SC:400,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Carrois+Gothic+SC" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Playball" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Lustria" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Molengo" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29142694-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <a id="top"></a>
+  <h1><a href="/">Victor Quinn</a></h1>
+  
+    <h2>Software Engineer, Legal Scholar, Problem Solver.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<ul class="main-navigation">
+  <li><a class="menu menu1" href="/blog/categories/tutorial/">Tutorials</a></li>
+  <li><a class="menu menu2" href="/development">Development</a></li>
+  <li><a class="menu menu3" href="/blog/archives/">Archives</a>
+  <li><a class="menu menu4" href="/legal">Legal</a></li>
+  <li><a class="menu menu5" href="/files/VQResumeLatest.pdf">Résumé</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Alfred Volume Control Extension</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-12T09:38:00-05:00" pubdate data-updated="true">Feb 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I am a huge fan of <a href="http://www.alfredapp.com/">Alfred</a>. It&#8217;s a productivity application which allows you to do almost anything on your Mac without reaching for your mouse. I use it for switching between applications, as a calculator, as a clipbord manager, and as a shortcut to web searches and opening URLs. It&#8217;s an amazing tool which has become embedded in my daily workflow.</p>
+
+<p>However, there was one thing for which I always had to reach for a mouse. Changing the volume.</p>
+
+<p><img class="center" src="http://victorquinn.com/images/volume.png"></p>
+
+<h2>Building an Extension</h2>
+
+<p>Since I use Alfred so frequently, I have purchased the <a href="http://www.alfredapp.com/powerpack/">PowerPack</a> which is a set of additional features to Alfred. One of those features is the ability to use and create Extensions.</p>
+
+<p>Extensions in Alfred can take many forms &#8211; they can be Shell Scripts, Applescripts, Automator Workflows, and more. My first attempt at writing this was to create a Shell Script as that is the form with which I&#8217;m most familiar. However, I couldn&#8217;t find any good way to reliably access the system volume from a shell. There were some ways (basically shell commands to invoke Applescript) but I found none of them to be robust enough.</p>
+
+<p>So I went with the next closest thing, Applescript.</p>
+
+<h2>Applescript</h2>
+
+<p>This was my first time writing anything in Applescript. Some things I noticed about it.</p>
+
+<p>First, it&#8217;s intended as a natural language which, to a programmer at least, seemed a bit unnatural at first, but was fine once I was able to grok how things interacted. Although in its attempt to sound more &#8220;natural&#8221; it seemed a bit unnatural. I wonder if a non-programmer would have the same opinion or if it would be easier for them to grok.</p>
+
+<p>Second, I had a hard time finding good documentation on Applescript. There were a bunch of places online (mostly forums) where users had mentioned it or discussed how to perform specific tasks, but none really laid out everything about the basics of the language such as the structure of an if-else statement. Apple&#8217;s own <a href="https://developer.apple.com/library/mac/#documentation/AppleScript/Conceptual/AppleScriptX/AppleScriptX.html">page for developers on Applescript</a> uncharacteristically left a lot to be desired. I found this a bit frustrating. It is so easy to find information like this for any of the other languages in which I regularly program that it caught me a bit offguard to be without any such resource. Eventually I was able to find a <a href="https://developer.apple.com/library/mac/documentation/AppleScript/Conceptual/AppleScriptLangGuide/AppleScriptLanguageGuide.pdf">PDF from Apple published in 2008</a> that set out all the nitty gritty details of the language.</p>
+
+<p>Using the Apple PDF and some searching, I was able to piece together how to write the extension.</p>
+
+<h2>Volume Adjust Extension</h2>
+
+<p>After figuring out Applescript, I got down to writing the extension. I wanted to make it as easy as possible to fit into my workflow and also to accommodate the workflows of others into a manner which felt as natural as possible.</p>
+
+<p>Alfred Extensions all start with a keyword which tells Alfred how to deal with that command. I started with the keyword &#8220;volume&#8221; but later changed it to &#8220;vol&#8221; for simplicity. When trying to change the volume quickly and easily, saving some keystrokes matters.</p>
+
+<p>Next, I tried to allow it to take many kinds of inputs. The <a href="http://victorquinn.com/programming/#volumeadjust" title="Detailed Documentation">full documentation</a> has all of the details, but as a high level overview, I wanted this extension to be able to handle specific commands such as &#8220;vol 25&#8221; to set the volume to 25%, but also natural language commands. I wanted the user to be able to type &#8220;vol up&#8221; and have the volume go up by 10% or &#8220;vol more&#8221; or &#8220;vol +&#8221; to do the same thing. I also wanted them to be able to specify a direction (up, down, more, less, +, -) and a number which is the percentage by which to raise or lower the volume. So my extension also handles &#8220;vol up 30&#8221; which will increase the volume by 30% or &#8220;vol - 45&#8221; which would decrease the volume by 45%.</p>
+
+<p>This extension is <a href="https://gist.github.com/1794961" title="Volume Adjust Github Gist">entirely open source</a> so feel free to fork the gist on Github and hack away at it, modify it, etc.</p>
+
+<p><a href="http://victorquinn.com/files/Adjust%20Volume.alfredextension">Click here to download this Volume Adjust Alfred Extension.</a></p>
+<a rel="permalink" class="permalink" href="">∮</a></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Victor Quinn</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-12T09:38:00-05:00" pubdate data-updated="true">Feb 12<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/alfred/'>Alfred</a>, <a class='category' href='/blog/categories/development/'>Development</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/12/alfred-volume-controls/" data-via="victorquinn" data-counturl="http://victorquinn.com/blog/2012/02/12/alfred-volume-controls/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/11/migrating-to-octopress/" title="Previous Post: Migrating to Octopress">&laquo; Migrating to Octopress</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension/" title="Next Post: Adjust Volume Tweaks">Adjust Volume Tweaks &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section id="about-me">
+  <div class="author-image"><img src="http://victorquinn.com/images/VictorQuinn%20100x100.jpg"></div>
+  <div class="author">
+    <span class="author-name">Victor Quinn</span>
+    <br />
+    <span class="author-email"><a href='mailto&#58;%6Da&#105;&#108;%&#52;&#48;&#118;%&#54;9c%74%6&#70;%&#55;&#50;&#113;uinn&#46;&#99;o&#109;'>ma&#105;l&#64;v&#105;ctorquinn&#46;com</a></span>
+    <span class="author-twitter"><a href="https://twitter.com/#!/victorquinn">@victorquinn</a></span>
+  </div>
+  <h1>About Me</h1>
+  <p>I grew up in Rochester, NY. My early career aspirations included nearly anything imaginable at one point or another, but I always gravitated toward the realms of science and logic.</p>
+  <p>Upon graduating from high school, I ventured to Massachusetts where I spent the next 10 years of my life becoming educated in Computer Science, Physics, and the Law.</p>
+  <p>In parallel, I spent most of those years working as a professional software engineer in the field of education, first at <a href="http://www.umass.edu" target=_blank>UMass Amherst</a> and then at <a href="https://www.amherst.edu" target=_blank>Amherst College.</a>
+  <p>After graduating from Law School, I moved down to Northern Virginia in search of warmer weather and a chance to enjoy life in a different region of the country. I also used this opportunity to change pace in my day-to-day, now working for <a href="http://www.ngpvan.com" target=_blank>NGP VAN</a>, a company specializing in political software. I am truly enjoying bringing my experience developing for the education sector while at the same time learning about the entirely different realm of politics.</p>
+  <p>On the side I am working on building my new legal learning startup, <a href="http://scalesapp.com">Scales</a>. I am also constantly expanding my knowledge of programming and the law while living with both my wife Susan and our great dane Stella.</p>
+  <p>Life is excellent and if you think otherwise, you're doing it wrong.</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/15/fortran-tutorial/">Fortran Tutorial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/25/launching-scales/">Launching Scales</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/01/fresh-look/">Fresh look</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/26/google-civic-drupal-module/">Google Civic Drupal Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/18/git-commit-partial/">git commit partial</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/victorquinn">@victorquinn</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'victorquinn',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("victorquinn", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/victorquinn" class="twitter-follow-button" data-show-count="false">Follow @victorquinn</a>
+  
+</section>
+
+
+
+
+
+<section>
+  <h1>Coderwall</h1>
+  <ul id="cw_badges">
+    <li class="loading">Status updating...</li>
+  </ul>
+
+  <script type="text/javascript">
+    var coderwall = (function(){
+      function render(options, badges){
+        var fragment = '',
+            t = $(options.target),
+            height = 65,
+            width = 65,
+            index;
+
+        for (index in badges) {
+          fragment += '<a class="cw_badge"title="' + badges[index].description + '" href="http://coderwall.com/' + options.user + '">';
+          fragment +=   '<img alt="' + badges[index].description + '" height="' + width + '" width="' + height + '" src="' + badges[index].badge + '"/>';
+          fragment += '</a>';
+        }
+
+        t.html(fragment);
+      }
+      return {
+        showBadges: function(options){
+          console.log(options);
+          $.ajax({
+              url: 'http://coderwall.com/' + options.user + '.json?callback=?'
+            , dataType: 'jsonp'
+            , error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); }
+            , success: function(res) {
+                render(options, res.data.badges);
+            }
+          });
+        }
+      };
+    })();
+
+    $(document).ready(function(){
+      coderwall.showBadges({
+        user: 'victorquinn',
+        target: '#cw_badges'
+      });
+    });
+  </script>
+  <style type="text/css">
+    .cw_badge img {
+      padding: 5px;
+      border: 0 none !important;
+      -moz-box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -o-box-shadow: none !important;
+      box-shadow: none !important;
+    }
+  </style>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Victor Quinn -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Solved: git svn broken in Mountain Lion - Victor Quinn</title>
+  <meta name="author" content="Victor Quinn">
+
+  
+  <meta name="description" content="On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named Mountain Lion to Developers. I will refrain from discussing anything &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Victor Quinn" type="application/atom+xml">
+  <!--Custom Javascript -->
+<script src="/javascripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+<script src="/javascripts/victorquinn.js"></script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=Mate+SC:400,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Carrois+Gothic+SC" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Playball" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Lustria" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Molengo" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29142694-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <a id="top"></a>
+  <h1><a href="/">Victor Quinn</a></h1>
+  
+    <h2>Software Engineer, Legal Scholar, Problem Solver.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<ul class="main-navigation">
+  <li><a class="menu menu1" href="/blog/categories/tutorial/">Tutorials</a></li>
+  <li><a class="menu menu2" href="/development">Development</a></li>
+  <li><a class="menu menu3" href="/blog/archives/">Archives</a>
+  <li><a class="menu menu4" href="/legal">Legal</a></li>
+  <li><a class="menu menu5" href="/files/VQResumeLatest.pdf">Résumé</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Solved: Git Svn Broken in Mountain Lion</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:20:00-05:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named <a href="http://www.apple.com/macosx/mountain-lion/">Mountain Lion</a> to Developers. I will refrain from discussing anything about the upcoming release for fear of violating Apple&#8217;s NDA, but I did come across one problem that interfered with my workflow which I solved and the disclosure that solution will not violate the NDA.</p>
+
+<p>I use <a href="http://git-scm.com/">git</a> to connect to my employer&#8217;s <a href="http://subversion.apache.org/">subversion</a> server. I was using a package called git-svn which includes connectors between the two systems. Upon upgrading to the Mountain Lion beta, my <em>git svn</em> commands stopped working. The solution follows.</p>
+
+<h3>Install Xcode</h3>
+
+<p>First, install the latest version of Xcode (version 4.4) for Mountain Lion. An interesting note is that in Mountain Lion, Apple decided to move it from its former home in <em>/Developer/Xcode</em> to <em>/Applications/Xcode</em>. This was the root source of many of the issues as many of the utilities were searching in the wrong place for the appropriate binaries.</p>
+
+<h3>Install Xcode Command Line Tools</h3>
+
+<p>Another change they&#8217;ve made is that the command line tools are no longer installed by default. Previously, they were included with Xcode with no additional installation necessary. To install the command line tools, launch Xcode, open the Preferences, and switch to the Downloads tab:</p>
+
+<p><img class="center" src="http://victorquinn.com/images/xcodepreferences.png"></p>
+
+<p>One of the entries there is <em>Command Line Tools</em>. Mine already says <em>Installed</em> as I&#8217;ve already installed it, but if you haven&#8217;t, it&#8217;ll appear as an <em>Install</em> button as the iOS 4.0 and 3.0 Device Debugging Support entries do in my screenshot above.</p>
+
+<h3>Link the svn Libraries</h3>
+
+<p>After this, you may be tempted to run a <em>git svn</em> command and see what happens. I received the following output:</p>
+
+<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
+</span><span class='line'>Can<span class="err">&#39;</span>t locate SVN/Core.pm in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/Perl/5.12 /Network/Library
+</span><span class='line'>/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-multi-2level /System/Library/P
+</span><span class='line'>erl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn l
+</span><span class='line'>ine 41.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The problem here is that the <em>git svn</em> command requires Perl libraries that aren&#8217;t linked in Mountain Lion. <sup><a href="#gitsvn1">[1]</a></sup> So, we&#8217;ll have to manually link them. Run the following in your terminal to link the library:</p>
+
+<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/SVN /System/Library/Perl/Extras/5.12/SVN
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when you run <em>git svn rebase</em> you will likely be presented with a different error. This is good because it indicates progress! But obviously poor because it&#8217;s not working.</p>
+
+<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
+</span><span class='line'>Can<span class="err">&#39;</span>t locate loadable object <span class="k">for </span>module SVN::_Core in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/
+</span><span class='line'>Perl/5.12 /Network/Library/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-mult
+</span><span class='line'>i-2level /System/Library/Perl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /System/Library/Perl/Extras/5.
+</span><span class='line'>12/SVN/Base.pm line 59
+</span><span class='line'>BEGIN failed--compilation aborted at /System/Library/Perl/Extras/5.12/SVN/Core.pm line 5.
+</span><span class='line'>Compilation failed in require at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn line 41.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So now it appears it <em>can</em> find the Subversion core, but cannot find some other libraries it requires. Issue the following command to remedy this:</p>
+
+<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/auto/SVN/ /System/Library/Perl/Extras/5.12/auto/SVN
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By doing this, we&#8217;ve now linked all of the Subversion Perl directories necessary for this command to run correctly.</p>
+
+<p><em>Update - March 19</em>
+<em>I installed Mountain Lion DP2 over the weekend which broke this again. However, my exact instructions still applied and fixed the issue. I simply needed to install the latest version of Xcode 4.4 (available from <a href="http://developer.apple.com/devcenter/mac">developer.apple.com</a>) and then run the commands listed above.</em></p>
+
+<ol>
+<li><a id="gitsvn1"></a> Note, I am using the version of git from <a href="http://mxcl.github.com/homebrew/">Homebrew</a>. Your outcome may differ slightly if you are using a different version or not using Homebrew.</li>
+</ol>
+
+<a rel="permalink" class="permalink" href="">∮</a></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Victor Quinn</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:20:00-05:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/tutorial/'>Tutorial</a>, <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/" data-via="victorquinn" data-counturl="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension/" title="Previous Post: Adjust Volume Tweaks">&laquo; Adjust Volume Tweaks</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/02/21/law-school-graduation/" title="Next Post: Law School Graduation">Law School Graduation &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section id="about-me">
+  <div class="author-image"><img src="http://victorquinn.com/images/VictorQuinn%20100x100.jpg"></div>
+  <div class="author">
+    <span class="author-name">Victor Quinn</span>
+    <br />
+    <span class="author-email"><a href='mailto&#58;%6Da&#105;&#108;%&#52;&#48;&#118;%&#54;9c%74%6&#70;%&#55;&#50;&#113;uinn&#46;&#99;o&#109;'>ma&#105;l&#64;v&#105;ctorquinn&#46;com</a></span>
+    <span class="author-twitter"><a href="https://twitter.com/#!/victorquinn">@victorquinn</a></span>
+  </div>
+  <h1>About Me</h1>
+  <p>I grew up in Rochester, NY. My early career aspirations included nearly anything imaginable at one point or another, but I always gravitated toward the realms of science and logic.</p>
+  <p>Upon graduating from high school, I ventured to Massachusetts where I spent the next 10 years of my life becoming educated in Computer Science, Physics, and the Law.</p>
+  <p>In parallel, I spent most of those years working as a professional software engineer in the field of education, first at <a href="http://www.umass.edu" target=_blank>UMass Amherst</a> and then at <a href="https://www.amherst.edu" target=_blank>Amherst College.</a>
+  <p>After graduating from Law School, I moved down to Northern Virginia in search of warmer weather and a chance to enjoy life in a different region of the country. I also used this opportunity to change pace in my day-to-day, now working for <a href="http://www.ngpvan.com" target=_blank>NGP VAN</a>, a company specializing in political software. I am truly enjoying bringing my experience developing for the education sector while at the same time learning about the entirely different realm of politics.</p>
+  <p>On the side I am working on building my new legal learning startup, <a href="http://scalesapp.com">Scales</a>. I am also constantly expanding my knowledge of programming and the law while living with both my wife Susan and our great dane Stella.</p>
+  <p>Life is excellent and if you think otherwise, you're doing it wrong.</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/15/fortran-tutorial/">Fortran Tutorial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/25/launching-scales/">Launching Scales</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/01/fresh-look/">Fresh look</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/26/google-civic-drupal-module/">Google Civic Drupal Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/18/git-commit-partial/">git commit partial</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/victorquinn">@victorquinn</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'victorquinn',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("victorquinn", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/victorquinn" class="twitter-follow-button" data-show-count="false">Follow @victorquinn</a>
+  
+</section>
+
+
+
+
+
+<section>
+  <h1>Coderwall</h1>
+  <ul id="cw_badges">
+    <li class="loading">Status updating...</li>
+  </ul>
+
+  <script type="text/javascript">
+    var coderwall = (function(){
+      function render(options, badges){
+        var fragment = '',
+            t = $(options.target),
+            height = 65,
+            width = 65,
+            index;
+
+        for (index in badges) {
+          fragment += '<a class="cw_badge"title="' + badges[index].description + '" href="http://coderwall.com/' + options.user + '">';
+          fragment +=   '<img alt="' + badges[index].description + '" height="' + width + '" width="' + height + '" src="' + badges[index].badge + '"/>';
+          fragment += '</a>';
+        }
+
+        t.html(fragment);
+      }
+      return {
+        showBadges: function(options){
+          console.log(options);
+          $.ajax({
+              url: 'http://coderwall.com/' + options.user + '.json?callback=?'
+            , dataType: 'jsonp'
+            , error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); }
+            , success: function(res) {
+                render(options, res.data.badges);
+            }
+          });
+        }
+      };
+    })();
+
+    $(document).ready(function(){
+      coderwall.showBadges({
+        user: 'victorquinn',
+        target: '#cw_badges'
+      });
+    });
+  </script>
+  <style type="text/css">
+    .cw_badge img {
+      padding: 5px;
+      border: 0 none !important;
+      -moz-box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -o-box-shadow: none !important;
+      box-shadow: none !important;
+    }
+  </style>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Victor Quinn -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

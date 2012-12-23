@@ -1,0 +1,1225 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Victor Quinn</title>
+  <meta name="author" content="Victor Quinn">
+
+  
+  <meta name="description" content="On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named Mountain Lion to Developers. I will refrain from discussing anything &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://victorquinn.com/blog/page/3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Victor Quinn" type="application/atom+xml">
+  <!--Custom Javascript -->
+<script src="/javascripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+<script src="/javascripts/victorquinn.js"></script>
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=Mate+SC:400,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Carrois+Gothic+SC" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Playball" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Lustria" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Molengo" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29142694-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <a id="top"></a>
+  <h1><a href="/">Victor Quinn</a></h1>
+  
+    <h2>Software Engineer, Legal Scholar, Problem Solver.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<ul class="main-navigation">
+  <li><a class="menu menu1" href="/blog/categories/tutorial/">Tutorials</a></li>
+  <li><a class="menu menu2" href="/development">Development</a></li>
+  <li><a class="menu menu3" href="/blog/archives/">Archives</a>
+  <li><a class="menu menu4" href="/legal">Legal</a></li>
+  <li><a class="menu menu5" href="/files/VQResumeLatest.pdf">Résumé</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/19/fix-git-svn-in-mountain-lion/">Solved: Git Svn Broken in Mountain Lion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:20:00-05:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named <a href="http://www.apple.com/macosx/mountain-lion/">Mountain Lion</a> to Developers. I will refrain from discussing anything about the upcoming release for fear of violating Apple&#8217;s NDA, but I did come across one problem that interfered with my workflow which I solved and the disclosure that solution will not violate the NDA.</p>
+
+<p>I use <a href="http://git-scm.com/">git</a> to connect to my employer&#8217;s <a href="http://subversion.apache.org/">subversion</a> server. I was using a package called git-svn which includes connectors between the two systems. Upon upgrading to the Mountain Lion beta, my <em>git svn</em> commands stopped working. The solution follows.</p>
+
+<h3>Install Xcode</h3>
+
+<p>First, install the latest version of Xcode (version 4.4) for Mountain Lion. An interesting note is that in Mountain Lion, Apple decided to move it from its former home in <em>/Developer/Xcode</em> to <em>/Applications/Xcode</em>. This was the root source of many of the issues as many of the utilities were searching in the wrong place for the appropriate binaries.</p>
+
+<h3>Install Xcode Command Line Tools</h3>
+
+<p>Another change they&#8217;ve made is that the command line tools are no longer installed by default. Previously, they were included with Xcode with no additional installation necessary. To install the command line tools, launch Xcode, open the Preferences, and switch to the Downloads tab:</p>
+
+<p><img class="center" src="http://victorquinn.com/images/xcodepreferences.png"></p>
+
+<p>One of the entries there is <em>Command Line Tools</em>. Mine already says <em>Installed</em> as I&#8217;ve already installed it, but if you haven&#8217;t, it&#8217;ll appear as an <em>Install</em> button as the iOS 4.0 and 3.0 Device Debugging Support entries do in my screenshot above.</p>
+
+<h3>Link the svn Libraries</h3>
+
+<p>After this, you may be tempted to run a <em>git svn</em> command and see what happens. I received the following output:</p>
+
+<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
+</span><span class='line'>Can<span class="err">&#39;</span>t locate SVN/Core.pm in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/Perl/5.12 /Network/Library
+</span><span class='line'>/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-multi-2level /System/Library/P
+</span><span class='line'>erl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn l
+</span><span class='line'>ine 41.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The problem here is that the <em>git svn</em> command requires Perl libraries that aren&#8217;t linked in Mountain Lion. <sup><a href="#gitsvn1">[1]</a></sup> So, we&#8217;ll have to manually link them. Run the following in your terminal to link the library:</p>
+
+<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/SVN /System/Library/Perl/Extras/5.12/SVN
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when you run <em>git svn rebase</em> you will likely be presented with a different error. This is good because it indicates progress! But obviously poor because it&#8217;s not working.</p>
+
+<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
+</span><span class='line'>Can<span class="err">&#39;</span>t locate loadable object <span class="k">for </span>module SVN::_Core in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/
+</span><span class='line'>Perl/5.12 /Network/Library/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-mult
+</span><span class='line'>i-2level /System/Library/Perl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /System/Library/Perl/Extras/5.
+</span><span class='line'>12/SVN/Base.pm line 59
+</span><span class='line'>BEGIN failed--compilation aborted at /System/Library/Perl/Extras/5.12/SVN/Core.pm line 5.
+</span><span class='line'>Compilation failed in require at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn line 41.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So now it appears it <em>can</em> find the Subversion core, but cannot find some other libraries it requires. Issue the following command to remedy this:</p>
+
+<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/auto/SVN/ /System/Library/Perl/Extras/5.12/auto/SVN
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By doing this, we&#8217;ve now linked all of the Subversion Perl directories necessary for this command to run correctly.</p>
+
+<p><em>Update - March 19</em>
+<em>I installed Mountain Lion DP2 over the weekend which broke this again. However, my exact instructions still applied and fixed the issue. I simply needed to install the latest version of Xcode 4.4 (available from <a href="http://developer.apple.com/devcenter/mac">developer.apple.com</a>) and then run the commands listed above.</em></p>
+
+<ol>
+<li><a id="gitsvn1"></a> Note, I am using the version of git from <a href="http://mxcl.github.com/homebrew/">Homebrew</a>. Your outcome may differ slightly if you are using a different version or not using Homebrew.</li>
+</ol>
+
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2012/02/19/fix-git-svn-in-mountain-lion/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Solved: git svn broken in Mountain Lion" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/" data-counturl="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension/">Adjust Volume Tweaks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T16:41:00-05:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I can&#8217;t help but tweak and refine something I&#8217;ve created until it reaches perfection (or as close to perfection as I can come!). Just a couple of days ago, I set out to create my extension to <a href="http://www.alfredapp.com/">Alfred</a> to adjust the volume. Since then, it&#8217;s been integrated into my workflow and I&#8217;ve noticed a few things which I&#8217;ve tweaked.</p>
+
+<h3>No mid-range</h3>
+
+<p>I noticed that in the initial version, I had &#8220;vol loud&#8221; and &#8220;vol soft&#8221; and similar such commands to set the volume high and low using natural language commands, but nothing to set the volume at 50%. This was a volume I found myself wanting frequently so I was frequently typing &#8220;vol 50&#8221;. That&#8217;s a bit unnatural. Now in the most recent version of this extension, it is possible to invoke &#8220;vol medium&#8221; or &#8220;vol half&#8221; or &#8220;vol mid&#8221; and end up at 50%.</p>
+
+<h3>Growl notifications</h3>
+
+<p>Another problem I ran into is that there was no visual indicator after changing the volume. I could hear the change, but it was not easy to tell at a glance what setting it actually had. I tried to add this in the first iteration, but couldn&#8217;t find a good way with the way Alfred handles extensions. Thankfully, after some research today I figured out how to use <a href="http://growl.info/">Growl</a> to display the current volume after it is set.</p>
+
+<p><a href="http://victorquinn.com/files/Adjust%20Volume.alfredextension">Download the latest version</a></p>
+
+<p><a href="http://victorquinn.com/programming/#volumeadjust">View the full extension documentation</a></p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Adjust Volume Tweaks" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension/" data-counturl="http://victorquinn.com/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/12/alfred-volume-controls/">Alfred Volume Control Extension</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-12T09:38:00-05:00" pubdate data-updated="true">Feb 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am a huge fan of <a href="http://www.alfredapp.com/">Alfred</a>. It&#8217;s a productivity application which allows you to do almost anything on your Mac without reaching for your mouse. I use it for switching between applications, as a calculator, as a clipbord manager, and as a shortcut to web searches and opening URLs. It&#8217;s an amazing tool which has become embedded in my daily workflow.</p>
+
+<p>However, there was one thing for which I always had to reach for a mouse. Changing the volume.</p>
+
+<p><img class="center" src="http://victorquinn.com/images/volume.png"></p>
+
+<h2>Building an Extension</h2>
+
+<p>Since I use Alfred so frequently, I have purchased the <a href="http://www.alfredapp.com/powerpack/">PowerPack</a> which is a set of additional features to Alfred. One of those features is the ability to use and create Extensions.</p>
+
+<p>Extensions in Alfred can take many forms &#8211; they can be Shell Scripts, Applescripts, Automator Workflows, and more. My first attempt at writing this was to create a Shell Script as that is the form with which I&#8217;m most familiar. However, I couldn&#8217;t find any good way to reliably access the system volume from a shell. There were some ways (basically shell commands to invoke Applescript) but I found none of them to be robust enough.</p>
+
+<p>So I went with the next closest thing, Applescript.</p>
+
+<h2>Applescript</h2>
+
+<p>This was my first time writing anything in Applescript. Some things I noticed about it.</p>
+
+<p>First, it&#8217;s intended as a natural language which, to a programmer at least, seemed a bit unnatural at first, but was fine once I was able to grok how things interacted. Although in its attempt to sound more &#8220;natural&#8221; it seemed a bit unnatural. I wonder if a non-programmer would have the same opinion or if it would be easier for them to grok.</p>
+
+<p>Second, I had a hard time finding good documentation on Applescript. There were a bunch of places online (mostly forums) where users had mentioned it or discussed how to perform specific tasks, but none really laid out everything about the basics of the language such as the structure of an if-else statement. Apple&#8217;s own <a href="https://developer.apple.com/library/mac/#documentation/AppleScript/Conceptual/AppleScriptX/AppleScriptX.html">page for developers on Applescript</a> uncharacteristically left a lot to be desired. I found this a bit frustrating. It is so easy to find information like this for any of the other languages in which I regularly program that it caught me a bit offguard to be without any such resource. Eventually I was able to find a <a href="https://developer.apple.com/library/mac/documentation/AppleScript/Conceptual/AppleScriptLangGuide/AppleScriptLanguageGuide.pdf">PDF from Apple published in 2008</a> that set out all the nitty gritty details of the language.</p>
+
+<p>Using the Apple PDF and some searching, I was able to piece together how to write the extension.</p>
+
+<h2>Volume Adjust Extension</h2>
+
+<p>After figuring out Applescript, I got down to writing the extension. I wanted to make it as easy as possible to fit into my workflow and also to accommodate the workflows of others into a manner which felt as natural as possible.</p>
+
+<p>Alfred Extensions all start with a keyword which tells Alfred how to deal with that command. I started with the keyword &#8220;volume&#8221; but later changed it to &#8220;vol&#8221; for simplicity. When trying to change the volume quickly and easily, saving some keystrokes matters.</p>
+
+<p>Next, I tried to allow it to take many kinds of inputs. The <a href="http://victorquinn.com/programming/#volumeadjust" title="Detailed Documentation">full documentation</a> has all of the details, but as a high level overview, I wanted this extension to be able to handle specific commands such as &#8220;vol 25&#8221; to set the volume to 25%, but also natural language commands. I wanted the user to be able to type &#8220;vol up&#8221; and have the volume go up by 10% or &#8220;vol more&#8221; or &#8220;vol +&#8221; to do the same thing. I also wanted them to be able to specify a direction (up, down, more, less, +, -) and a number which is the percentage by which to raise or lower the volume. So my extension also handles &#8220;vol up 30&#8221; which will increase the volume by 30% or &#8220;vol - 45&#8221; which would decrease the volume by 45%.</p>
+
+<p>This extension is <a href="https://gist.github.com/1794961" title="Volume Adjust Github Gist">entirely open source</a> so feel free to fork the gist on Github and hack away at it, modify it, etc.</p>
+
+<p><a href="http://victorquinn.com/files/Adjust%20Volume.alfredextension">Click here to download this Volume Adjust Alfred Extension.</a></p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2012/02/12/alfred-volume-controls/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Alfred Volume Control Extension" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/12/alfred-volume-controls/" data-counturl="http://victorquinn.com/blog/2012/02/12/alfred-volume-controls/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/11/migrating-to-octopress/">Migrating to Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-11T15:33:00-05:00" pubdate data-updated="true">Feb 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is my first post since migrating my personal website to <a href="http://www.octopress.org">Octopress</a>. Octopress is a blogging engine built on Jekyll which generates static pages and it&#8217;s really geared toward computer programmers.</p>
+
+<p><img class="center" src="http://victorquinn.com/images/octopress.png"></p>
+
+<h2>Rationale</h2>
+
+<p>My main rationale for moving over to Octopress is that I&#8217;ve been seeking to regain control over my website for awhile but hadn&#8217;t found something that really fit the bill. Previously my website was a <a href="http://posterous.com/">Posterous</a> blog, but they made a series of changes over the years which moved away from the simplicity which enticed me to start with them in the first place. I spent a bunch of time evaluating different platforms, but nothing really fit the bill. Then along came Octopress and it was exactly what I was seeking.</p>
+
+<p>Not only did I want to regain control, but I also wanted capabilities Posterous could no longer offer. Posterous was great as simply a blog, but I wanted to have my website showcase more about myself and my abilities in a manner which Posterous simply was not capable enough. Octopress allows me to finely control what is on the website and how it appears. I can tweak the output of each post as it appears on the website and as it appears in the RSS feed. I can finely tune the look and feel of anything on the site and I can add or remove anything anywhere on the site. Having my site on Posterous gave me few of those capabilities.</p>
+
+<p>And last, I wanted to maintain control over my own website. With Posterous, my data was hosted on Posterous&#8217; servers and at any given point they could have removed it and it would have been gone. Using Octopress, I am hosting my website on my own server so no one can pull the plug or lose my data.</p>
+
+<p>Over time, this site will grow and evolve as I fill it with things that I have already done and accumulate more experiences in the future.</p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2012/02/11/migrating-to-octopress/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Migrating to Octopress" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/11/migrating-to-octopress/" data-counturl="http://victorquinn.com/blog/2012/02/11/migrating-to-octopress/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/22/solved-zsh-git-tab-completion-painfully-slow/">Solved: Zsh Git Tab Completion Painfully Slow</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-22T20:55:00-05:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Soooo slow</h2>
+
+<p>First, I love zsh. It has a bunch of features that bash doesn&#8217;t so I&#8217;ve been using it as my main shell for about three years.</p>
+
+<p>That said, it hasn&#8217;t been all great. Some time ago, I came across a major issue that almost made me stop using zsh. Basically, for sufficiently large projects, git tab completion was taking longer and longer. At first, it was a few seconds which, while annoying, wasn&#8217;t fatal. Then it got worse and worse. This morning, if I had a file named foo.html and I typed <code>git diff fo</code> and hit tab, the command line would lock for up to 30 seconds, leaving me unable to do anything.</p>
+
+<p>I had, in the past, spent some time searching and found a handful of pages in the zsh developer mailing lists discussing the problem as a known issue, but offering no solution. Some pointed to the way compinit recursively does things, others had other explanations, but no one offered a solution. There were technical grumblings about how it&#8217;s a hard problem to solve, blah blah. I&#8217;m not saying it isn&#8217;t a hard problem to solve, but it&#8217;s pretty ridiculous that it isn&#8217;t solved. In bash, this kind of thing is basically instant, there should be no way that they can&#8217;t find some solution.</p>
+
+<p><em>Bottom line, I no longer cared, I just wanted my freaking command line to not go unresponsive for such a long time.</em></p>
+
+<h2>The solution</h2>
+
+<p>I found the solution <a href="https://github.com/bobthecow/git-flow-completion/wiki/Update-Zsh-git-completion-module">here</a>. It was relatively simple, just replace the zsh _git with that version. And voila, all seems to work! Literally years of frustration seem to have vanished. I&#8217;m writing this hopefully to publicize it so more people are able to find the solution to this painful problem.</p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2011/12/22/solved-zsh-git-tab-completion-painfully-slow/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Solved: zsh git tab completion painfully slow" class="twitter-share-button" data-url="http://victorquinn.com/blog/2011/12/22/solved-zsh-git-tab-completion-painfully-slow/" data-counturl="http://victorquinn.com/blog/2011/12/22/solved-zsh-git-tab-completion-painfully-slow/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/28/joint-infringement/">Joint Infringement</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-28T00:00:00-04:00" pubdate data-updated="true">Sep 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over the course of this past summer, I completed an independent study in the field of patent litigation, specifically writing about the concept of <strong>Joint Infringement</strong>, a new and emerging area in patent litigation. For this study, I completed a lengthy research paper. As I have no intentions of having the paper formally published, I am attaching it here as it may be of use to practitioners in this field or to anyone else curious about this emerging area of law.</p>
+<p>I am proud of the finished product and glad to have had the experience to study and learn about this new theory. I am also incredibly gracious to my sponsors for their assistance this paper though they shall remain nameless as I do not have their consent to mention them publicly and will respect their privacy.</p>
+<p>One of the things that excites me about this area of law particularly is how fast things are changing and I get quite a rush from staying on top of it. Much like the fast-paced world of computer programming, it seems that things are changing in the realm of patent law with this, the<a href="http://en.wikipedia.org/wiki/Leahy-Smith_America_Invents_Act"> America Invents Act</a>, and with its attempt to keep up with the furious pace of technology. I enjoy being on this cutting edge and consider my enthusiasm for new developing areas to be one of my most valuable assets.</p>
+<p>Without further adieu, here is my paper:</p>
+<p><a title="View VQ Joint Infringement FINAL on Scribd" href="http://www.scribd.com/doc/81248683/VQ-Joint-Infringement-FINAL" style="margin: 12px auto 6px auto; font-family: Helvetica,Arial,Sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; display: block; text-decoration: underline;">VQ Joint Infringement FINAL</a><iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/81248683/content?start_page=1&view_mode=list&access_key=key-24psfoex0thth15976ci" data-auto-height="true" data-aspect-ratio="0.772727272727273" scrolling="no" id="doc_33422" width="100%" height="600" frameborder="0"></iframe><script type="text/javascript">(function() { var scribd = document.createElement("script"); scribd.type = "text/javascript"; scribd.async = true; scribd.src = "http://www.scribd.com/javascripts/embed_code/inject.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(scribd, s); })();</script></p>
+
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2011/09/28/joint-infringement/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Joint Infringement" class="twitter-share-button" data-url="http://victorquinn.com/blog/2011/09/28/joint-infringement/" data-counturl="http://victorquinn.com/blog/2011/09/28/joint-infringement/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/09/random-idea-gravity-powered-waste-generator-for-high-rise-buildings/">Random Idea: Gravity Powered Waste Generator for High-rise Buildings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-09T00:00:00-04:00" pubdate data-updated="true">Aug 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I often have random ideas which occupy my mind which are seldom written down anywhere. I have decided that I will start documenting these random ideas on this website, starting with one that has been percolating for some time. As a warning, most of these ideas are half-baked and often I have done little to no research into whether they are actually viable, already patented, or otherwise developed. They are just my raw thoughts for things I think would be neat or useful to society if implemented. It just seems as though they are squandered occupying my brain for awhile then fading away, unremembered.</p>
+<p>My first of these random ideas is a generator powered by waste material in high-rise buildings.</p>
+<p>We spend a fair amount of resources to get items up into high-rise buildings. From water for showers, the toilet, or cooking to groceries and other household items, there is energy expended to get these items up to the top of a tall building. Then, there are waste pipes or garbage chutes which just let the items fall back to earth, wasting the energy expended to get those objects up into the building. Surely something can be done to harness this energy!</p>
+<p>So my concept is to have some kind of generator powered by waste from high-rise buildings. This may take many forms. First, from waste-water. Right now, the waste-water enters the pipes and falls by gravity down to the ground floor where it goes into the sewers. This falling is just wasted potential energy. Why not put a turbine driven by the falling water in the path to recoup some of that wasted energy?&nbsp;Better yet, why not a handful of these turbines along the path of the water? Water, much like air, has a terminal velocity, a maximum speed attained in free-fall limited by friction by outside forces. In a free-falling body, it is the friction of air which limits the speed of descent. With water in pipes, it is not only the friction of air in the pipes, but also likely the friction of the wall of the pipe as well. So putting small turbine generators at different intervals along the high-rise building will harness the maximum amount of energy without losing it to such friction.</p>
+<p>Next, there is the trash. From bottles and cans to cardboard and other packaging to food waste, there is a fair amount of stuff which is hauled up by residents and then discarded. Many buildings have some sort of garbage chute where trash just kind of falls down to the place where it is to be handled. Why not have some system to harness the energy related to that item falling back to the ground level? One such implementation could be a sort of reverse dumbwaiter where refuse is loaded and as it makes its descent to the ground level, the motion is turning a generator.</p>
+<p>Now certainly any such method as described above will not generate more power than was used to get those objects up into the high-rise building in the first place, but at least they could help recoup some of that energy and not have it entirely wasted. By doing so, the energy cost in moving those objects up in the building would be significantly lessened.</p>
+<p>Think about a 12-pack of bottled beer. Currently, a resident of a high-rise building goes to the store and buys it, then carries it in the elevator with them. Energy is expended to get that elevator up in the building to the resident&#8217;s floor. Then they drink the beer. They urinate and that waste just falls down the pipes. Then they discard the used bottles into the garbage chute where they fall aimlessly. In my proposed system, some of that waste water would be used to power turbines and the weight of those bottles falling to generate some energy. While the energy gained from any one resident&#8217;s waste-water or trash would not amount to much, all of the energy generated from the waste of the many hundreds or thousands of residents in a tall building would likely be non-trivial. And simply unharnessed at present for anything. By making this a bit more efficient, we burn a bit less oil or coal or gas which can pollute the environment and could be put to better use.</p>
+<p>Tangentially related, there could be a rainwater collector at the top of such a high-rise which runs a turbine as it makes its descent to the ground. Since we made no effort to carry the rain up to such a height, that is just extra energy.</p>
+<p>This concept also need not require a high-rise building per se. Similar systems could be installed in low-rise buildings, though their return would be less. Economically, it may not be worth it or feasible to install these in low-rise buildings if the energy they recoup is less than the energy or other resources required to keep such systems repaired and in working order. There is a non-trivial cost in installation, maintenance, etc. and if that cost is not at least offset by the savings, then these systems would not be worthwhile to install.</p>
+<p>Certainly it would not be possible to power any particular appliances or devices directly by any of these methods, but the power could be stored in batteries and used at some other point or contributed back to the grid thereby causing some powerplant somewhere to burn a bit less fuel than it may have otherwise. If these were in every skyscraper in a city, they would have a non-trivial contribution.&nbsp;</p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2011/08/09/random-idea-gravity-powered-waste-generator-for-high-rise-buildings/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Random Idea: Gravity powered waste generator for high-rise buildings" class="twitter-share-button" data-url="http://victorquinn.com/blog/2011/08/09/random-idea-gravity-powered-waste-generator-for-high-rise-buildings/" data-counturl="http://victorquinn.com/blog/2011/08/09/random-idea-gravity-powered-waste-generator-for-high-rise-buildings/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/20/tmux/">Tmux Tutorial</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-20T00:00:00-04:00" pubdate data-updated="true">Jun 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Why a terminal window manager?</h2>
+
+<p>As a web developer, most of my time is spent in a command prompt banging away at web code. One of the greatest discoveries I have made to my productivity is the use of <a href="http://www.gnu.org/software/screen/">GNU Screen</a>. It&rsquo;s hard to distill the many benefits of this type of program into a few bullet points, so here is my best shot:</p>
+
+<ul>
+<li>Ability to quickly switch between multiple command prompts or editor windows.</li>
+<li>Persistence, so if the connection is lost between client and server, server maintains the state it was in exactly prior to disconnection. This also means you can just close your terminal window, reopen it, reattach, and everything is just as you left it.</li>
+<li>Ability to copy-paste and perform other operations across command prompts or editor windows without the use of the mouse.</li>
+<li>Visual alerts to things happening in other &ldquo;windows&rdquo; not in the foreground.</li>
+</ul>
+
+
+<p>Some quick Googling will provide a more exhaustive list, but these are my main favorites. For anyone curious, here is my <a href="https://github.com/victorquinn/dotfiles/blob/master/.screenrc">.screenrc file on GitHub</a></p>
+
+<p>But GNU Screen is just one of many programs that accomplish the same task.</p>
+
+<h2>Why try tmux when I&rsquo;m a happy GNU Screen user?</h2>
+
+<p>I&rsquo;ve been a happy GNU Screen user for about 2.5 years, but I am always looking for ways to improve my development process. I came across an article linked on <a href="http://news.ycombinator.com">HackerNews</a> discussing <a href="http://www.techrepublic.com/blog/opensource/is-tmux-the-gnu-screen-killer/1901">tmux as a GNU Screen Killer</a>. I&rsquo;m not a fan of such a sensationalist title, but I thought it was worth evaluating.</p>
+
+<p>I figured I would also document my experience here because I often find a lack of beginner documentation for many *nix based command line utilities. Most hardcore nerds just reply, &ldquo;Just read the man pages n00b!&rdquo; which I find to be disappointing as a first-time user. If I spend my first hour using some new technology just trying to get it set up and learn the ropes, I am liable to simply give up on it and decide it&rsquo;s not worth my time &ndash; and I am a persistent bugger. If I can help one new user get up to speed a bit faster, using my first-time experiences as a stepping stone, mission accomplished.</p>
+
+<h2>Installation</h2>
+
+<p>My primary development machine is a Mac, and I use the fantastic <a href="http://mxcl.github.com/homebrew/">HomeBrew</a> as my package manager of choice. (Highly recommended over MacPorts!) This makes my installation very easy:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>brew install tmux</pre></div>
+</div>
+
+
+<p>And that&rsquo;s it! Typing tmux in the command line launches it.</p>
+
+<h2>Initial Configuration</h2>
+
+<p>My first step was to get my initial configuration all set up. To do so, I first create a file called .tmux.conf in my home directory:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>touch ~/.tmux.conf</pre></div>
+</div>
+
+
+<p>Now, I jump in with my favorite editor (go emacs!) and set up a few basics. Through some experimentation and playing, I got my initial file set up which I&rsquo;ll paste here then explain:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>set -g status on
+set -g status-keys emacs
+
+set -g history-limit 1000000
+
+set -g prefix C-t
+
+set -g status-bg green
+setw -g window-status-current-bg cyan
+setw -g window-status-current-attr bold
+
+set -g status-right '#7H | %F %s'
+
+bind-key C-t last-window
+
+setw -g monitor-activity on
+set -g visual-activity on</pre></div>
+</div>
+
+
+<p>The first couple lines turn the status bar on and set my keybindings to emacs. There are also vi keybindings. The status bar is one of the main benefits of using tmux. In GNU Screen, it was quite a task to get the status bar working. Below I&rsquo;ve pasted the .screenrc configuration line to get the status bar working:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>hardstatus string '%{= kG}[ %{G}%H %{g}[%{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'</pre></div>
+</div>
+
+
+<p>God help me if I ever had to change anything there! I can barely decipher what it&rsquo;s doing! So, with tmux, just turning it on was much simpler. I think it may default to on, but I wanted to ensure it is always on.</p>
+
+<p>The history-limit line sets the history limit very high so tmux remembers everything I have done. The &ldquo;set -g prefix C-t&rdquo; changes the keybinding to have Control-t be the keyboard command for all of tmux&rsquo;s commands. This had been my keybinding in GNU Screen and I liked it because it didn&rsquo;t conflict with anything I use in emacs (I rarely use the transpose function). The default GNU Screen C-a conflicted with the jump-to-beginning-of-line command in emacs which I had frequently used. The default in tmux is C-b. More on this prefix command below.</p>
+
+<p>The next 3 lines set the colors. I want the background of the status bar to be green and the currently active one to be cyan so it stands out.</p>
+
+<p>The status-right command sets some attributes for the status bar. I found it a bit difficult to get a straightforward enumeration of what all possibilities were, but the <em>#7H</em> shows the name of the machine I am using, the <em>%F</em> is the date in the form Y-M-D, and the <em>%s</em> puts the unix time, which is seconds since 1970. This is always useful for database and other things which use that. There are many other things which could be added to this status bar, but these are a few I found useful.</p>
+
+<p>The last-window line makes it so when I just type C-t C-t twice, it jumps to the last window I was using for easy switching and the last 2 lines set visual activity on so when something happens in a window other than my current one, I get a visual notification.</p>
+
+<p>There are many more things that could go in a configuration file, but this gets me set up and going quickly and easily with my familiar keybindings.</p>
+
+<h2>Assorted tips</h2>
+
+<h3>Naming the session</h3>
+
+<p>First, you can just start tmux by typing the command and hitting enter:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>tmux</pre></div>
+</div>
+
+
+<p>But then your session has no name. This is ok, but it makes it more difficult to reattach later. To start a session with a name, start it with the following command:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>tmux new-session -s {session-name}</pre></div>
+</div>
+
+
+<p>Where {session-name} is the name you want to give to your session. Then, to reattach it later, if you disconnect from the server running tmux or just decide to detach it for any other reason, just run:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>tmux attach-session -t {session-name}</pre></div>
+</div>
+
+
+<p>To attach the session which was previously open. Try it. Open a terminal window, run <em>tmux new-session -s test</em>, type some stuff into the command prompt, then close the terminal window. Don&rsquo;t worry, it&rsquo;s not gone. Open up another terminal window and run <em>tmux attach-session -t test</em> and you&rsquo;ll be back up and running with your commands still entered.</p>
+
+<h3>Prefix command, typing commands</h3>
+
+<p>Above, I rebound my prefix to C-t. The default in tmux is C-b. This means you type it and, regardless of what program or window you are in, anything that follows is a global command to tmux, superseding the underlying window. This is why I chose C-t, because C-b is frequently used by me in emacs and I didn&rsquo;t want to change it. If you look at the <a href="http://man.cx/tmux">man page for tmux</a>, you can see a full list of commands. They all assume the prefix command has come first. This confused me a bit at first because I thought those were all commands I could type from tmux, but they all needed the prefix command first, then the command. Note, from here on out, I&rsquo;ll use C-b to denote the prefix command because it&rsquo;s the default and likely more useful to most people than my C-t rebinding.</p>
+
+<p>So to use any of those keybindings from the man page, type your prefix command (C-b) then the key. For example, when it says <em>t &ndash; Show the time.</em> it actually means &ldquo;C-b, t&rdquo; which is typing Control-b (or your rebound prefix key) then the t key.</p>
+
+<p>On that same man page, further down, there are a bunch of word commands such as <em>source-file</em> and <em>list-commands</em>. These can be bound to keys, but they can also be called ad-hoc. This is like M-x in emacs or vi&rsquo;s :. Simply type your prefix command such as C-b, then type a colon (:) and, where the status bar was, these arbitrary commands can now be typed. For example:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, :, list-commands</pre></div>
+</div>
+
+
+<p>Will show you all of the available commands. These arbitrary commands can also be bound by adding the following to the .tmux.conf file:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>bind-key C-l list-commands</pre></div>
+</div>
+
+
+<p>This will bind C-l to the <em>list-commands</em> command. So, typing your prefix key (C-b) then that (C-l) will launch the list of commands without the need to type it out. (this command, by default, is already bound to ? so this is a bit of an unnecessary example)</p>
+
+<h3>Detaching the session</h3>
+
+<p>In the subsection above about attaching a session, I suggested that you close your terminal window to detach the session. That is however unnecessary. It is easy to just detach a session from within tmux without closing the terminal window by typing:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, d</pre></div>
+</div>
+
+
+<p>d for Detach.</p>
+
+<h3>Creating, removing windows</h3>
+
+<p>So you&rsquo;ve started tmux, but you only have a single window. Much of the discussion above assumes multiple active windows. To create a new window, just type:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, c</pre></div>
+</div>
+
+
+<p>c for create. A new window is created and currently active. Look at the status bar and there is now a new numbered window. There is no (reasonable) limit to the number of windows created. Now, to kill the currently selected one, just type:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, &amp;</pre></div>
+</div>
+
+
+<p>Then confirm.</p>
+
+<h3>Moving between windows</h3>
+
+<h4>Select Window by Number</h4>
+
+<p>There are many ways to jump between currently active windows. The first is just to type the prefix command, C-b, then a number. This will jump to the selected window. For example, <em>C-b, 1</em> jumps to window 1, <em>C-b, 0</em> jumps to window 0.</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, {number}</pre></div>
+</div>
+
+
+<h4>Last Selected Window</h4>
+
+<p>To jump to the last selected window:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, l</pre></div>
+</div>
+
+
+<p>That&rsquo;s l as in lion. In my configuration, I rebound it to my prefix command so I just type my prefix twice. This is my most frequently used command, so I gave it the easiest shortcut.</p>
+
+<h4>Next, previous</h4>
+
+<p>The commands:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, n
+C-b, p</pre></div>
+</div>
+
+
+<p>n for next, p for previous. Jump between the next and previous windows respectively. It wraps so if the last window is currently selected and the next command is issued, it will jump to the first window.</p>
+
+<h4>List of windows</h4>
+
+<p>It is also possible to get a list of all windows and choose between them:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, w</pre></div>
+</div>
+
+
+<p>w for windows. This is great if there are many windows opened. The status bar can only show so many titles, so this view is often useful if titles are long or there are many open windows.</p>
+
+<h4>Find text</h4>
+
+<p>This is one of my favorite features in tmux that I have discovered. This command actually allows for finding text in a given window and switching to that window. If multiple windows contain that text, a dialog is displayed for choosing the window.</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, f, {search string}</pre></div>
+</div>
+
+
+<p>f for find. Any search string can be entered and tmux will search each of the windows for the appearance of that string and jump to the window that contains that string.</p>
+
+<h3>Windows vs. Panes</h3>
+
+<p>In tmux, there is a distinction made between windows and panes. Windows are what appear along the bottom status bar. However, there is also talk of panes in the man file. So is a pane different from a window one may wonder?</p>
+
+<p>Yes. The difference however is quite simple. Each thing along the status bar is a window. Each window consists of one or more panes, just like a real physical window. By default, it is a single pane, but it could have more. One of the strong benefits of tmux is the ability to split a window into multiple panes and work with each of them. More detailed discussion on panes below. Killing a pane kills just that pane and does not kill the window unless it is the last remaining pane in that window.</p>
+
+<h3><em>q</em> dismisses tmux dialogs</h3>
+
+<p>If you want to see a list of commands available to you, type <em>C-b, :, list-commands</em> and hit enter. To make that list disappear and go back to where you were, just hit the <em>q</em> key. This use of the <em>q</em> key to jump out of any tmux dialog is consistent, so it also works for any other commands. To try another, type <em>C-b, t</em> to view the current time. Typing <em>q</em> closes the time.</p>
+
+<h3>Reloading the configuration without leaving the session.</h3>
+
+<p>When I first tried using tmux and getting my configuration set up, I was entering it using <em>tmux</em>, seeing how it looked, quitting it with the exit command, editing the configuration file, then relaunching it. I thought, &ldquo;there has got to be a better way, like <a href="http://man.cx/source">source</a> for tmux&rdquo; There is. Just run:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, :, source-file, ~/.tmux.conf</pre></div>
+</div>
+
+
+<p>And the configuration is reloaded in place! Now there is no reason to leave tmux to reload it.</p>
+
+<h3>Copy-paste buffer</h3>
+
+<p>One of the things I always found a bit kludgy was the way GNU Screen dealt with copy-past between buffers. I have a cheat sheet taped to my monitor for just this. In tmux, things seem a bit more straightforward and more powerful as tmux maintains a buffer so you can copy multiple things and access each thing you copied later! So you can copy Thing A, Thing B, Thing C, then go paste Thing B, Thing A, Thing C if you want. Very cool.</p>
+
+<p>So, to jump into copy mode, type:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, [</pre></div>
+</div>
+
+
+<p>You&rsquo;ll see now you can move your cursor up and down the current window using your keybindings of choice (for emacs, it&rsquo;s C-p for previous line, C-n for next line, M-v for page up, C-v for page down). When you get the cursor to where you want to start copying, hit the space bar to start the selection. Then move to the end of what you want to copy and use the command to wipe in emacs (C-w) and the text is copied! Now is where the magic starts. To paste the last thing copied, just type:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, ]</pre></div>
+</div>
+
+
+<p>But, to get to the whole buffer of what has previously been copied, type:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, =</pre></div>
+</div>
+
+
+<p>The copy buffer is now displayed. Just highlight the thing to be pasted and hit enter to paste it. As with any dialog in tmux, <em>q</em> will also just dismiss the dialog.</p>
+
+<h3>Split window into panes</h3>
+
+<p>So, you want to split your window to have an editor in the top and a command prompt in the bottom. No problem with tmux!</p>
+
+<p>In any window, just type:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, &quot;</pre></div>
+</div>
+
+
+<p>That&rsquo;s a double-quote and it&rsquo;ll split that window into 2 panes! Now, to move the cursor between the panes:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, o</pre></div>
+</div>
+
+
+<p>To kill a pane, just type:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, x</pre></div>
+</div>
+
+
+<p>It&rsquo;s easy to open an editor in one and use the other like a terminal. There are many advanced features in tmux for getting the panes specifically configured a certain way, but that would merit its own treatment entirely. My favorite little trick though is to create a few panes and use:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, space</pre></div>
+</div>
+
+
+<p>This jumps through a set of default pane configurations, one of which almost always suits my needs.</p>
+
+<h2>Conclusion</h2>
+
+<p>This is just the tip of the iceberg, there are many other features in tmux, but at the start, I see a lot I like. It seems a lot like the next generation of GNU Screen which, sadly, has been mostly stagnant for many years. tmux gets a lot of things right like the configuration, the status bar and its use of panes. All of these things, while technically possible in GNU Screen, require a PhD in GNU Screen configuration, a task for which mere mortals are unequipped. I&rsquo;ll keep using tmux for awhile to see how it goes, but it already has all the functionality of GNU Screen with basically the same keybindings (with a bit of conf file tweaking) and it has many additional features without dropping anything I use from the feature set of GNU Screen.</p>
+
+<p>Thus far, I have to give tmux a big thumbs up!</p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2011/06/20/tmux/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=tmux Tutorial" class="twitter-share-button" data-url="http://victorquinn.com/blog/2011/06/20/tmux/" data-counturl="http://victorquinn.com/blog/2011/06/20/tmux/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/09/on-apple-s-rumored-arm-adoption/">On Apple&#8217;s Rumored ARM Adoption</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-09T00:00:00-04:00" pubdate data-updated="true">May 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There is recent buzz in the tech world that Apple is thinking of moving to ARM chipsets in their laptops. There have been numerous articles over the past few days on this concept, but here is <a href="http://arstechnica.com/apple/news/2011/05/apple-could-adopt-arm-for-laptops-but-why-would-it.ars">Ars Technica&#8217;s take</a>.</p>
+<p>The tech pundits appear to be caught up in a will they won&#8217;t they debate. I think the more likely scenario is not that they&#8217;ve chosen either model, but rather that Apple is simply covering their bases, being agile and preparing for either. This is what they did with Intel when they still had the PowerPC Processor and this is almost certainly what they are doing today. Diversification is, in almost all scenarios, a good business strategy.</p>
+<p>I would be&nbsp;<em>extremely</em>&nbsp;surprised if OS X is not already running on ARM in Apple&#8217;s skunkworks and likely has for quite some time, especially as its little brother (iOS) has been running on ARM for at least 4 years now.</p>
+<p>Below is a clip from Steve Jobs&#8217; keynote announcing Apple&#8217;s move from PowerPC to Intel back in 2005. Jump to 4:40 for the pertinent part:</p>
+<p style="text-align: center;"><iframe width="420" height="315" src="http://www.youtube.com/embed/ghdTqnYnFyg" frameborder="0" allowfullscreen></iframe></p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2011/05/09/on-apple-s-rumored-arm-adoption/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=On Apple's Rumored ARM Adoption" class="twitter-share-button" data-url="http://victorquinn.com/blog/2011/05/09/on-apple-s-rumored-arm-adoption/" data-counturl="http://victorquinn.com/blog/2011/05/09/on-apple-s-rumored-arm-adoption/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/">Concept Idea: Using Client-side Javascript for Distributed Computing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-26T00:00:00-04:00" pubdate data-updated="true">Apr 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Earlier today I read <a href="http://www.mercurynews.com/science/ci_17926565?nclick_check=1">this article</a> about SETI (the Search for Extra-Terrestrial Intelligence) shutting down the Allen Telescope Array due to lack of funding.</p>
+<p><strong>SETI@home</strong></p>
+<p>That article reminded me of how, back when I ran Windows many years ago, I used&nbsp;<a href="http://setiathome.ssl.berkeley.edu/">SETI@home</a> to donate my free computing cycles. Essentially this program is a screensaver that sits on your computer waiting for you to be idle. When idle, the screensaver pops on, and SETI@home goes to work.&nbsp;</p>
+<p>SETI operated many satellites. These satellites listened for data, but the data came in faster than they could process it. So they had to find a solution. SETI@home arose out of this need.</p>
+<p><img class="center" src="http://victorquinn.com/images/setiathomescreenshot.png" title="SETI@Home Screenshot" ></p>
+<p>So the SETI program took the raw data it received from the satellite, got it into its servers and then it would break this raw data into small, manageable chunks. When a person had the SETI@home screensaver, it would automatically retrieve a chunk of data to analyze from the SETI servers and then would use the (otherwise) idle time to run its calculations on the data. When it was complete, it would send the finished analysis back to SETI who would re-assemble the pieces into meaningful results.</p>
+<p>The concept is brilliant. By breaking the problem into many small chunks and running it as a screensaver, it was not inconveniencing any user as it ran only when a comptuer was not being used, and many could lend their idle processing power to the project. It cost them nothing and they were able to have many potential workers to sort out their data. For a program with a tight budget, this is certainly more appealing than investing in a large array of servers.</p>
+<p>The reason I started this section &#8220;back when I ran Windows&#8221; was that when I first moved to using a Mac, I could not find a SETI@home screensaver client, so I stopped using it.</p>
+<p><strong>Barriers to Entry</strong></p>
+<p>After reading this article, I thought I would check it out again. There is now a client for OS X, but it is not pretty. One of the main issues with this approach is that the barrier to entry is high. Requiring people to install a screensaver in order to contribute is more than most users are ready and willing to do. Further, the program setup is very confusing. I downloaded the latest version from <a href="http://setiathome.ssl.berkeley.edu/">Berkeley&#8217;s SETI website.</a> The program, is actually called BOINC and is a universal client for a bunch of different projects. Upon launch, I was greeted by this:
+<img class="center" src="http://victorquinn.com/images/boincscreenshot1.png" title="BOINC Screenshot" ></p>
+<p>Not the prettiest interface, but that should be OK in theory. I picked SETI@home from the list of projects and got&#8230;this:<img class="center" src="http://victorquinn.com/images/boincscreenshot2.png" title="BOINC Screenshot" ></p>
+<p>But now I&#8217;m determined to make it work. I want to donate my free CPU cycles to someone! So I tried MilkyWay@home and was in business. Now I have to create an account. It&#8217;s starting to become more of a pain than it&#8217;s worth:</p>
+<p><img class="center" src="http://victorquinn.com/images/boincscreenshot3.png" title="BOINC Screenshot" >But I&#8217;m dedicated, I want to do this! So I do it and then I&#8217;m finally done with the setup&#8230;or so I thought. It opened a web browser and wanted <em>more</em>&nbsp;information:</p>
+<p><img class="center" src="http://victorquinn.com/images/boincscreenshot4.png" title="BOINC Screenshot" >I just wanted to help donate some free computing, I don&#8217;t want to have to divulge all of my personal information in order to help out. At the same time that happened, this BOINC program looks like it&#8217;s doing something:</p>
+<p><img class="center" src="http://victorquinn.com/images/boincscreenshot5.png" title="BOINC Screenshot" >But why is it doing something? Isn&#8217;t this supposed to be a screensaver, using my idle computing time? Not right now when I&#8217;m actively using my computer! So I look in the Preferences.&nbsp;<img class="center" src="http://victorquinn.com/images/boincscreenshot6.png" title="BOINC Screenshot" ></p>
+<p>Notice &#8220;Do work after idle for:&#8221; is set to &#8220;0 (Run Always)&#8221;. That&#8217;s not what I want! I am fine with donating some free CPU, but I don&#8217;t want my performance degraded while I am trying to work. Now, I understand why they may have set this default, but in my opinion it is overly greedy. Of course they want as many CPU cycles as they can, so defaulting to always running on the computer of any installer will maximize that. But it does frustrate and anger me that I have to manually override the damned thing to make it not run constantly. And I thought this was supposed to be a screensaver? Why not just put all of the options into the screensaver settings? Why have a separate client like this.</p>
+<p>Anyway, I&#8217;ll stop here because a review of the questionable UI of the BOINC software is not the goal of this article. This was probably written by some grad students with little or no budget. I get that. My point in here is to show that the barrier to entry is very high. I am a developer and<em> I </em>had trouble figuring out what was going on here. Good luck getting the masses to adopt such a thing.</p>
+<p><strong>Client-Side Javascript For Distributed Computing</strong></p>
+<p>As a web programmer, I am constantly writing software that is instantly available to all of our users. This is one aspect of web programming that I truly love. And this is great because it has almost NO barrier to entry. Anyone with a web browser can access something that I have made and use it to change their lives instantly. No downloading something, running it, etc.</p>
+<p>Now why not re-write the SETI@home client in client-side javascript? Any user could point their browser at it and be in business, sharing the computing power of their machine with almost no friction. Even better, it could be deployed as a widget in iGoogle or any other homepage. Then I can just add the widget, leave iGoogle open on my computer and I&#8217;ll be making a contribution.</p>
+<p>I don&#8217;t advocate for it, but it could conceivably be hidden from the user and deployed automatically on page load. Imagine if Facebook did this? While people were browsing on Facebook, they could conceivably deploy some code that would run on every user connected to their servers. If done intelligently enough, it could even be possible to use the CPU of clients to compute things for the other clients! Imagine if, instead of taxing the Facebook servers to create image thumbnails, Facebook received the full-size image upload, pushed it to a random user&#8217;s computer, then their machine, using the distributed computing libraries, created the derivative images and sent them back. This is a bit of a contrived example, this is not necessarily the type of thing distributing computing would best be used for, but it illustrates my point.</p>
+<p>It would be very neat for someone to write a javascript library enabling this kind of thing which could then be extended and used by developers to implement other things. Much of this could be abstracted for the developer, leaving a simple and clean API which developers could leverage to send jobs to. Imagine if there were just a library called &#8220;distributed.js&#8221; or something that were in use by many different websites. So visiting any of these websites essentially spun up the client on your local machine. Then someone could send jobs which would get sent out to any client visiting a site which loaded the library.</p>
+<p>While it seems on first glance that this could open a large security hole, one beautiful point is that it makes use of the existing security infrastructure in web browsers which isolates the javascript VM from the host machine. So it poses no danger to the host machine. Further, the data could be encrypted to help with security for the data. Though it could make their CPU spike and degrade their performance which is certainly poor practice, it is interesting to think of the possibilities.</p>
+<p>While just a concept, I believe this has a lot of interesting potential&#8230;</p>
+<p><em>If such an API library exists, let me know in the comments. I searched around for awhile and couldn&#8217;t find much.</em></p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Concept Idea: Using Client-side Javascript for Distributed Computing" class="twitter-share-button" data-url="http://victorquinn.com/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/" data-counturl="http://victorquinn.com/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section id="about-me">
+  <div class="author-image"><img src="http://victorquinn.com/images/VictorQuinn%20100x100.jpg"></div>
+  <div class="author">
+    <span class="author-name">Victor Quinn</span>
+    <br />
+    <span class="author-email"><a href='mailto&#58;%6Da&#105;&#108;%&#52;&#48;&#118;%&#54;9c%74%6&#70;%&#55;&#50;&#113;uinn&#46;&#99;o&#109;'>ma&#105;l&#64;v&#105;ctorquinn&#46;com</a></span>
+    <span class="author-twitter"><a href="https://twitter.com/#!/victorquinn">@victorquinn</a></span>
+  </div>
+  <h1>About Me</h1>
+  <p>I grew up in Rochester, NY. My early career aspirations included nearly anything imaginable at one point or another, but I always gravitated toward the realms of science and logic.</p>
+  <p>Upon graduating from high school, I ventured to Massachusetts where I spent the next 10 years of my life becoming educated in Computer Science, Physics, and the Law.</p>
+  <p>In parallel, I spent most of those years working as a professional software engineer in the field of education, first at <a href="http://www.umass.edu" target=_blank>UMass Amherst</a> and then at <a href="https://www.amherst.edu" target=_blank>Amherst College.</a>
+  <p>After graduating from Law School, I moved down to Northern Virginia in search of warmer weather and a chance to enjoy life in a different region of the country. I also used this opportunity to change pace in my day-to-day, now working for <a href="http://www.ngpvan.com" target=_blank>NGP VAN</a>, a company specializing in political software. I am truly enjoying bringing my experience developing for the education sector while at the same time learning about the entirely different realm of politics.</p>
+  <p>On the side I am working on building my new legal learning startup, <a href="http://scalesapp.com">Scales</a>. I am also constantly expanding my knowledge of programming and the law while living with both my wife Susan and our great dane Stella.</p>
+  <p>Life is excellent and if you think otherwise, you&#8217;re doing it wrong.</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/12/15/fortran-tutorial/">Fortran Tutorial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/25/launching-scales/">Launching Scales</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/01/fresh-look/">Fresh look</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/26/google-civic-drupal-module/">Google Civic Drupal Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/18/git-commit-partial/">git commit partial</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/victorquinn">@victorquinn</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'victorquinn',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("victorquinn", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/victorquinn" class="twitter-follow-button" data-show-count="false">Follow @victorquinn</a>
+  
+</section>
+
+
+
+
+
+<section>
+  <h1>Coderwall</h1>
+  <ul id="cw_badges">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+
+  <script type="text/javascript">
+    var coderwall = (function(){
+      function render(options, badges){
+        var fragment = '',
+            t = $(options.target),
+            height = 65,
+            width = 65,
+            index;
+
+        for (index in badges) {
+          fragment += '<a class="cw_badge"title="' + badges[index].description + '" href="http://coderwall.com/' + options.user + '">';
+          fragment +=   '<img alt="' + badges[index].description + '" height="' + width + '" width="' + height + '" src="' + badges[index].badge + '"/>';
+          fragment += '</a>';
+        }
+
+        t.html(fragment);
+      }
+      return {
+        showBadges: function(options){
+          console.log(options);
+          $.ajax({
+              url: 'http://coderwall.com/' + options.user + '.json?callback=?'
+            , dataType: 'jsonp'
+            , error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); }
+            , success: function(res) {
+                render(options, res.data.badges);
+            }
+          });
+        }
+      };
+    })();
+
+    $(document).ready(function(){
+      coderwall.showBadges({
+        user: 'victorquinn',
+        target: '#cw_badges'
+      });
+    });
+  </script>
+  <style type="text/css">
+    .cw_badge img {
+      padding: 5px;
+      border: 0 none !important;
+      -moz-box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -o-box-shadow: none !important;
+      box-shadow: none !important;
+    }
+  </style>
+</section>
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Victor Quinn -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

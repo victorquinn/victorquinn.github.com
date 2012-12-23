@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Alfred | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/alfred/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Adjust Volume Tweaks]]></title>
+    <link href="http://victorquinn.com/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension/"/>
+    <updated>2012-02-14T16:41:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2012/02/14/tweaks-to-adjust-volume-alfred-extension</id>
+    <content type="html"><![CDATA[<p>I can't help but tweak and refine something I've created until it reaches perfection (or as close to perfection as I can come!). Just a couple of days ago, I set out to create my extension to <a href="http://www.alfredapp.com/">Alfred</a> to adjust the volume. Since then, it's been integrated into my workflow and I've noticed a few things which I've tweaked.</p>
+
+<h3>No mid-range</h3>
+
+<p>I noticed that in the initial version, I had "vol loud" and "vol soft" and similar such commands to set the volume high and low using natural language commands, but nothing to set the volume at 50%. This was a volume I found myself wanting frequently so I was frequently typing "vol 50". That's a bit unnatural. Now in the most recent version of this extension, it is possible to invoke "vol medium" or "vol half" or "vol mid" and end up at 50%.</p>
+
+<h3>Growl notifications</h3>
+
+<p>Another problem I ran into is that there was no visual indicator after changing the volume. I could hear the change, but it was not easy to tell at a glance what setting it actually had. I tried to add this in the first iteration, but couldn't find a good way with the way Alfred handles extensions. Thankfully, after some research today I figured out how to use <a href="http://growl.info/">Growl</a> to display the current volume after it is set.</p>
+
+<p><a href="http://victorquinn.com/files/Adjust%20Volume.alfredextension">Download the latest version</a></p>
+
+<p><a href="http://victorquinn.com/programming/#volumeadjust">View the full extension documentation</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Alfred Volume Control Extension]]></title>
+    <link href="http://victorquinn.com/blog/2012/02/12/alfred-volume-controls/"/>
+    <updated>2012-02-12T09:38:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2012/02/12/alfred-volume-controls</id>
+    <content type="html"><![CDATA[<p>I am a huge fan of <a href="http://www.alfredapp.com/">Alfred</a>. It's a productivity application which allows you to do almost anything on your Mac without reaching for your mouse. I use it for switching between applications, as a calculator, as a clipbord manager, and as a shortcut to web searches and opening URLs. It's an amazing tool which has become embedded in my daily workflow.</p>
+
+<p>However, there was one thing for which I always had to reach for a mouse. Changing the volume.</p>
+
+<p><img class="center" src="http://victorquinn.com/images/volume.png"></p>
+
+<h2>Building an Extension</h2>
+
+<p>Since I use Alfred so frequently, I have purchased the <a href="http://www.alfredapp.com/powerpack/">PowerPack</a> which is a set of additional features to Alfred. One of those features is the ability to use and create Extensions.</p>
+
+<p>Extensions in Alfred can take many forms -- they can be Shell Scripts, Applescripts, Automator Workflows, and more. My first attempt at writing this was to create a Shell Script as that is the form with which I'm most familiar. However, I couldn't find any good way to reliably access the system volume from a shell. There were some ways (basically shell commands to invoke Applescript) but I found none of them to be robust enough.</p>
+
+<p>So I went with the next closest thing, Applescript.</p>
+
+<h2>Applescript</h2>
+
+<p>This was my first time writing anything in Applescript. Some things I noticed about it.</p>
+
+<p>First, it's intended as a natural language which, to a programmer at least, seemed a bit unnatural at first, but was fine once I was able to grok how things interacted. Although in its attempt to sound more "natural" it seemed a bit unnatural. I wonder if a non-programmer would have the same opinion or if it would be easier for them to grok.</p>
+
+<p>Second, I had a hard time finding good documentation on Applescript. There were a bunch of places online (mostly forums) where users had mentioned it or discussed how to perform specific tasks, but none really laid out everything about the basics of the language such as the structure of an if-else statement. Apple's own <a href="https://developer.apple.com/library/mac/#documentation/AppleScript/Conceptual/AppleScriptX/AppleScriptX.html">page for developers on Applescript</a> uncharacteristically left a lot to be desired. I found this a bit frustrating. It is so easy to find information like this for any of the other languages in which I regularly program that it caught me a bit offguard to be without any such resource. Eventually I was able to find a <a href="https://developer.apple.com/library/mac/documentation/AppleScript/Conceptual/AppleScriptLangGuide/AppleScriptLanguageGuide.pdf">PDF from Apple published in 2008</a> that set out all the nitty gritty details of the language.</p>
+
+<p>Using the Apple PDF and some searching, I was able to piece together how to write the extension.</p>
+
+<h2>Volume Adjust Extension</h2>
+
+<p>After figuring out Applescript, I got down to writing the extension. I wanted to make it as easy as possible to fit into my workflow and also to accommodate the workflows of others into a manner which felt as natural as possible.</p>
+
+<p>Alfred Extensions all start with a keyword which tells Alfred how to deal with that command. I started with the keyword "volume" but later changed it to "vol" for simplicity. When trying to change the volume quickly and easily, saving some keystrokes matters.</p>
+
+<p>Next, I tried to allow it to take many kinds of inputs. The <a href="http://victorquinn.com/programming/#volumeadjust" title="Detailed Documentation">full documentation</a> has all of the details, but as a high level overview, I wanted this extension to be able to handle specific commands such as "vol 25" to set the volume to 25%, but also natural language commands. I wanted the user to be able to type "vol up" and have the volume go up by 10% or "vol more" or "vol +" to do the same thing. I also wanted them to be able to specify a direction (up, down, more, less, +, -) and a number which is the percentage by which to raise or lower the volume. So my extension also handles "vol up 30" which will increase the volume by 30% or "vol - 45" which would decrease the volume by 45%.</p>
+
+<p>This extension is <a href="https://gist.github.com/1794961" title="Volume Adjust Github Gist">entirely open source</a> so feel free to fork the gist on Github and hack away at it, modify it, etc.</p>
+
+<p><a href="http://victorquinn.com/files/Adjust%20Volume.alfredextension">Click here to download this Volume Adjust Alfred Extension.</a></p>
+]]></content>
+  </entry>
+  
+</feed>

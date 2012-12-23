@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using Capybara and RSpec to test Drupal]]></title>
+    <link href="http://victorquinn.com/blog/2012/10/11/using-capybara-and-rspec-to-test-drupal/"/>
+    <updated>2012-10-11T14:49:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/10/11/using-capybara-and-rspec-to-test-drupal</id>
+    <content type="html"><![CDATA[<h2>tl;dr</h2>
+
+<p>I created a git repo with a framework for testing Drupal sites using Capybara webkit and RSpec so any Drupal developers can just clone it and go.</p>
+
+<p><a href="https://github.com/victorquinn/drupal-capybara">View project on Github</a></p>
+
+<h2>Rationale</h2>
+
+<p>The first question I'm likely to get here is "Why?" Drupal has its own testing framework <a href="http://drupal.org/simpletest">SimpleTest</a> which can be used for both Unit and Functional tests, so why try to use RSpec/Ruby? Also, SimpleTest has access to all of the Drupal-y goodness, why write functional tests in Ruby where those functions would not be available?</p>
+
+<p>That's a great question. In my case I'm trying to run tests on a Drupal instance that is on a different machine. In my case I'm trying to run the tests from by desktop and hit my production web server which is on an offsite clustered server. Here SimpleTest wouldn't fit the bill. These tests allow me to take into account network latency and such.</p>
+
+<p>Note, of course since these tests are not in Drupal, tests written and performed like this will not do the setup/teardown like SimpleTest. So I would strongly suggest only touching data on test websites.</p>
+
+<h2>Setup</h2>
+
+<p>First, test that ruby exists and is the right version.</p>
+
+<p><code>bash
+ruby -v
+</code></p>
+
+<p>I used ruby 1.9.3-p194 managed by <a href="https://rvm.io">rvm</a> but I believe any 1.9+ version of ruby should work here with Capybara.</p>
+
+<p>Next, clone my repo which is basically a skeleton setup ready to test Drupal using Capybara. In the repo I've included a file called default.config.yaml. You will want to copy that file to config.yaml. The Gemfile should be set up to install all necessary dependencies.</p>
+
+<p><code>bash
+git clone git://github.com/victorquinn/drupal-capybara.git
+cp default.config.yaml config.yaml
+bundle install
+</code></p>
+
+<p>Now edit config.yaml and change the values to match the Drupal site you are testing.</p>
+
+<p><code>yaml
+site: "http://mycoolwebsite.com"
+user: myusername
+password: abcd1234
+</code></p>
+
+<h2>Is it working?</h2>
+
+<p>I've included two sample tests, one which will just check to ensure the site can be hit and the second which should try logging in to your Drupal site using the values in config.yaml. I've tested this both on Drupal 6 and Drupal 7 and works out of the box on both.</p>
+
+<p>Try to run the tests and ensure things work. Go to the root of that directory (drupal-capybara by default) and try to run it! (do not try to run this from inside the spec directory, you'll get errors.)</p>
+
+<p><code>bash
+rspec spec
+</code></p>
+
+<p>You should see something like the following:</p>
+
+<p>``` bash
+2012-10-12 11:45:18.027 webkit_server[73469:707] *** WARNING: Method userSpaceScaleFactor in class NSView is deprecated on 10.7 and later. It should not be used in new applications. Use convertRectToBacking: instead.</p>
+
+<p>..</p>
+
+<p>Finished in 4.23 seconds
+2 examples, 0 failures
+```
+The warnings can be safely ignored. I am not sure exactly why they're there, something to do with the way the Capybara webkit code is with Mountain Lion. But it's just a warning and doesn't have anything to do with our web tests.</p>
+
+<p>Note: The login test I included will only work if your system has not altered the login page. If something has changed the Log In button to say "Login" or "Go" or "Submit" or anything else, the test will fail. This is one of the downsides of trying to write tests for Drupal in a system that is not associated with Drupal -- it cannot dynamically know about anything which has changed internal to Drupal.</p>
+
+<p>** Capybara webkit can be a bit of a tricky beast to get installed on your system with dependencies and such. <a href="#troubleshooting_webkit">Jump to the bottom</a> to see more details on some possible solutions.</p>
+
+<p>Now test that tests fail correctly by changing your password in config.yaml to a bad value and run it again.</p>
+
+<p><code>yaml
+site: "http://mycoolwebsite.com"
+user: myusername
+password: notmypassword
+</code></p>
+
+<p>You should see something like the following:</p>
+
+<p>``` bash
+2012-10-12 11:42:51.760 webkit_server[72603:707] *** WARNING: Method userSpaceScaleFactor in class NSView is deprecated on 10.7 and later. It should not be used in new applications. Use convertRectToBacking: instead.</p>
+
+<p>Failures:</p>
+
+<p>  1) DrupalTest login works</p>
+
+<pre><code> Failure/Error: verify_login_worked
+   expected #has_content?("Sorry, unrecognized username or password.") to return false, got true
+ # ./spec/drupal_test_helper.rb:10:in `verify_login_worked'
+ # ./spec/drupal_capybara_spec.rb:27:in `block (2 levels) in &lt;top (required)&gt;'
+</code></pre>
+
+<p>Finished in 3.46 seconds
+2 examples, 1 failure</p>
+
+<p>Failed examples:</p>
+
+<p>rspec ./spec/drupal_capybara_spec.rb:25 # DrupalTest login works
+```</p>
+
+<p>Here failure is a good thing! Shouldn't be able to log in if the password is wrong. Don't forget to change your password back in config.yaml before moving on.</p>
+
+<p>This isn't a full rspec tutorial as such, but with my example tests that should be a good start. I've included a third sample test of filling out a Drupal form in my code (specifically in <em>spec/drupal_capybara_spec.rb</em>, but it's commented out by default because that's kind of specific to the particulars of the site and I didn't want to send this out with tests likely to fail on most systems.</p>
+
+<p>I should note, you can also run RSpec to get a nice HTML output. Just run the following:</p>
+
+<p>``` bash
+rspec spec --format html --out results.html</p>
+
+<h1>And if you're on a Mac, to open the results in a browser, just run:</h1>
+
+<p>open results.html
+```
+<em>You should be all set and ready to write some tests!</em></p>
+
+<h2><a id="troubleshooting_webkit"></a>Troubleshooting Capybara Webkit</h2>
+
+<p>Not to sugar coat things, I found Capybara Webkit pretty painful to get installed.</p>
+
+<p>I'll help with the issues I overcame, but generally it will likely involve some googling and such as it's very dependent on the particulars of the system on which this is being run. For reference, I am on Mountain Lion (10.8.2) using ruby 1.9.3-p194. I also use <a href="http://mxcl.github.com/homebrew/">HomeBrew</a> to manage packages.</p>
+
+<p>If you get the following error:</p>
+
+<p>``` bash
+Installing capybara-webkit (0.12.1) with native extensions
+Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.</p>
+
+<pre><code>    /Users/&lt;username&gt;/.rvm/rubies/ruby-1.9.3-p194/bin/ruby extconf.rb
+</code></pre>
+
+<p>Gem files will remain installed in /Users/<username>/.rvm/gems/ruby-1.9.3-p194/gems/capybara-webkit-0.12.1 for inspection.
+Results logged to /Users/<username>/.rvm/gems/ruby-1.9.3-p194/gems/capybara-webkit-0.12.1/./gem_make.out
+An error occured while installing capybara-webkit (0.12.1), and Bundler cannot continue.
+Make sure that <code>gem install capybara-webkit -v '0.12.1'</code> succeeds before bundling.
+```
+Then it's likely qt is not installed on your system. I resolved this by running:</p>
+
+<p><code>bash
+brew install qt libpng
+</code></p>
+
+<p>Mentioned above, but if you're on Mountain Lion you will likely see a warning such as:</p>
+
+<p><code>bash
+2012-10-11 18:16:42.457 webkit_server[64967:707] *** WARNING: Method userSpaceScaleFactor in class NSView is deprecated on 10.7 and later. It should not be used in new applications. Use convertRectToBacking: instead.
+</code></p>
+
+<p>but it can safely be ignored.</p>
+
+<p>If all else fails and you cannot get Webkit working on your system, Selenium can be used instead of Capybara Webkit so all this magic still works, just using Selenium instead of Webkit.</p>
+
+<h3>Alternative setup with Selenium</h3>
+
+<p>To use Selenium instead of headless Webkit, simply edit the drupal_capybara_spec.rb file as follows:</p>
+
+<p>``` ruby</p>
+
+<h1>Before</h1>
+
+<p>Capybara.default_driver = :webkit
+Capybara.javascript_driver = :webkit</p>
+
+<h1>After</h1>
+
+<p>Capybara.default_driver = :selenium
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RubyNation 2012]]></title>
+    <link href="http://victorquinn.com/blog/2012/03/22/rubynation-2012/"/>
+    <updated>2012-03-22T23:05:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/03/22/rubynation-2012</id>
+    <content type="html"><![CDATA[<p>I'll be at RubyNation 2012 tomorrow.</p>
+
+<p>Getting my laptop set up and ready to roll so I'll be ready to code like a madman.</p>
+
+<p>I love <a href="http://victorquinn.com/blog/2012/03/15/attending-rubynation-2012/">conferences</a> ;)</p>
+
+<p>If you'll be there, find me or <a href="https://twitter.com/intent/tweet?screen_name=victorquinn" class="twitter-mention-button" data-lang="en">Tweet to @victorquinn</a></p>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Developer Conference Excitement]]></title>
+    <link href="http://victorquinn.com/blog/2012/03/15/attending-rubynation-2012/"/>
+    <updated>2012-03-15T10:36:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/03/15/attending-rubynation-2012</id>
+    <content type="html"><![CDATA[<p>Excited to attend the <a href="http://www.rubynation.org/">RubyNation</a> 2012 conference next week!</p>
+
+<p>This will be the first year since 2009 that I will not be attending <a href="http://denver2012.drupal.org/">DrupalCon</a> <sup><a href="#excitement1">[1]</a></sup> and my conference itch needs scratching.</p>
+
+<p>I find generally that conference excitement manifests itself in a handful of ways.</p>
+
+<h2>New Things!</h2>
+
+<p>My favorite thing about attending a programming conference is the excitement I have during and immediately after for all the new things I will learn at the conference.</p>
+
+<p>Every time I walk out of a room where someone was giving a presentation on a cool new technology or process, in the back of my head I am thinking of how I can work that technology or process into each of my current projects. Or I am pondering what old projects I could revamp or new projects I could start using this technology as a launchpad which were previously out of scope or cost prohibitive.</p>
+
+<p>Setting aside the new things themselves, this type of self-reflection and evaluation is invaluable. I strive for this type of reflection in my everyday life, but it's much easier in this type of forum, removed from the daily doldrums of life at the office. Having traveled to a conference, often far away, and broken the routine, it is easier to have this kind of perspective.</p>
+
+<p>New things also inherently bring excitement for their new-ness, particularly for a person like myself. Some people enjoy consistency and sameness and have an aversion to change. I am the exact opposite and view a new thing as a new challenge ready and ripe for besting. It also represents uncharted territory and I am definitely an explorer.</p>
+
+<h2>High Energy Environment</h2>
+
+<p>There is always an extremely high energy level at such conferences.</p>
+
+<p>The speakers have high energy, speaking excitedly about something interesting they have recently worked on in an attempt to proselytize.</p>
+
+<p>This in turn leads me (and others) to similarly get excited about their new thing. This kind of network effect is huge. When high energy people start bouncing ideas off of each other in a sort of feedback loop, great things can result.</p>
+
+<p><span class='pullquote-right' data-pullquote='Never weary of the cost to implement, I am a constant proponent for whatever will be objectively best.'>
+I had a reputation with my co-workers of being the guy with the kooky fringe ideas. This is because I was always excited about the possibility of using new and more efficient concepts in our projects. For someone like me, a conference was like crack. Never weary of the cost to implement, I am a constant proponent for whatever will be objectively best. It always led to interesting meals during conferences with me excitedly ranting about how we could use X for this project or Y for that project with my co-workers offering counterpoints to keep me grounded. I'm sure they grew weary at times, but my co-workers generally allowed me to indulge.
+</span></p>
+
+<p>My first week back after a conference is always absorbed by planning and trying to implement many of the new things I learned at the conference or figuring out a reason why I couldn't or shouldn't. I feel like I'm kicked into high gear, being three times as productive that week as any other while I run on the natural high from learning about new things as most people run on coffee.</p>
+
+<p><span class='pullquote-left' data-pullquote='My employer benefited greatly as a result, but that was not my intent in working like mad.'>
+I notice myself staying voluntarily late at work and working much longer hours than normal or necessary which, for a salaried employee, was solely for my own personal enjoyment. My employer benefited greatly as a result, but that was not my intent in working like mad. I was rushing to solve a new puzzle, to conquer a new opponent. I was working purely for enjoyment.
+</span></p>
+
+<p>Another high energy aspect is that each of the attendees is there to learn. Almost like a wedding, where another new beginning is celebrated, most attendees are embarking on a journey of their own with a technology. Most attendees get a break from their normal day at the office and this fills them with energy and joy they wouldn't otherwise have.</p>
+
+<p>Being around people in a natural state of high energy serves to amplify the learning and the network effects of the conference.</p>
+
+<h2>Networking</h2>
+
+<p>And of course there is the value of networking. Many people go to developer conferences primarily for this aspect.</p>
+
+<p><span class='pullquote-right' data-pullquote='It is nearly priceless to compare notes on problems, solved and unsolved, and initiate future collaborations.'>
+It is incredibly useful to meet other people doing similar things. It is nearly priceless to compare notes on problems, solved and unsolved, and initiate future collaborations.
+</span></p>
+
+<p>There are certainly attendees whose primary mission at a conference is to network. At times this can get a bit predatory, but in general it is a net positive.</p>
+
+<p>Particularly in the open source community, finding that someone else has already solved a problem and is willing to share the solution could save days or weeks or more of developer time.</p>
+
+<p>For a seasoned programmer looking for a job, this is a great way to feel out potential employers. Not only would I be hesitant to work as a programmer at a company that failed to value such events, developer conferences are a great way to be introduced to other employees of a company and see what they are working on. It opens the door to talking with these people directly about their work in a manner that is not easy in everyday business. In the case of an open source technology, conference attendance, sponsorship, and the contribution to sessions by an employer are all indicative of a company that contributes back to open source, values the community aspect, and fosters innovation.</p>
+
+<h2>It's Not All Rainbows, But It's Close</h2>
+
+<p>One major downside is that having someone stand in front of you and preach excitedly about their latest thing can, at times, be misleading.</p>
+
+<p>This is not to say the speakers intentionally or negligently mislead, but each one often discusses the highlights of their new thing without strongly discussing the downsides. This makes sense as their intent at speaking at a conference is generally not purely to educate, but also to drum up support for their new thing or for publicity for their company or themselves. This results in many of the sessions having some kind of bias or marketing twist. This unsurprising as the speakers are often incentivized to do so and without such sponsorship most conferences would not exist, but it is necessary to remain cognizant of this facet when sitting in a session whose speakers claims are on par with claiming to have invented a better mouse trap.</p>
+
+<p>Sometimes when I get back from a conference and decompress, I find myself thinking, "Wait, this only works in that specific instance? How is that even helpful?"</p>
+
+<p><span class='pullquote-left' data-pullquote='Once the honeymoon period ends on some of these new things, it becomes apparent that instead of sliced bread, they&#8217;re just the same old bread repackaged in a shiny shell.'>
+Once the honeymoon period ends on some of these new things, it becomes apparent that instead of sliced bread, they're just the same old bread repackaged in a shiny shell. On the other hand, even the discovery that some of the newfangled technologies offer little benefits over tried and true methods can itself be a significant benefit.
+</span></p>
+
+<p>Further, while every new thing cannot itself be directly applicable and useful, each new thing that a developer learns is yet another thing they can add to their arsenal. Then sometime in the future, they will have the knowledge of how a problem was once solved and whether it would be useful in a given set of circumstances. So while it will not all bear fruit, gaining knowledge from a conference, as it does in any realm, serves to enrich the developer's background for future endeavors.</p>
+
+<p>If you are attending <a href="http://www.rubynation.org/">RubyNation 2012</a>, I hope to see you there!</p>
+
+<p><a id="excitement1"></a>[1] I would <em>love</em> to attend DrupalCon this year, but the timing and travel just didn't work out. Thankfully, <a href="http://www.rubynation.org/">RubyNation</a> is being held right in my backyard!</p>
+]]></content>
+  </entry>
+  
+</feed>

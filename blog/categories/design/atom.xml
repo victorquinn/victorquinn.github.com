@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Design | Victor Quinn]]></title>
+  <link href="http://victorquinn.com/blog/categories/design/atom.xml" rel="self"/>
+  <link href="http://victorquinn.com/"/>
+  <updated>2012-12-23T15:40:34-05:00</updated>
+  <id>http://victorquinn.com/</id>
+  <author>
+    <name><![CDATA[Victor Quinn]]></name>
+    <email><![CDATA[inquiries@victorquinn.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fresh look]]></title>
+    <link href="http://victorquinn.com/blog/2012/11/01/fresh-look/"/>
+    <updated>2012-11-01T00:27:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/11/01/fresh-look</id>
+    <content type="html"><![CDATA[<p>Decided it was time for a fresh new look.</p>
+
+<p>For reference, a screenshot of the old design:</p>
+
+<p><img class="center" src="/images/oldstyle.png"></p>
+
+<p>I wanted to redesign to make it cleaner and simpler, to better highlight the content, and to move to something which felt a bit less constrained with some more fun colors. I had grown bored of the green everywhere. I'm quite pleased with the outcome.</p>
+]]></content>
+  </entry>
+  
+</feed>
