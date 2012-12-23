@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Victor Quinn]]></title>
   <link href="http://victorquinn.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://victorquinn.com/"/>
-  <updated>2012-12-23T15:40:34-05:00</updated>
+  <updated>2012-12-23T15:45:15-05:00</updated>
   <id>http://victorquinn.com/</id>
   <author>
     <name><![CDATA[Victor Quinn]]></name>
@@ -12,19 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Fortran Tutorial]]></title>
-    <link href="http://victorquinn.com/blog/2012/12/15/fortran-tutorial/"/>
-    <updated>2012-12-15T10:46:00-05:00</updated>
-    <id>http://victorquinn.com/blog/2012/12/15/fortran-tutorial</id>
-    <content type="html"><![CDATA[<p>I know what you're thinking. Have I fallen through a time portal? Was this post truly written in 2012? No and Yes!</p>
-
-<p>My father is an electrical engineer/physicist who has a bunch of Fortran programs he uses regularly. As a hobby project, I offered to take a look at them and see if I couldn't find some optimizations or modernizations. Upon Googling it, I found it more difficult than I thought to find the type of modern tutorial I'm so used to for Rails or Node.js or something.</p>
-
-<h3></h3>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Launching Scales]]></title>
@@ -262,6 +249,24 @@ git add -p filename.rb
 <p>I think Drupal should be much better here and dropped the ball for developers by not allowing the first method above to work. This ['und'][0]['value'] mess may make it easier for the system to deal with the input, but it makes things far more difficult/complicated for developers. This is an area where it's painfully clear that the Drupal Field API is not a true ORM like <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">ActiveRecord</a> and in my opinion that's a missed opportunity.</p>
 
 <p>Ideally the system would be able to default to allowing things to be set with just the key and not require developers to specify the language, array index, and value key every single time a value is set to the field.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RubyNation 2012]]></title>
+    <link href="http://victorquinn.com/blog/2012/03/22/rubynation-2012/"/>
+    <updated>2012-03-22T23:05:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2012/03/22/rubynation-2012</id>
+    <content type="html"><![CDATA[<p>I'll be at RubyNation 2012 tomorrow.</p>
+
+<p>Getting my laptop set up and ready to roll so I'll be ready to code like a madman.</p>
+
+<p>I love <a href="http://victorquinn.com/blog/2012/03/15/attending-rubynation-2012/">conferences</a> ;)</p>
+
+<p>If you'll be there, find me or <a href="https://twitter.com/intent/tweet?screen_name=victorquinn" class="twitter-mention-button" data-lang="en">Tweet to @victorquinn</a></p>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 ]]></content>
   </entry>
   

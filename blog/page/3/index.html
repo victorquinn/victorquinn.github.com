@@ -9,7 +9,7 @@
   <meta name="author" content="Victor Quinn">
 
   
-  <meta name="description" content="On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named Mountain Lion to Developers. I will refrain from discussing anything &hellip;">
+  <meta name="description" content="I can&#8217;t help but tweak and refine something I&#8217;ve created until it reaches perfection (or as close to perfection as I can come!). Just a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,125 +83,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/19/fix-git-svn-in-mountain-lion/">Solved: Git Svn Broken in Mountain Lion</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-19T12:20:00-05:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named <a href="http://www.apple.com/macosx/mountain-lion/">Mountain Lion</a> to Developers. I will refrain from discussing anything about the upcoming release for fear of violating Apple&#8217;s NDA, but I did come across one problem that interfered with my workflow which I solved and the disclosure that solution will not violate the NDA.</p>
-
-<p>I use <a href="http://git-scm.com/">git</a> to connect to my employer&#8217;s <a href="http://subversion.apache.org/">subversion</a> server. I was using a package called git-svn which includes connectors between the two systems. Upon upgrading to the Mountain Lion beta, my <em>git svn</em> commands stopped working. The solution follows.</p>
-
-<h3>Install Xcode</h3>
-
-<p>First, install the latest version of Xcode (version 4.4) for Mountain Lion. An interesting note is that in Mountain Lion, Apple decided to move it from its former home in <em>/Developer/Xcode</em> to <em>/Applications/Xcode</em>. This was the root source of many of the issues as many of the utilities were searching in the wrong place for the appropriate binaries.</p>
-
-<h3>Install Xcode Command Line Tools</h3>
-
-<p>Another change they&#8217;ve made is that the command line tools are no longer installed by default. Previously, they were included with Xcode with no additional installation necessary. To install the command line tools, launch Xcode, open the Preferences, and switch to the Downloads tab:</p>
-
-<p><img class="center" src="http://victorquinn.com/images/xcodepreferences.png"></p>
-
-<p>One of the entries there is <em>Command Line Tools</em>. Mine already says <em>Installed</em> as I&#8217;ve already installed it, but if you haven&#8217;t, it&#8217;ll appear as an <em>Install</em> button as the iOS 4.0 and 3.0 Device Debugging Support entries do in my screenshot above.</p>
-
-<h3>Link the svn Libraries</h3>
-
-<p>After this, you may be tempted to run a <em>git svn</em> command and see what happens. I received the following output:</p>
-
-<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
-</span><span class='line'>Can<span class="err">&#39;</span>t locate SVN/Core.pm in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/Perl/5.12 /Network/Library
-</span><span class='line'>/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-multi-2level /System/Library/P
-</span><span class='line'>erl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn l
-</span><span class='line'>ine 41.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The problem here is that the <em>git svn</em> command requires Perl libraries that aren&#8217;t linked in Mountain Lion. <sup><a href="#gitsvn1">[1]</a></sup> So, we&#8217;ll have to manually link them. Run the following in your terminal to link the library:</p>
-
-<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/SVN /System/Library/Perl/Extras/5.12/SVN
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now when you run <em>git svn rebase</em> you will likely be presented with a different error. This is good because it indicates progress! But obviously poor because it&#8217;s not working.</p>
-
-<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
-</span><span class='line'>Can<span class="err">&#39;</span>t locate loadable object <span class="k">for </span>module SVN::_Core in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/
-</span><span class='line'>Perl/5.12 /Network/Library/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-mult
-</span><span class='line'>i-2level /System/Library/Perl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /System/Library/Perl/Extras/5.
-</span><span class='line'>12/SVN/Base.pm line 59
-</span><span class='line'>BEGIN failed--compilation aborted at /System/Library/Perl/Extras/5.12/SVN/Core.pm line 5.
-</span><span class='line'>Compilation failed in require at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn line 41.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So now it appears it <em>can</em> find the Subversion core, but cannot find some other libraries it requires. Issue the following command to remedy this:</p>
-
-<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/auto/SVN/ /System/Library/Perl/Extras/5.12/auto/SVN
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By doing this, we&#8217;ve now linked all of the Subversion Perl directories necessary for this command to run correctly.</p>
-
-<p><em>Update - March 19</em>
-<em>I installed Mountain Lion DP2 over the weekend which broke this again. However, my exact instructions still applied and fixed the issue. I simply needed to install the latest version of Xcode 4.4 (available from <a href="http://developer.apple.com/devcenter/mac">developer.apple.com</a>) and then run the commands listed above.</em></p>
-
-<ol>
-<li><a id="gitsvn1"></a> Note, I am using the version of git from <a href="http://mxcl.github.com/homebrew/">Homebrew</a>. Your outcome may differ slightly if you are using a different version or not using Homebrew.</li>
-</ol>
-
-</div>
-  
-  
-    <footer>
-      <div class="permalink-container">
-        <a rel="permalink" class="permalink" href="/blog/2012/02/19/fix-git-svn-in-mountain-lion/">∮</a>
-      </div>
-      <div class="twitter-share-container">
-        <a href="https://twitter.com/share?text=Solved: git svn broken in Mountain Lion" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/" data-counturl="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/" data-via="victorquinn" data-lang="en">Tweet</a>
-      </div>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -1025,6 +906,69 @@ C-b, p</pre></div>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/10/25/autodesk-and-the-right-to-resell-software/">Autodesk and the Right to Resell Software</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-25T00:00:00-04:00" pubdate data-updated="true">Oct 25<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In early September 2010, the Court of Appeals for the Ninth Circuit came down with a controversial decision in <a href="http://www.ca9.uscourts.gov/datastore/opinions/2010/09/10/09-35969.pdf" target="_blank">Vernor v. Autodesk</a>. In this case, Vernor had purchased used copies of Autodesk&#8217;s software, AutoCAD and sold them on eBay. Autodesk attempted to bar him from selling them, claiming essentially that their initial sale of the software was a license to use the software and not the sale of the physical disk and therefore that he could not resell it.</p>
+<p>In making this argument, Autodesk attempted to get around the <a href="http://en.wikipedia.org/wiki/First-sale_doctrine" target="_blank">first-sale doctrine</a> which would preclude them from intervening. The first-sale doctrine, at its essence, says that once something (such as a painting) has been sold, the artist has no claim to profits, etc. in future sales. Vernor attempted to use this first-sale doctrine as a defense claiming the resale of software was no different from the resale of a painting in which the original creator no longer has any claim. Vernor claims the physical item which was sold was the disk and he should be free to resell at will.</p>
+<p>However, Autodesk argued that the disk simply contained the program and it was subject to a license. Essentially, the original purchaser paid Autodesk not for the physical disk, but for the right to use what was contained therein.</p>
+<p>Ultimately, the court sided with Autodesk in this case, thereby barring Vernor and other third-parties from reselling software granted by license without the approval of the original vendor.</p>
+<p>I think this brings up a few interesting points. First, it questions the nature of software. Is it a physical item, or is it a license to use that item? If it is a physical item, then clearly the first-sale doctrine ought apply. If it is a license to use that item, then it would make sense for a reseller to have issues reselling for they will be unable to sell a license that was essentially a contract for use between Autodesk and the original purchaser. The transfer of the physical disk ceases to matter.</p>
+<p>This offends many people&#8217;s notions of what software is/ought to be. Many people expect to purchase software and have it be theirs to do with as they would please in perpetuity.&nbsp;</p>
+<p>Let us look at things from the standpoint of the software company. Let&#8217;s say they have a piece of software that is one-time use. Autodesk is not, but we will assume this for the sake of the following hypothetical. Assume the software will calculate some thing once, then will no longer have use. In a world where the software can be resold, the company that created the software is going to set their price based on this assumption that people will resell it. So they will charge a high enough value to cover their expenses to offset the second sale of that software for which they will get no profits.</p>
+<p>To put it more concretely, I offer the following example. Imagine a software company spent $100,000 on a piece of software and thinks they will have 10,000 users. If they want to make their money back, they should sell the software for $10. However, if half of those users (5,000) purchase the software from the company at that rate and resell it for $8 after they have made use of it, the software company has spent $100,000 to create the software and only recouped $50,000 from sales. Further, these first users are only paying $2 to use the software. So the software company is going to realize a huge loss.</p>
+<p>The company could certainly attempt to account for resale when setting their prices. Knowing that only half will purchase the software from them directly, they could sell it for $20 thereby making their $100,000 back on the half (5,000) that buy it. However, this is a tricky thing to do. Maybe when they sell it for $20, only 1/4 purchase the software and the remaining 3/4 get it used because the initial cost is too high. Now the creator is getting $20 for 2,500 licenses or $50,000, again taking a loss.</p>
+<p>Anyway, my point for this hypothetical is that things are extremely unpredictable when things are set up in this manner, such that the first sale doctrine applies. However, if we treat software as a license instead of applying the first-sale doctrine, much of the unpredictability goes away. If it cost $100,000 to create the software, they can sell it for $10/license. It is then far easier for the software company to price the item such that they will recoup their development costs. Further, it removes the incentive to be a middle man which existed with resale. With resale, it made sense for many entities to purchase the software from the company, use it, then resell it. Then they have gotten extremely cheap use of the software. One could argue that allowing resale is more consumer friendly, and this I do not dispute, but in order for the consumer to benefit in this manner (by having extremely low-cost use of software) there is a reciprocal deficit borne by the software companies.</p>
+<p>One of the problems is that the <strong>paradigm of the first-sale doctrine breaks down when dealing with virtual items.</strong> When things can be infinitely copied without penalty as is the case with digital items, things get messy fast.</p>
+<p>I think, going forward, we need to pick one road or the other. I think it is starting to make more sense to make the first-sale doctrine no longer apply to software. As we move more toward a digital age, the antiquated notion of software as a physical item needs to go away. I am glad the court is moving in this direction. Technology is moving at such a fast pace that the law is struggling to keep up. This is one of those realms and it is exciting when the law catches up.</p>
+<p>First-sale doctrine issues aside, I think this is ultimately a question of intellectual property. I think that since Autodesk created the software, they ought to have the final say in how it is used. I like the fact that software uses a license model with many modern devices. Due to this, I can purchase an app on my iPod Touch and I can also use it on my iPad without having to purchase it again. If I threw my iPod Touch in the river and replaced it with a new one, I could re-download that app without having to buy it again. This is due to the flexibility of the license model which Apple has applied to its App Store. Since I have paid for a license to use the software, I do not need to pay again to retrieve another copy. Certainly I lose the freedom to be able to pass that app to my friend, but I would take that over the alternative of having to buy another copy every time the device on which it&#8217;s running breaks or otherwise loses the software.</p>
+<p>This model could also be more clear to the consumer. If the only legitimate way to purchase some software is from the creator, people will be less bombarded with disreputable sources. Try a <a href="http://lmgtfy.com/?q=purchase+windows+7" target="_blank">search for where to purchase Windows 7.</a>&nbsp;The user is bombarded with ads for PriceGrabber.com and RealBuySoftware.com and other questionably legitimate sources*. &nbsp;Compare this to something like <a href="http://itunes.apple.com/us/app/angry-birds/id343200656?mt=8">Angry Birds</a>, where it can be purchased in the Apple app store, the Android app store, and that&#8217;s about it. A Google search does not bombard anyone with links of third party retailers trying to resell the software because Angry Birds is sold on a license basis and therefore cannot be resold.</p>
+<p>I also think the free market will handle the dissenters of such a system. If people have a dislike for licensed software, they can buy from another software creator who will sell theirs as a physical item. Or, depending on their needs, open source is always a great option and they can forego payment altogether. (though they should support open source projects via donations, etc. if they are financially capable!)</p>
+<p>Overall I think, like an artist who creates a painting, a software company should be able to dictate who does what with their intellectual property. An artist can give reproduction rights to one entity and charge another to show their painting in a gallery. They have that say unless or until they part with the painting by selling it. I think the same ought to apply to software. <strong>If a company wants to license their software, but retain the rights to reproduction, etc. that should be their choice to make. </strong></p>
+<p>For this reason and the others stated above, I think the Ninth Circuit Court of Appeals made the right decision in this case.</p>
+<p>&nbsp;</p>
+<p>* I have no clue whether or not these sources are legitimate and I am not assuming they are illegitimate by using them as examples; I have never heard of them and they could just as well be replaced by stolensoftware.com or some other equally questionable site. With the ability for multiple vendors to carry both unused copies and resale copies of software, there is a very high signal to noise ratio which is likely confusing to the lay consumer.&nbsp;</p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2010/10/25/autodesk-and-the-right-to-resell-software/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Autodesk and the Right to Resell Software" class="twitter-share-button" data-url="http://victorquinn.com/blog/2010/10/25/autodesk-and-the-right-to-resell-software/" data-counturl="http://victorquinn.com/blog/2010/10/25/autodesk-and-the-right-to-resell-software/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1058,10 +1002,6 @@ C-b, p</pre></div>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2012/12/15/fortran-tutorial/">Fortran Tutorial</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2012/11/25/launching-scales/">Launching Scales</a>
       </li>
     
@@ -1075,6 +1015,10 @@ C-b, p</pre></div>
     
       <li class="post">
         <a href="/blog/2012/10/18/git-commit-partial/">git commit partial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/15/cd-which-directory/">cd which directory</a>
       </li>
     
   </ul>

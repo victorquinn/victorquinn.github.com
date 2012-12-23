@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tutorial | Victor Quinn]]></title>
   <link href="http://victorquinn.com/blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http://victorquinn.com/"/>
-  <updated>2012-12-23T15:40:34-05:00</updated>
+  <updated>2012-12-23T15:45:15-05:00</updated>
   <id>http://victorquinn.com/</id>
   <author>
     <name><![CDATA[Victor Quinn]]></name>
@@ -12,19 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Fortran Tutorial]]></title>
-    <link href="http://victorquinn.com/blog/2012/12/15/fortran-tutorial/"/>
-    <updated>2012-12-15T10:46:00-05:00</updated>
-    <id>http://victorquinn.com/blog/2012/12/15/fortran-tutorial</id>
-    <content type="html"><![CDATA[<p>I know what you're thinking. Have I fallen through a time portal? Was this post truly written in 2012? No and Yes!</p>
-
-<p>My father is an electrical engineer/physicist who has a bunch of Fortran programs he uses regularly. As a hobby project, I offered to take a look at them and see if I couldn't find some optimizations or modernizations. Upon Googling it, I found it more difficult than I thought to find the type of modern tutorial I'm so used to for Rails or Node.js or something.</p>
-
-<h3></h3>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Using Capybara and RSpec to test Drupal]]></title>
@@ -453,6 +440,603 @@ By doing this, we've now linked all of the Subversion Perl directories necessary
 <ol>
 <li><a id="gitsvn1"></a> Note, I am using the version of git from <a href="http://mxcl.github.com/homebrew/">Homebrew</a>. Your outcome may differ slightly if you are using a different version or not using Homebrew.</li>
 </ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[tmux Tutorial]]></title>
+    <link href="http://victorquinn.com/blog/2011/06/20/tmux/"/>
+    <updated>2011-06-20T00:00:00-04:00</updated>
+    <id>http://victorquinn.com/blog/2011/06/20/tmux</id>
+    <content type="html"><![CDATA[<h2>Why a terminal window manager?</h2>
+
+
+
+
+<p>As a web developer, most of my time is spent in a command prompt banging away at web code. One of the greatest discoveries I have made to my productivity is the use of <a href="http://www.gnu.org/software/screen/">GNU Screen</a>. It&rsquo;s hard to distill the many benefits of this type of program into a few bullet points, so here is my best shot:</p>
+
+
+
+
+<ul>
+<li>Ability to quickly switch between multiple command prompts or editor windows.</li>
+<li>Persistence, so if the connection is lost between client and server, server maintains the state it was in exactly prior to disconnection. This also means you can just close your terminal window, reopen it, reattach, and everything is just as you left it.</li>
+<li>Ability to copy-paste and perform other operations across command prompts or editor windows without the use of the mouse.</li>
+<li>Visual alerts to things happening in other &ldquo;windows&rdquo; not in the foreground.</li>
+</ul>
+
+
+
+
+<p>Some quick Googling will provide a more exhaustive list, but these are my main favorites. For anyone curious, here is my <a href="https://github.com/victorquinn/dotfiles/blob/master/.screenrc">.screenrc file on GitHub</a></p>
+
+
+
+
+<p>But GNU Screen is just one of many programs that accomplish the same task.</p>
+
+
+
+
+<h2>Why try tmux when I&rsquo;m a happy GNU Screen user?</h2>
+
+
+
+
+<p>I&rsquo;ve been a happy GNU Screen user for about 2.5 years, but I am always looking for ways to improve my development process. I came across an article linked on <a href="http://news.ycombinator.com">HackerNews</a> discussing <a href="http://www.techrepublic.com/blog/opensource/is-tmux-the-gnu-screen-killer/1901">tmux as a GNU Screen Killer</a>. I&rsquo;m not a fan of such a sensationalist title, but I thought it was worth evaluating.</p>
+
+
+
+
+<p>I figured I would also document my experience here because I often find a lack of beginner documentation for many *nix based command line utilities. Most hardcore nerds just reply, &ldquo;Just read the man pages n00b!&rdquo; which I find to be disappointing as a first-time user. If I spend my first hour using some new technology just trying to get it set up and learn the ropes, I am liable to simply give up on it and decide it&rsquo;s not worth my time &ndash; and I am a persistent bugger. If I can help one new user get up to speed a bit faster, using my first-time experiences as a stepping stone, mission accomplished.</p>
+
+
+
+
+<h2>Installation</h2>
+
+
+
+
+<p>My primary development machine is a Mac, and I use the fantastic <a href="http://mxcl.github.com/homebrew/">HomeBrew</a> as my package manager of choice. (Highly recommended over MacPorts!) This makes my installation very easy:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>brew install tmux</pre></div>
+</div>
+
+
+
+
+<p>And that&rsquo;s it! Typing tmux in the command line launches it.</p>
+
+
+
+
+<h2>Initial Configuration</h2>
+
+
+
+
+<p>My first step was to get my initial configuration all set up. To do so, I first create a file called .tmux.conf in my home directory:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>touch ~/.tmux.conf</pre></div>
+</div>
+
+
+
+
+<p>Now, I jump in with my favorite editor (go emacs!) and set up a few basics. Through some experimentation and playing, I got my initial file set up which I&rsquo;ll paste here then explain:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>set -g status on
+set -g status-keys emacs
+
+set -g history-limit 1000000
+
+set -g prefix C-t
+
+set -g status-bg green
+setw -g window-status-current-bg cyan
+setw -g window-status-current-attr bold
+
+set -g status-right '#7H | %F %s'
+
+bind-key C-t last-window
+
+setw -g monitor-activity on
+set -g visual-activity on</pre></div>
+</div>
+
+
+
+
+<p>The first couple lines turn the status bar on and set my keybindings to emacs. There are also vi keybindings. The status bar is one of the main benefits of using tmux. In GNU Screen, it was quite a task to get the status bar working. Below I&rsquo;ve pasted the .screenrc configuration line to get the status bar working:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>hardstatus string '%{= kG}[ %{G}%H %{g}[%{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'</pre></div>
+</div>
+
+
+
+
+<p>God help me if I ever had to change anything there! I can barely decipher what it&rsquo;s doing! So, with tmux, just turning it on was much simpler. I think it may default to on, but I wanted to ensure it is always on.</p>
+
+
+
+
+<p>The history-limit line sets the history limit very high so tmux remembers everything I have done. The &ldquo;set -g prefix C-t&rdquo; changes the keybinding to have Control-t be the keyboard command for all of tmux&rsquo;s commands. This had been my keybinding in GNU Screen and I liked it because it didn&rsquo;t conflict with anything I use in emacs (I rarely use the transpose function). The default GNU Screen C-a conflicted with the jump-to-beginning-of-line command in emacs which I had frequently used. The default in tmux is C-b. More on this prefix command below.</p>
+
+
+
+
+<p>The next 3 lines set the colors. I want the background of the status bar to be green and the currently active one to be cyan so it stands out.</p>
+
+
+
+
+<p>The status-right command sets some attributes for the status bar. I found it a bit difficult to get a straightforward enumeration of what all possibilities were, but the <em>#7H</em> shows the name of the machine I am using, the <em>%F</em> is the date in the form Y-M-D, and the <em>%s</em> puts the unix time, which is seconds since 1970. This is always useful for database and other things which use that. There are many other things which could be added to this status bar, but these are a few I found useful.</p>
+
+
+
+
+<p>The last-window line makes it so when I just type C-t C-t twice, it jumps to the last window I was using for easy switching and the last 2 lines set visual activity on so when something happens in a window other than my current one, I get a visual notification.</p>
+
+
+
+
+<p>There are many more things that could go in a configuration file, but this gets me set up and going quickly and easily with my familiar keybindings.</p>
+
+
+
+
+<h2>Assorted tips</h2>
+
+
+
+
+<h3>Naming the session</h3>
+
+
+
+
+<p>First, you can just start tmux by typing the command and hitting enter:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>tmux</pre></div>
+</div>
+
+
+
+
+<p>But then your session has no name. This is ok, but it makes it more difficult to reattach later. To start a session with a name, start it with the following command:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>tmux new-session -s {session-name}</pre></div>
+</div>
+
+
+
+
+<p>Where {session-name} is the name you want to give to your session. Then, to reattach it later, if you disconnect from the server running tmux or just decide to detach it for any other reason, just run:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>tmux attach-session -t {session-name}</pre></div>
+</div>
+
+
+
+
+<p>To attach the session which was previously open. Try it. Open a terminal window, run <em>tmux new-session -s test</em>, type some stuff into the command prompt, then close the terminal window. Don&rsquo;t worry, it&rsquo;s not gone. Open up another terminal window and run <em>tmux attach-session -t test</em> and you&rsquo;ll be back up and running with your commands still entered.</p>
+
+
+
+
+<h3>Prefix command, typing commands</h3>
+
+
+
+
+<p>Above, I rebound my prefix to C-t. The default in tmux is C-b. This means you type it and, regardless of what program or window you are in, anything that follows is a global command to tmux, superseding the underlying window. This is why I chose C-t, because C-b is frequently used by me in emacs and I didn&rsquo;t want to change it. If you look at the <a href="http://man.cx/tmux">man page for tmux</a>, you can see a full list of commands. They all assume the prefix command has come first. This confused me a bit at first because I thought those were all commands I could type from tmux, but they all needed the prefix command first, then the command. Note, from here on out, I&rsquo;ll use C-b to denote the prefix command because it&rsquo;s the default and likely more useful to most people than my C-t rebinding.</p>
+
+
+
+
+<p>So to use any of those keybindings from the man page, type your prefix command (C-b) then the key. For example, when it says <em>t &ndash; Show the time.</em> it actually means &ldquo;C-b, t&rdquo; which is typing Control-b (or your rebound prefix key) then the t key.</p>
+
+
+
+
+<p>On that same man page, further down, there are a bunch of word commands such as <em>source-file</em> and <em>list-commands</em>. These can be bound to keys, but they can also be called ad-hoc. This is like M-x in emacs or vi&rsquo;s :. Simply type your prefix command such as C-b, then type a colon (:) and, where the status bar was, these arbitrary commands can now be typed. For example:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, :, list-commands</pre></div>
+</div>
+
+
+
+
+<p>Will show you all of the available commands. These arbitrary commands can also be bound by adding the following to the .tmux.conf file:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>bind-key C-l list-commands</pre></div>
+</div>
+
+
+
+
+<p>This will bind C-l to the <em>list-commands</em> command. So, typing your prefix key (C-b) then that (C-l) will launch the list of commands without the need to type it out. (this command, by default, is already bound to ? so this is a bit of an unnecessary example)</p>
+
+
+
+
+<h3>Detaching the session</h3>
+
+
+
+
+<p>In the subsection above about attaching a session, I suggested that you close your terminal window to detach the session. That is however unnecessary. It is easy to just detach a session from within tmux without closing the terminal window by typing:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, d</pre></div>
+</div>
+
+
+
+
+<p>d for Detach.</p>
+
+
+
+
+<h3>Creating, removing windows</h3>
+
+
+
+
+<p>So you&rsquo;ve started tmux, but you only have a single window. Much of the discussion above assumes multiple active windows. To create a new window, just type:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, c</pre></div>
+</div>
+
+
+
+
+<p>c for create. A new window is created and currently active. Look at the status bar and there is now a new numbered window. There is no (reasonable) limit to the number of windows created. Now, to kill the currently selected one, just type:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, &amp;</pre></div>
+</div>
+
+
+
+
+<p>Then confirm.</p>
+
+
+
+
+<h3>Moving between windows</h3>
+
+
+
+
+<h4>Select Window by Number</h4>
+
+
+
+
+<p>There are many ways to jump between currently active windows. The first is just to type the prefix command, C-b, then a number. This will jump to the selected window. For example, <em>C-b, 1</em> jumps to window 1, <em>C-b, 0</em> jumps to window 0.</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, {number}</pre></div>
+</div>
+
+
+
+
+<h4>Last Selected Window</h4>
+
+
+
+
+<p>To jump to the last selected window:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, l</pre></div>
+</div>
+
+
+
+
+<p>That&rsquo;s l as in lion. In my configuration, I rebound it to my prefix command so I just type my prefix twice. This is my most frequently used command, so I gave it the easiest shortcut.</p>
+
+
+
+
+<h4>Next, previous</h4>
+
+
+
+
+<p>The commands:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, n
+C-b, p</pre></div>
+</div>
+
+
+
+
+<p>n for next, p for previous. Jump between the next and previous windows respectively. It wraps so if the last window is currently selected and the next command is issued, it will jump to the first window.</p>
+
+
+
+
+<h4>List of windows</h4>
+
+
+
+
+<p>It is also possible to get a list of all windows and choose between them:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, w</pre></div>
+</div>
+
+
+
+
+<p>w for windows. This is great if there are many windows opened. The status bar can only show so many titles, so this view is often useful if titles are long or there are many open windows.</p>
+
+
+
+
+<h4>Find text</h4>
+
+
+
+
+<p>This is one of my favorite features in tmux that I have discovered. This command actually allows for finding text in a given window and switching to that window. If multiple windows contain that text, a dialog is displayed for choosing the window.</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, f, {search string}</pre></div>
+</div>
+
+
+
+
+<p>f for find. Any search string can be entered and tmux will search each of the windows for the appearance of that string and jump to the window that contains that string.</p>
+
+
+
+
+<h3>Windows vs. Panes</h3>
+
+
+
+
+<p>In tmux, there is a distinction made between windows and panes. Windows are what appear along the bottom status bar. However, there is also talk of panes in the man file. So is a pane different from a window one may wonder?</p>
+
+
+
+
+<p>Yes. The difference however is quite simple. Each thing along the status bar is a window. Each window consists of one or more panes, just like a real physical window. By default, it is a single pane, but it could have more. One of the strong benefits of tmux is the ability to split a window into multiple panes and work with each of them. More detailed discussion on panes below. Killing a pane kills just that pane and does not kill the window unless it is the last remaining pane in that window.</p>
+
+
+
+
+<h3><em>q</em> dismisses tmux dialogs</h3>
+
+
+
+
+<p>If you want to see a list of commands available to you, type <em>C-b, :, list-commands</em> and hit enter. To make that list disappear and go back to where you were, just hit the <em>q</em> key. This use of the <em>q</em> key to jump out of any tmux dialog is consistent, so it also works for any other commands. To try another, type <em>C-b, t</em> to view the current time. Typing <em>q</em> closes the time.</p>
+
+
+
+
+<h3>Reloading the configuration without leaving the session.</h3>
+
+
+
+
+<p>When I first tried using tmux and getting my configuration set up, I was entering it using <em>tmux</em>, seeing how it looked, quitting it with the exit command, editing the configuration file, then relaunching it. I thought, &ldquo;there has got to be a better way, like <a href="http://man.cx/source">source</a> for tmux&rdquo; There is. Just run:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, :, source-file, ~/.tmux.conf</pre></div>
+</div>
+
+
+
+
+<p>And the configuration is reloaded in place! Now there is no reason to leave tmux to reload it.</p>
+
+
+
+
+<h3>Copy-paste buffer</h3>
+
+
+
+
+<p>One of the things I always found a bit kludgy was the way GNU Screen dealt with copy-past between buffers. I have a cheat sheet taped to my monitor for just this. In tmux, things seem a bit more straightforward and more powerful as tmux maintains a buffer so you can copy multiple things and access each thing you copied later! So you can copy Thing A, Thing B, Thing C, then go paste Thing B, Thing A, Thing C if you want. Very cool.</p>
+
+
+
+
+<p>So, to jump into copy mode, type:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, [</pre></div>
+</div>
+
+
+
+
+<p>You&rsquo;ll see now you can move your cursor up and down the current window using your keybindings of choice (for emacs, it&rsquo;s C-p for previous line, C-n for next line, M-v for page up, C-v for page down). When you get the cursor to where you want to start copying, hit the space bar to start the selection. Then move to the end of what you want to copy and use the command to wipe in emacs (C-w) and the text is copied! Now is where the magic starts. To paste the last thing copied, just type:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, ]</pre></div>
+</div>
+
+
+
+
+<p>But, to get to the whole buffer of what has previously been copied, type:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, =</pre></div>
+</div>
+
+
+
+
+<p>The copy buffer is now displayed. Just highlight the thing to be pasted and hit enter to paste it. As with any dialog in tmux, <em>q</em> will also just dismiss the dialog.</p>
+
+
+
+
+<h3>Split window into panes</h3>
+
+
+
+
+<p>So, you want to split your window to have an editor in the top and a command prompt in the bottom. No problem with tmux!</p>
+
+
+
+
+<p>In any window, just type:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, &quot;</pre></div>
+</div>
+
+
+
+
+<p>That&rsquo;s a double-quote and it&rsquo;ll split that window into 2 panes! Now, to move the cursor between the panes:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, o</pre></div>
+</div>
+
+
+
+
+<p>To kill a pane, just type:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, x</pre></div>
+</div>
+
+
+
+
+<p>It&rsquo;s easy to open an editor in one and use the other like a terminal. There are many advanced features in tmux for getting the panes specifically configured a certain way, but that would merit its own treatment entirely. My favorite little trick though is to create a few panes and use:</p>
+
+
+
+
+<div class="CodeRay">
+  <div class="code"><pre>C-b, space</pre></div>
+</div>
+
+
+
+
+<p>This jumps through a set of default pane configurations, one of which almost always suits my needs.</p>
+
+
+
+
+<h2>Conclusion</h2>
+
+
+
+
+<p>This is just the tip of the iceberg, there are many other features in tmux, but at the start, I see a lot I like. It seems a lot like the next generation of GNU Screen which, sadly, has been mostly stagnant for many years. tmux gets a lot of things right like the configuration, the status bar and its use of panes. All of these things, while technically possible in GNU Screen, require a PhD in GNU Screen configuration, a task for which mere mortals are unequipped. I&rsquo;ll keep using tmux for awhile to see how it goes, but it already has all the functionality of GNU Screen with basically the same keybindings (with a bit of conf file tweaking) and it has many additional features without dropping anything I use from the feature set of GNU Screen.</p>
+
+
+
+
+<p>Thus far, I have to give tmux a big thumbs up!</p>
 
 ]]></content>
   </entry>
