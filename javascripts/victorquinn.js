@@ -57,7 +57,7 @@ GoSquared.acct = "GSN-520134-O";
 
 
 // Persistent Headers
-function updateHeaders() {
+function updateHeaders(event) {
   var scrollTop = $(window).scrollTop(),
       floatingHeader = $(".floatingHeader");
 
@@ -67,6 +67,7 @@ function updateHeaders() {
   else {
     floatingHeader.css({ "visibility": "hidden" });
   }
+  event.preventDefault();
 };
 
 $(document).ready(function() {
