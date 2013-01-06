@@ -4,7 +4,7 @@
   <title><![CDATA[Victor Quinn]]></title>
   <link href="http://victorquinn.com/atom.xml" rel="self"/>
   <link href="http://victorquinn.com/"/>
-  <updated>2012-12-23T16:11:42-05:00</updated>
+  <updated>2013-01-06T15:46:07-05:00</updated>
   <id>http://victorquinn.com/</id>
   <author>
     <name><![CDATA[Victor Quinn]]></name>
@@ -14,7 +14,84 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Launching Scales]]></title>
+    <title type="html"><![CDATA[Cloud9]]></title>
+    <link href="http://victorquinn.com/blog/2012/12/23/cloud9/"/>
+    <updated>2012-12-23T15:19:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2012/12/23/cloud9</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve been half following the <a href="http://c9.io">Cloud9</a> project since its early days.
+I was thrilled at their open source editor, Ace (formerly Bespin) and actually
+wrote a <a href="http://drupal.org/node/1377948">Drupal WYSIWYG plugin</a> to allow it as
+an option for HTML editing in Drupal.</p>
+
+<p>But, when I originally looked at Cloud9, as neat as it was to be able to edit
+files in the cloud, it wasn&#8217;t really too useful for much.</p>
+
+<p>Just recently a co-worker sent me a link to some code he had written using it
+with some client-side javascript code. It was nothing short of magical.</p>
+
+<p>This. Changes. Everything.</p>
+
+<p>Wondering what it&#8217;ll be like to develop in the future? Just try out Cloud9.</p>
+
+<h2>Direct git Integration</h2>
+
+<p>Cloud9 can pair with your <a href="http://github.com">Github</a> or
+<a href="http://bitbucket.com">Bitbucket</a> account and pull in all the code in any of your
+repositories. So with just the click of a button you&#8217;re up and running with your
+code. That&#8217;s pretty awesome.</p>
+
+<p>But they actually had this awhile back when I tried it (though it now is even
+more fluid and awesome). What has changed?</p>
+
+<h2>The old problem</h2>
+
+<p>Code editing in the cloud was neat and all, but I had to commit any changes I
+made so I could check them out locally or on my webserver so I could test it and
+see if it blew everything up or fixed the problem I was trying to solve.</p>
+
+<p>This led to a tortured workflow involving committing sometimes not working code
+in Cloud9, checking it out locally, running it, seeing if it worked or broke,
+editing and bugfixing it locally, committing that, then going back to work in
+Cloud9. As I&#8217;m sure you can imagine, Cloud9 quickly dropped out of my workflow
+and I went back to just editing everything locally.</p>
+
+<h2>The solution arrives!</h2>
+
+<p>Imagine my surprise and wonder upon most recently checking out Cloud9 when it
+had the ability to run code, in your browser! It can easily handle node.js,
+rails, I&#8217;m sure more. It even handled this Jekyll-based blog with ease! In fact
+I am editing this now, in Cloud9!</p>
+
+<p>It has GUI shortcuts for things like git commands, npm install/uninstall, and
+more, but it also allows you to drop directly into a terminal and run commands
+there! It&#8217;s just like having your own server with none of the headache.</p>
+
+<h2>Always in sync across systems</h2>
+
+<p>One of my favorite benefits of this approach is that everything is, by its
+nature always in sync across systems. I can pick up my laptop, do some work,
+then move to my desktop, open Cloud9 and everything is just as I left it. I
+could go sit down in a random computer lab or library and still be in sync and
+ready to roll.</p>
+
+<p>This last bit, in my opinion, is the most powerful feature of this kind
+of Cloud programming. For $0, I can have an always in sync IDE operable from any
+browser, my own cloud server, and more. It took awhile for the gravity of this
+to sink in, but this is pretty amazing. The barrier to entry for programming
+with a server has never been lower</p>
+
+<h2>Conclusion</h2>
+
+<p>There&#8217;s a lot more to discuss that I&#8217;m not touching on here, just wanted to hit
+some of the quick highlights. I&#8217;m trying to work this into my workflow more so
+I&#8217;m sure I&#8217;ll have more thoughts later.</p>
+
+<p>This is seriously awesome and feels like the future&#8230;</p>
+]]><a href="http://victorquinn.com/blog/2012/12/23/cloud9/"><strong>∮</strong></a><br /><br /></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Announcing Scales]]></title>
     <link href="http://victorquinn.com/blog/2012/11/25/launching-scales/"/>
     <updated>2012-11-25T18:31:00-05:00</updated>
     <id>http://victorquinn.com/blog/2012/11/25/launching-scales</id>
@@ -952,89 +1029,6 @@ Once the honeymoon period ends on some of these new things, it becomes apparent 
 
 <p>I finished the degree requirements in December, but Western New England University just finished processing everything!</p>
 ]]><a href="http://victorquinn.com/blog/2012/02/21/law-school-graduation/"><strong>∮</strong></a><br /><br /></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Solved: git svn broken in Mountain Lion]]></title>
-    <link href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/"/>
-    <updated>2012-02-19T12:20:00-05:00</updated>
-    <id>http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion</id>
-    <content type="html"><![CDATA[<p>On Thursday, February 16 2012, Apple released the first beta of OS X 10.8 named <a href="http://www.apple.com/macosx/mountain-lion/">Mountain Lion</a> to Developers. I will refrain from discussing anything about the upcoming release for fear of violating Apple&#8217;s NDA, but I did come across one problem that interfered with my workflow which I solved and the disclosure that solution will not violate the NDA.</p>
-
-<p>I use <a href="http://git-scm.com/">git</a> to connect to my employer&#8217;s <a href="http://subversion.apache.org/">subversion</a> server. I was using a package called git-svn which includes connectors between the two systems. Upon upgrading to the Mountain Lion beta, my <em>git svn</em> commands stopped working. The solution follows.</p>
-
-<h3>Install Xcode</h3>
-
-<p>First, install the latest version of Xcode (version 4.4) for Mountain Lion. An interesting note is that in Mountain Lion, Apple decided to move it from its former home in <em>/Developer/Xcode</em> to <em>/Applications/Xcode</em>. This was the root source of many of the issues as many of the utilities were searching in the wrong place for the appropriate binaries.</p>
-
-<h3>Install Xcode Command Line Tools</h3>
-
-<p>Another change they&#8217;ve made is that the command line tools are no longer installed by default. Previously, they were included with Xcode with no additional installation necessary. To install the command line tools, launch Xcode, open the Preferences, and switch to the Downloads tab:</p>
-
-<p><img class="center" src="http://victorquinn.com/images/xcodepreferences.png"></p>
-
-<p>One of the entries there is <em>Command Line Tools</em>. Mine already says <em>Installed</em> as I&#8217;ve already installed it, but if you haven&#8217;t, it&#8217;ll appear as an <em>Install</em> button as the iOS 4.0 and 3.0 Device Debugging Support entries do in my screenshot above.</p>
-
-<h3>Link the svn Libraries</h3>
-
-<p>After this, you may be tempted to run a <em>git svn</em> command and see what happens. I received the following output:</p>
-
-<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
-</span><span class='line'>Can<span class="err">&#39;</span>t locate SVN/Core.pm in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/Perl/5.12 /Network/Library
-</span><span class='line'>/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-multi-2level /System/Library/P
-</span><span class='line'>erl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn l
-</span><span class='line'>ine 41.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The problem here is that the <em>git svn</em> command requires Perl libraries that aren&#8217;t linked in Mountain Lion. <sup><a href="#gitsvn1">[1]</a></sup> So, we&#8217;ll have to manually link them. Run the following in your terminal to link the library:</p>
-
-<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/SVN /System/Library/Perl/Extras/5.12/SVN
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now when you run <em>git svn rebase</em> you will likely be presented with a different error. This is good because it indicates progress! But obviously poor because it&#8217;s not working.</p>
-
-<figure class='code'><figcaption><span>Can&#8217;t locate error</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git svn rebase
-</span><span class='line'>Can<span class="err">&#39;</span>t locate loadable object <span class="k">for </span>module SVN::_Core in @INC <span class="o">(</span>@INC contains: /usr/local/Cellar/git/1.7.9.1/lib /Library/Perl/5.12/darwin-thread-multi-2level /Library/
-</span><span class='line'>Perl/5.12 /Network/Library/Perl/5.12/darwin-thread-multi-2level /Network/Library/Perl/5.12 /Library/Perl/Updates/5.12.4 /System/Library/Perl/5.12/darwin-thread-mult
-</span><span class='line'>i-2level /System/Library/Perl/5.12 /System/Library/Perl/Extras/5.12/darwin-thread-multi-2level /System/Library/Perl/Extras/5.12 .<span class="o">)</span> at /System/Library/Perl/Extras/5.
-</span><span class='line'>12/SVN/Base.pm line 59
-</span><span class='line'>BEGIN failed--compilation aborted at /System/Library/Perl/Extras/5.12/SVN/Core.pm line 5.
-</span><span class='line'>Compilation failed in require at /usr/local/Cellar/git/1.7.9.1/libexec/git-core/git-svn line 41.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So now it appears it <em>can</em> find the Subversion core, but cannot find some other libraries it requires. Issue the following command to remedy this:</p>
-
-<figure class='code'><figcaption><span>Link the second library</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /Applications/Xcode.app/Contents/Developer/Library/Perl/5.12/darwin-thread-multi-2level/auto/SVN/ /System/Library/Perl/Extras/5.12/auto/SVN
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By doing this, we&#8217;ve now linked all of the Subversion Perl directories necessary for this command to run correctly.</p>
-
-<p><em>Update - March 19</em>
-<em>I installed Mountain Lion DP2 over the weekend which broke this again. However, my exact instructions still applied and fixed the issue. I simply needed to install the latest version of Xcode 4.4 (available from <a href="http://developer.apple.com/devcenter/mac">developer.apple.com</a>) and then run the commands listed above.</em></p>
-
-<ol>
-<li><a id="gitsvn1"></a> Note, I am using the version of git from <a href="http://mxcl.github.com/homebrew/">Homebrew</a>. Your outcome may differ slightly if you are using a different version or not using Homebrew.</li>
-</ol>
-
-]]><a href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/"><strong>∮</strong></a><br /><br /></content>
   </entry>
   
 </feed>
