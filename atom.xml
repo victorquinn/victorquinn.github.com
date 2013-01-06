@@ -4,7 +4,7 @@
   <title><![CDATA[Victor Quinn]]></title>
   <link href="http://victorquinn.com/atom.xml" rel="self"/>
   <link href="http://victorquinn.com/"/>
-  <updated>2013-01-06T16:57:52-05:00</updated>
+  <updated>2013-01-06T18:01:31-05:00</updated>
   <id>http://victorquinn.com/</id>
   <author>
     <name><![CDATA[Victor Quinn]]></name>
@@ -23,13 +23,13 @@ into a new place. I am at once excited about my new home and the prospect of a
 new beginning while frustrated at the ridiculous time sink it has become.</p>
 
 <p>Things were not (for reasons on which I will not elaborate) working out at our
-old place, so we packed up everything we owned and now have a new start in a
+old place, so we packed up everything we owned and now have a fresh start in a
 a new townhouse.</p>
 
 <p>I sit here, surrounded by boxes and bare walls, having already spent an
-untold number of days putting every one of my worldly possessions into boxes
-just to remove them upon arrival at this new house, and knowing I&#8217;ll spend many
-more before reaching the end.</p>
+untold number of days putting every one of my worldly possessions into those
+boxes just to remove them upon arrival at this new house, and knowing I&#8217;ll spend
+many more taking my stuff out of those boxes before reaching the end.</p>
 
 <p>Things are good and I am overall quite happy, but if someone told me, &#8220;you will
 have to stop all work on anything productive for the next 2 months while you
@@ -41,10 +41,10 @@ have moved my stuff from over there to over here. &lt;sarcasm>Awesome.
 &lt;/sarcasm></p>
 
 <p>The first few days here were exciting:
-* Look at all the organizing I can do!
-* Everything can be put in its rightful place
-* Clean all the things!
-* There are so many possibilities</p>
+- Look at all the organizing I can do!
+- Everything can be put in its rightful place
+- Clean all the things!
+- There are so many possibilities</p>
 
 <p>But now that the honeymoon period has worn off, I&#8217;m left with a ton of boxes and
 little motivation. I&#8217;ve put away and dealt with the fun things, all that&#8217;s left
@@ -62,10 +62,11 @@ keep me motivated but man is it a drag.</p>
     <id>http://victorquinn.com/blog/2012/12/23/cloud9</id>
     <content type="html"><![CDATA[<p><img class="center" src="http://victorquinn.com/images/cloud9.png"></p>
 
-<p>I have been following the <a href="http://c9.io">Cloud9</a> project since its early
-days. I was thrilled at their open source editor, Ace (formerly Bespin) and
-actually wrote a <a href="http://drupal.org/node/1377948">Drupal WYSIWYG plugin</a> to
-allow it as an option for HTML editing in Drupal.</p>
+<p>I have been following <a href="http://c9.io">Cloud9</a> since their early
+days. I was thrilled at their open source editor, <a href="http://ace.ajax.org">Ace</a>
+(formerly Bespin) and actually wrote a
+<a href="http://drupal.org/node/1377948">Drupal WYSIWYG plugin</a> to allow it as an option
+for HTML editing in Drupal.</p>
 
 <p>But, when I originally looked at Cloud9, as neat as it was to be able to edit
 files in the cloud, it wasn&#8217;t really too useful for much.</p>

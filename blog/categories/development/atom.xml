@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Victor Quinn]]></title>
   <link href="http://victorquinn.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://victorquinn.com/"/>
-  <updated>2013-01-06T16:57:52-05:00</updated>
+  <updated>2013-01-06T18:01:31-05:00</updated>
   <id>http://victorquinn.com/</id>
   <author>
     <name><![CDATA[Victor Quinn]]></name>
@@ -20,10 +20,11 @@
     <id>http://victorquinn.com/blog/2012/12/23/cloud9</id>
     <content type="html"><![CDATA[<p><img class="center" src="/images/cloud9.png"></p>
 
-<p>I have been following the <a href="http://c9.io">Cloud9</a> project since its early
-days. I was thrilled at their open source editor, Ace (formerly Bespin) and
-actually wrote a <a href="http://drupal.org/node/1377948">Drupal WYSIWYG plugin</a> to
-allow it as an option for HTML editing in Drupal.</p>
+<p>I have been following <a href="http://c9.io">Cloud9</a> since their early
+days. I was thrilled at their open source editor, <a href="http://ace.ajax.org">Ace</a>
+(formerly Bespin) and actually wrote a
+<a href="http://drupal.org/node/1377948">Drupal WYSIWYG plugin</a> to allow it as an option
+for HTML editing in Drupal.</p>
 
 <p>But, when I originally looked at Cloud9, as neat as it was to be able to edit
 files in the cloud, it wasn't really too useful for much.</p>
