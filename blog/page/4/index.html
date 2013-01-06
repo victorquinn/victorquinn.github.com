@@ -9,7 +9,7 @@
   <meta name="author" content="Victor Quinn">
 
   
-  <meta name="description" content="In early September 2010, the Court of Appeals for the Ninth Circuit came down with a controversial decision in Vernor v. Autodesk. In this case, &hellip;">
+  <meta name="description" content="Earlier today I read this article about SETI (the Search for Extra-Terrestrial Intelligence) shutting down the Allen Telescope Array due to lack of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +83,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/">Concept Idea: Using Client-side Javascript for Distributed Computing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-26T00:00:00-04:00" pubdate data-updated="true">Apr 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Earlier today I read <a href="http://www.mercurynews.com/science/ci_17926565?nclick_check=1">this article</a> about SETI (the Search for Extra-Terrestrial Intelligence) shutting down the Allen Telescope Array due to lack of funding.</p>
+<p><strong>SETI@home</strong></p>
+<p>That article reminded me of how, back when I ran Windows many years ago, I used&nbsp;<a href="http://setiathome.ssl.berkeley.edu/">SETI@home</a> to donate my free computing cycles. Essentially this program is a screensaver that sits on your computer waiting for you to be idle. When idle, the screensaver pops on, and SETI@home goes to work.&nbsp;</p>
+<p>SETI operated many satellites. These satellites listened for data, but the data came in faster than they could process it. So they had to find a solution. SETI@home arose out of this need.</p>
+<p><img class="center" src="http://victorquinn.com/images/setiathomescreenshot.png" title="SETI@Home Screenshot" ></p>
+<p>So the SETI program took the raw data it received from the satellite, got it into its servers and then it would break this raw data into small, manageable chunks. When a person had the SETI@home screensaver, it would automatically retrieve a chunk of data to analyze from the SETI servers and then would use the (otherwise) idle time to run its calculations on the data. When it was complete, it would send the finished analysis back to SETI who would re-assemble the pieces into meaningful results.</p>
+<p>The concept is brilliant. By breaking the problem into many small chunks and running it as a screensaver, it was not inconveniencing any user as it ran only when a comptuer was not being used, and many could lend their idle processing power to the project. It cost them nothing and they were able to have many potential workers to sort out their data. For a program with a tight budget, this is certainly more appealing than investing in a large array of servers.</p>
+<p>The reason I started this section &#8220;back when I ran Windows&#8221; was that when I first moved to using a Mac, I could not find a SETI@home screensaver client, so I stopped using it.</p>
+<p><strong>Barriers to Entry</strong></p>
+<p>After reading this article, I thought I would check it out again. There is now a client for OS X, but it is not pretty. One of the main issues with this approach is that the barrier to entry is high. Requiring people to install a screensaver in order to contribute is more than most users are ready and willing to do. Further, the program setup is very confusing. I downloaded the latest version from <a href="http://setiathome.ssl.berkeley.edu/">Berkeley&#8217;s SETI website.</a> The program, is actually called BOINC and is a universal client for a bunch of different projects. Upon launch, I was greeted by this:
+<img class="center" src="http://victorquinn.com/images/boincscreenshot1.png" title="BOINC Screenshot" ></p>
+<p>Not the prettiest interface, but that should be OK in theory. I picked SETI@home from the list of projects and got&#8230;this:<img class="center" src="http://victorquinn.com/images/boincscreenshot2.png" title="BOINC Screenshot" ></p>
+<p>But now I&#8217;m determined to make it work. I want to donate my free CPU cycles to someone! So I tried MilkyWay@home and was in business. Now I have to create an account. It&#8217;s starting to become more of a pain than it&#8217;s worth:</p>
+<p><img class="center" src="http://victorquinn.com/images/boincscreenshot3.png" title="BOINC Screenshot" >But I&#8217;m dedicated, I want to do this! So I do it and then I&#8217;m finally done with the setup&#8230;or so I thought. It opened a web browser and wanted <em>more</em>&nbsp;information:</p>
+<p><img class="center" src="http://victorquinn.com/images/boincscreenshot4.png" title="BOINC Screenshot" >I just wanted to help donate some free computing, I don&#8217;t want to have to divulge all of my personal information in order to help out. At the same time that happened, this BOINC program looks like it&#8217;s doing something:</p>
+<p><img class="center" src="http://victorquinn.com/images/boincscreenshot5.png" title="BOINC Screenshot" >But why is it doing something? Isn&#8217;t this supposed to be a screensaver, using my idle computing time? Not right now when I&#8217;m actively using my computer! So I look in the Preferences.&nbsp;<img class="center" src="http://victorquinn.com/images/boincscreenshot6.png" title="BOINC Screenshot" ></p>
+<p>Notice &#8220;Do work after idle for:&#8221; is set to &#8220;0 (Run Always)&#8221;. That&#8217;s not what I want! I am fine with donating some free CPU, but I don&#8217;t want my performance degraded while I am trying to work. Now, I understand why they may have set this default, but in my opinion it is overly greedy. Of course they want as many CPU cycles as they can, so defaulting to always running on the computer of any installer will maximize that. But it does frustrate and anger me that I have to manually override the damned thing to make it not run constantly. And I thought this was supposed to be a screensaver? Why not just put all of the options into the screensaver settings? Why have a separate client like this.</p>
+<p>Anyway, I&#8217;ll stop here because a review of the questionable UI of the BOINC software is not the goal of this article. This was probably written by some grad students with little or no budget. I get that. My point in here is to show that the barrier to entry is very high. I am a developer and<em> I </em>had trouble figuring out what was going on here. Good luck getting the masses to adopt such a thing.</p>
+<p><strong>Client-Side Javascript For Distributed Computing</strong></p>
+<p>As a web programmer, I am constantly writing software that is instantly available to all of our users. This is one aspect of web programming that I truly love. And this is great because it has almost NO barrier to entry. Anyone with a web browser can access something that I have made and use it to change their lives instantly. No downloading something, running it, etc.</p>
+<p>Now why not re-write the SETI@home client in client-side javascript? Any user could point their browser at it and be in business, sharing the computing power of their machine with almost no friction. Even better, it could be deployed as a widget in iGoogle or any other homepage. Then I can just add the widget, leave iGoogle open on my computer and I&#8217;ll be making a contribution.</p>
+<p>I don&#8217;t advocate for it, but it could conceivably be hidden from the user and deployed automatically on page load. Imagine if Facebook did this? While people were browsing on Facebook, they could conceivably deploy some code that would run on every user connected to their servers. If done intelligently enough, it could even be possible to use the CPU of clients to compute things for the other clients! Imagine if, instead of taxing the Facebook servers to create image thumbnails, Facebook received the full-size image upload, pushed it to a random user&#8217;s computer, then their machine, using the distributed computing libraries, created the derivative images and sent them back. This is a bit of a contrived example, this is not necessarily the type of thing distributing computing would best be used for, but it illustrates my point.</p>
+<p>It would be very neat for someone to write a javascript library enabling this kind of thing which could then be extended and used by developers to implement other things. Much of this could be abstracted for the developer, leaving a simple and clean API which developers could leverage to send jobs to. Imagine if there were just a library called &#8220;distributed.js&#8221; or something that were in use by many different websites. So visiting any of these websites essentially spun up the client on your local machine. Then someone could send jobs which would get sent out to any client visiting a site which loaded the library.</p>
+<p>While it seems on first glance that this could open a large security hole, one beautiful point is that it makes use of the existing security infrastructure in web browsers which isolates the javascript VM from the host machine. So it poses no danger to the host machine. Further, the data could be encrypted to help with security for the data. Though it could make their CPU spike and degrade their performance which is certainly poor practice, it is interesting to think of the possibilities.</p>
+<p>While just a concept, I believe this has a lot of interesting potential&#8230;</p>
+<p><em>If such an API library exists, let me know in the comments. I searched around for awhile and couldn&#8217;t find much.</em></p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Concept Idea: Using Client-side Javascript for Distributed Computing" class="twitter-share-button" data-url="http://victorquinn.com/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/" data-counturl="http://victorquinn.com/blog/2011/04/26/concept-idea-using-client-side-javascript-for-distributed-computing/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -599,58 +669,9 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/08/04/the-start-of-the-journey/">The Start of the Journey</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-04T00:00:00-04:00" pubdate data-updated="true">Aug 4<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have blogged before, but this is the first time I am creating a blog with my own name and will use it for general purpose blogging. In the past, I had one tech blog, a separate blog for my musings about politics, etc. It occurred to me that some people would get use out of all of those things and there was no need to have them all separate. This also rids me of the need to maintain a few different blogs when a single one will suffice.</p>
-
-<p>Additionally, I previously had different URLs/names/identities for each of these blogs which were all anonymous and had no link to myself. I had nothing to hide, nothing to be ashamed of, and did not need to hide under a shroud of anonymity for fear that anyone would find out who I was. So why did I do this? In the past, everyone strove to be anonymous online. However, with things changing as they are, more and more people are moving toward using their own, true identity online. I see no reason why I should not also use my true identity in an online forum.</p>
-
-<p>So this is it, the start of a journey. The start of a journey is always one of my favorite concepts. Every time I have started a journey, I have been there with bags packed and rough idea of where I want to go. One of my favorite moments is when I have passed the airport security, am waiting for my plane, and sit at the bar to have a beer. I am full of anticipation knowing what the near future will have in store for me. I may have hostels or rail tickets booked, but it is impossible to envision everything that will happen along the way on that journey. I may decide at some point to stop off and see something I had not planned on seeing that could change my outlook on life. I know that at least for the next few days, weeks, months, I will do nothing but adventure, explore, and take it all in. Sitting there, I am full of anticipation because, although I do not know everything that will happen on the journey, I do know that I will be out there and it is a great break from the monotony of everyday life.</p>
-
-<p>That is the way I feel right now as I write this first post and start a journey on this blog. I have an idea of what I intend to discuss, but beyond that I&#8217;ll see where the wind takes me.</p>
-</div>
-  
-  
-    <footer>
-      <div class="permalink-container">
-        <a rel="permalink" class="permalink" href="/blog/2010/08/04/the-start-of-the-journey/">∮</a>
-      </div>
-      <div class="twitter-share-container">
-        <a href="https://twitter.com/share?text=The start of the journey" class="twitter-share-button" data-url="http://victorquinn.com/blog/2010/08/04/the-start-of-the-journey/" data-counturl="http://victorquinn.com/blog/2010/08/04/the-start-of-the-journey/" data-via="victorquinn" data-lang="en">Tweet</a>
-      </div>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -681,6 +702,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/06/moving/">Moving</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/12/23/cloud9/">Cloud9</a>
       </li>
     
@@ -694,10 +719,6 @@
     
       <li class="post">
         <a href="/blog/2012/10/26/google-civic-drupal-module/">Google Civic Drupal Module</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/18/git-commit-partial/">git commit partial</a>
       </li>
     
   </ul>

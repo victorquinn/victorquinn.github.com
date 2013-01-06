@@ -9,8 +9,7 @@
   <meta name="author" content="Victor Quinn">
 
   
-  <meta name="description" content="Went out yesterday and bought myself a new toy. It&#8217;s a 2012 Harley Davidson Sportster 1200 Custom I have more pics on flickr.
-">
+  <meta name="description" content="The Setup You&#8217;ve just created your new super awesome node type in Drupal 7 using the (now in core!) Content type editor. Now you want to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +83,223 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/11/programmatically-creating-fielded-d7-nodes/">Programmatically Creating Fielded Nodes in Drupal 7</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-11T18:23:00-04:00" pubdate data-updated="true">Aug 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>The Setup</h3>
+
+<p>You&#8217;ve just created your new super awesome node type in Drupal 7 using the (now in core!) Content type editor.</p>
+
+<p><img class="center" src="/images/contenttype1.png"></p>
+
+<p>Now you want to programmatically generate some Super Awesome Content nodes. Some <a href="https://www.google.com">Googling</a> (or <a href="https://duckduckgo.com">Ducking</a>!) will land you with some snippets that look as follows:</p>
+
+<figure class='code'><figcaption><span>Works with standard node  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">create_my_node</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nv">$node</span> <span class="o">=</span> <span class="k">new</span> <span class="k">stdClass</span><span class="p">();</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">type</span> <span class="o">=</span> <span class="s1">&#39;blog&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">node_object_prepare</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">title</span> <span class="o">=</span> <span class="s2">&quot;My Awesome Title&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">language</span> <span class="o">=</span> <span class="nx">LANGUAGE_NONE</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">node_save</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>The Problem</h3>
+
+<p>Since you&#8217;ve defined a custom content type, you may think something like the following would work great with your new custom node type to set your custom field values:</p>
+
+<figure class='code'><figcaption><span>Attempt with custom node (this will fail!)  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">create_my_node</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nv">$node</span> <span class="o">=</span> <span class="k">new</span> <span class="k">stdClass</span><span class="p">();</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">type</span> <span class="o">=</span> <span class="s1">&#39;super_awesome_content&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">node_object_prepare</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">title</span> <span class="o">=</span> <span class="s2">&quot;My Awesome Title&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">language</span> <span class="o">=</span> <span class="nx">LANGUAGE_NONE</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Try to set your custom field values</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span> <span class="o">=</span> <span class="s2">&quot;Too many to count...&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_awesome_points</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">node_save</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, that will fail! Why? Because you can&#8217;t set node custom fields like you may expect with <em>$node->{$key}</em>.</p>
+
+<p><em>In my opinion, this is one thing Drupal 7 got very wrong. I&#8217;ll explain their rationale in a bit after showing the correct way to do this and it does make some sense, but it seems unnecessarily complicated.</em></p>
+
+<h3>The Solution</h3>
+
+<p>Instead of trying to set those custom field attributes directly, you have to use the following funky syntax:</p>
+
+<figure class='code'><figcaption><span>Successful attempt with custom node (this totally works!)  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">create_my_node</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nv">$node</span> <span class="o">=</span> <span class="k">new</span> <span class="k">stdClass</span><span class="p">();</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">type</span> <span class="o">=</span> <span class="s1">&#39;super_awesome_content&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">node_object_prepare</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">title</span> <span class="o">=</span> <span class="s2">&quot;My Awesome Title&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">language</span> <span class="o">=</span> <span class="nx">LANGUAGE_NONE</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Try to set your custom field</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Too many to count...&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_awesome_points</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">node_save</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Huh? What&#8217;s with this <em>[&#8216;und&#8217;][0][&#8216;value&#8217;]</em> stuff?</p>
+
+<p>Well, it&#8217;s a bit complicated. Let&#8217;s break it down piece by piece</p>
+
+<h4>[&#8216;und&#8217;]</h4>
+
+<p>This first bit is the language to be applied to the field. <em>&#8216;und&#8217;</em> is the key specifying that the language is undefined. This could also be &#8216;en&#8217; or &#8216;de&#8217; or &#8216;fr&#8217; or any other 2 letter language code if a particular language is specified for this field.</p>
+
+<h4>[0]</h4>
+
+<p>This is an array index. For any single value fields like the ones we have, this is just [0]. But it&#8217;s conceivable to have multiple values in which this would kind of make sense. For example, let&#8217;s say our reasons_for_being_awesome field was a multi-value field:</p>
+
+<figure class='code'><figcaption><span>Multi-value field  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'>  <span class="o">...</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Too many to count...&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Reason number 2&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Another reason&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;The most important reason&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">node_save</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So it makes some sense for the array index to be there, but it&#8217;s somewhat confusing for what is arguably the main use case &#8211; namely trying to assign a single value to a field.</p>
+
+<h4>[&#8216;value&#8217;]</h4>
+
+<p>This may be the oddest piece. There are a few other keys which could be specified here, among them <em>[&#8216;format&#8217;]</em> and <em>[&#8216;summary&#8217;]</em>, but when working programmatically with custom fields, it&#8217;s rare to be setting anything other than <em>[&#8216;value&#8217;]</em>.</p>
+
+<h3>Summary</h3>
+
+<figure class='code'><figcaption><span>Summary  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'>  <span class="c1">// Won&#39;t work</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span> <span class="o">=</span> <span class="s2">&quot;Too many to count...&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_awesome_points</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Will work</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_reasons_for_being_awesome</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Too many to count...&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$node</span><span class="o">-&gt;</span><span class="na">field_awesome_points</span><span class="p">[</span><span class="s1">&#39;und&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Commentary</h3>
+
+<p>I think Drupal should be much better here and dropped the ball for developers by not allowing the first method above to work. This [&#8216;und&#8217;][0][&#8216;value&#8217;] mess may make it easier for the system to deal with the input, but it makes things far more difficult/complicated for developers. This is an area where it&#8217;s painfully clear that the Drupal Field API is not a true ORM like <a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html">ActiveRecord</a> and in my opinion that&#8217;s a missed opportunity.</p>
+
+<p>Ideally the system would be able to default to allowing things to be set with just the key and not require developers to specify the language, array index, and value key every single time a value is set to the field.</p>
+</div>
+  
+  
+    <footer>
+      <div class="permalink-container">
+        <a rel="permalink" class="permalink" href="/blog/2012/08/11/programmatically-creating-fielded-d7-nodes/">∮</a>
+      </div>
+      <div class="twitter-share-container">
+        <a href="https://twitter.com/share?text=Programmatically Creating Fielded Nodes in Drupal 7" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/08/11/programmatically-creating-fielded-d7-nodes/" data-counturl="http://victorquinn.com/blog/2012/08/11/programmatically-creating-fielded-d7-nodes/" data-via="victorquinn" data-lang="en">Tweet</a>
+      </div>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -764,53 +980,6 @@ Once the honeymoon period ends on some of these new things, it becomes apparent 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/21/law-school-graduation/">Law School Graduation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-21T11:55:00-05:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://readabout.me/achievements/Victor-Quinn-Receives-Degree-from-Western-New-England-University/3630536?utm_source=emailcc&amp;utm_medium=email&amp;utm_campaign=cc_emails">It&#8217;s official!</a></p>
-
-<p>I finished the degree requirements in December, but Western New England University just finished processing everything!</p>
-</div>
-  
-  
-    <footer>
-      <div class="permalink-container">
-        <a rel="permalink" class="permalink" href="/blog/2012/02/21/law-school-graduation/">∮</a>
-      </div>
-      <div class="twitter-share-container">
-        <a href="https://twitter.com/share?text=Law School Graduation" class="twitter-share-button" data-url="http://victorquinn.com/blog/2012/02/21/law-school-graduation/" data-counturl="http://victorquinn.com/blog/2012/02/21/law-school-graduation/" data-via="victorquinn" data-lang="en">Tweet</a>
-      </div>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -844,6 +1013,10 @@ Once the honeymoon period ends on some of these new things, it becomes apparent 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/06/moving/">Moving</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/12/23/cloud9/">Cloud9</a>
       </li>
     
@@ -857,10 +1030,6 @@ Once the honeymoon period ends on some of these new things, it becomes apparent 
     
       <li class="post">
         <a href="/blog/2012/10/26/google-civic-drupal-module/">Google Civic Drupal Module</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/18/git-commit-partial/">git commit partial</a>
       </li>
     
   </ul>

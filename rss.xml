@@ -4,7 +4,7 @@
   <title><![CDATA[Victor Quinn]]></title>
   <link href="http://victorquinn.com/atom.xml" rel="self"/>
   <link href="http://victorquinn.com/"/>
-  <updated>2013-01-06T15:46:07-05:00</updated>
+  <updated>2013-01-06T16:47:27-05:00</updated>
   <id>http://victorquinn.com/</id>
   <author>
     <name><![CDATA[Victor Quinn]]></name>
@@ -14,14 +14,56 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Moving]]></title>
+    <link href="http://victorquinn.com/blog/2013/01/06/moving/"/>
+    <updated>2013-01-06T15:47:00-05:00</updated>
+    <id>http://victorquinn.com/blog/2013/01/06/moving</id>
+    <content type="html"><![CDATA[<p>Moving.</p>
+
+<p>Ugh. Just seeing the word makes me cringe. The weekend after Christmas, I moved
+into a new place. I am at once excited about my new home and the prospect of a
+new beginning while frustrated at the ridiculous time sink it has become.</p>
+
+<p>Things were not (for reasons on which I will not elaborate) working out at our
+old place, so we packed up everything we owned and now have a new start in a
+a new townhouse.</p>
+
+<p>I sit here, surrounded by boxes and bare walls, having already spent an
+untold number of days putting every one of my worldly possessions into boxes
+just to remove them upon arrival at this new house, and knowing I&#8217;ll spend many
+more before reaching the end.</p>
+
+<p>Things are good and I am overall quite happy, but if someone told me, &#8220;you will
+have to stop all work on anything productive for the next 2 months while you
+do nothing but pick your stuff up here and put it away on the other side&#8221; I&#8217;d
+have told them to shove something somewhere where things aren&#8217;t meant to shoved.</p>
+
+<p>The first few days here were exciting:
+- Look at all the organizing I can do!
+- Everything can be put in its rightful place
+- Clean all the things!
+- There are so many possibilities</p>
+
+<p>But now that the honeymoon period has worn off, I&#8217;m left with a ton of boxes and
+little motivation. I&#8217;ve put away and dealt with the fun things, all that&#8217;s left
+is the tedious boring stuff. I&#8217;ll slog through it and my wife will no doubt help
+keep me motivated but man is it a drag.</p>
+
+<p>I. Hate. Moving.</p>
+]]><a href="http://victorquinn.com/blog/2013/01/06/moving/"><strong>∮</strong></a><br /><br /></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Cloud9]]></title>
     <link href="http://victorquinn.com/blog/2012/12/23/cloud9/"/>
     <updated>2012-12-23T15:19:00-05:00</updated>
     <id>http://victorquinn.com/blog/2012/12/23/cloud9</id>
-    <content type="html"><![CDATA[<p>I&#8217;ve been half following the <a href="http://c9.io">Cloud9</a> project since its early days.
-I was thrilled at their open source editor, Ace (formerly Bespin) and actually
-wrote a <a href="http://drupal.org/node/1377948">Drupal WYSIWYG plugin</a> to allow it as
-an option for HTML editing in Drupal.</p>
+    <content type="html"><![CDATA[<p><img class="center" src="http://victorquinn.com/images/cloud9.png"></p>
+
+<p>I&#8217;ve been half following the <a href="http://c9.io">Cloud9</a> project since its early
+days. I was thrilled at their open source editor, Ace (formerly Bespin) and
+actually wrote a <a href="http://drupal.org/node/1377948">Drupal WYSIWYG plugin</a> to
+allow it as an option for HTML editing in Drupal.</p>
 
 <p>But, when I originally looked at Cloud9, as neat as it was to be able to edit
 files in the cloud, it wasn&#8217;t really too useful for much.</p>
@@ -1018,17 +1060,6 @@ Once the honeymoon period ends on some of these new things, it becomes apparent 
 
 <p>Special thanks to <a href="https://www.amherst.edu">Amherst College</a> for paving the way with this module!</p>
 ]]><a href="http://victorquinn.com/blog/2012/03/06/monster-menus-and-drupal-multisite/"><strong>∮</strong></a><br /><br /></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Law School Graduation]]></title>
-    <link href="http://victorquinn.com/blog/2012/02/21/law-school-graduation/"/>
-    <updated>2012-02-21T11:55:00-05:00</updated>
-    <id>http://victorquinn.com/blog/2012/02/21/law-school-graduation</id>
-    <content type="html"><![CDATA[<p><a href="http://readabout.me/achievements/Victor-Quinn-Receives-Degree-from-Western-New-England-University/3630536?utm_source=emailcc&amp;utm_medium=email&amp;utm_campaign=cc_emails">It&#8217;s official!</a></p>
-
-<p>I finished the degree requirements in December, but Western New England University just finished processing everything!</p>
-]]><a href="http://victorquinn.com/blog/2012/02/21/law-school-graduation/"><strong>∮</strong></a><br /><br /></content>
   </entry>
   
 </feed>
