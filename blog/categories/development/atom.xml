@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Victor Quinn]]></title>
   <link href="http://victorquinn.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://victorquinn.com/"/>
-  <updated>2013-01-09T15:27:32-05:00</updated>
+  <updated>2013-01-10T11:58:02-05:00</updated>
   <id>http://victorquinn.com/</id>
   <author>
     <name><![CDATA[Victor Quinn]]></name>
@@ -412,7 +412,7 @@ any member methods to be a bit cleaner:</p>
 </span><span class='line'><span class="x"> */</span>
 </span><span class='line'><span class="x">function construct_instance_of($i) {</span>
 </span><span class='line'><span class="x">    $class = get_class($this);</span>
-</span><span class='line'><span class="x">    return $class($i);</span>
+</span><span class='line'><span class="x">    return new $class($i);</span>
 </span><span class='line'><span class="x">}</span>
 </span><span class='line'><span class="x">...</span>
 </span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>

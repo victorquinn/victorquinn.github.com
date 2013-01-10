@@ -483,7 +483,7 @@ any member methods to be a bit cleaner:</p>
 </span><span class='line'><span class="sd">     */</span>
 </span><span class='line'>    <span class="k">function</span> <span class="nf">construct_instance_of</span><span class="p">(</span><span class="nv">$i</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="nv">$class</span> <span class="o">=</span> <span class="nb">get_class</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nv">$class</span><span class="p">(</span><span class="nv">$i</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nv">$class</span><span class="p">(</span><span class="nv">$i</span><span class="p">);</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>    <span class="o">...</span>
 </span><span class='line'><span class="p">}</span>
